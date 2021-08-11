@@ -1,0 +1,25 @@
+{
+  "current": "czs",
+  "groups": [
+    {
+      "id": "czd",
+      "name": "Czompi",
+      "url": "https://czompi.hu"
+    },
+    {
+      "id": "czs",
+      "name": "Czompi Software",
+      "url": "https://czompi.hu"
+    },
+    {
+      "id": "hls",
+      "name": "HunLuxSCHOOL",
+      "url": "https://hunluxschool.hu"
+    },
+    {
+      "id": "hll",
+      "name": "HunLux Launcher",
+      "url": "https://hunluxlauncher.hu"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "id": "czompisoftware",
+  "shortName": "Czompi Software",
+  "fullName": "Czompi Software",
+  "siteURL": "https://czompi.hu",
+  "meta": {
+    "title": "Czompi Software",
+    "description": "Czompi Software",
+    "primaryColor": "#32661F",
+    "image": null
+  },
+  "pages": [
+    {
+      "id": "",
+      "name": "Main",
+      "alias": [
+        "main"
+      ]
+    },
+    {
+      "id": "products",
+      "name": "Products",
+      "alias": [
+        "product"
+      ]
+    }
+  ]
+}

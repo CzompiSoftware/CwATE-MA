@@ -1,0 +1,12 @@
+﻿<div class="alert alert-@Type.ToString().ToLower()">
+    <h2>@Title</h2>
+    <p>@Content.Replace("{product.name}", Globals.Config.FullName, StringComparison.OrdinalIgnoreCase)</p>
+</div>
+@code {
+    [Parameter]
+    public AlertType Type { get; set; } = AlertType.Info;
+    [Parameter]
+    public string Title { get; set; }
+    [Parameter]
+    public string Content { get; set; }
+}

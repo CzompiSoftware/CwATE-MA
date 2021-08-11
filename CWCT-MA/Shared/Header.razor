@@ -1,0 +1,60 @@
+﻿
+        <header>
+            <!-- #region Czompi Group products -->
+            <nav class="nav nav-sticky group">
+                <div class="container w-100">
+                    @foreach (GroupConfigItem group in Globals.Group.Groups) {
+                        @if(group.Id == Globals.Group.Current)
+                        {
+                        @((MarkupString)$"<div class=\"nav-item group-{group.Id}\"><span class=\"active\">{group.Name}</span></div>")
+                        }
+                        else
+                        {
+                        @((MarkupString)$"<div class=\"nav-item group-{group.Id}\"><a href=\"{group.Url}\">{group.Name}</a></div>")
+                        }
+                    }
+                </div>
+            </nav>
+            <!-- #endregion -->
+            
+            <!-- #region Navigation menu -->
+            <div class="container">
+                <nav class="nav menu">
+                    <a href="/" class="brand">
+                        <img src="@CDN.GetUrl($"img/{Globals.Config.Id}/{Globals.Config.Id}-logo.svg")">
+                    </a>
+                    <a class="nav-mobile" @onclick="ToggleNavMenu"></a>
+
+                    <div class="nav-items@(NavMenuCssClass)">
+                        @foreach (Page page in Globals.Config.Pages) {
+                        <div class="nav-item">
+                            @if(page.Id == this.Page)
+                            {
+                               @((MarkupString)$"<div class=\"active\">{page.Name}</div>")
+                            }
+                            else
+                            {
+                               @((MarkupString)$"<a href=\"/{page.Id}\">{page.Name}</a>")
+                            }
+                        </div>
+                        }
+                    </div>
+                </nav>
+            </div>
+            <!-- #endregion -->
+        </header>
+        <div class="container">
+        </div>
+@code {
+    private bool collapseNavMenu = true;
+
+    private string NavMenuCssClass => !collapseNavMenu ? " show" : null;
+    private string Page => Globals.CurrentPage;
+    [Inject] 
+    public NavigationManager MyNavigationManager {get; set;}
+    
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+}

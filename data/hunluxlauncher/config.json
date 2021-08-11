@@ -1,0 +1,26 @@
+{
+  "id": "cwctmade",
+  "shortName": "CWCT/MA DE",
+  "fullName": "Czompi WebAPP Common Template for Microsoft ASP.NET - Development Environment",
+  "siteURL": "./",
+  "meta": {
+    "title": "CWCT/MA DE",
+    "description": "Czompi WebAPP Common Template for Microsoft ASP.NET - Development Environment",
+    "primaryColor": "#EAEAEA",
+    "image": null
+  },
+  "pages": [
+    {
+      "id": "",
+      "name": "Main page",
+      "alias": [
+        "main"
+      ]
+    },
+    {
+      "id": "page2",
+      "name": "Page #2",
+      "alias": null
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+﻿@page "/{*remaining}"
+@using Markdig
+@using System.IO
+
+@Remaining<br>
+@FileName
+
+@if (File.Exists(FileName))
+{
+    ()Markdown.ToHtml(File.ReadAllText(FileName), Config.MarkdownPipeline);
+}
+else
+{
+    Markdown.ToHtml("]>danger< # Error 404\r\n] File not found!", Config.MarkdownPipeline);
+}
+
+
+@code {
+    [Parameter]
+    public string Remaining { get; set; }
+    
+    public string FileName => Path.Combine(Config.Files.ContentDirectory, $"{(Remaining ?? "index")}.md");
+    
+    public IEnumerable<string> RemainingList {
+        get
+        {
+            return Remaining?.Split("/");
+        }
+    }
+}
