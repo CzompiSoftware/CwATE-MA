@@ -14,12 +14,17 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="ColorCode.Portable" Version="1.0.3" />
 		<PackageReference Include="CzomPack" Version="3.0.0" />
 		<PackageReference Include="CzomPack.Cryptography" Version="3.0.0" />
 		<PackageReference Include="Markdig" Version="0.25.0" />
 		<PackageReference Include="Markdig.SyntaxHighlighting" Version="1.1.7" />
-		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.14" />
-		<PackageReference Include="Serilog.AspNetCore" Version="4.1.0" />
+		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.11.1" />
+		<PackageReference Include="Serilog.AspNetCore" Version="4.1.1-dev-00229" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Markdig.CWCTMA.XMD\Markdig.CWCTMA.XMD.csproj" />
 	</ItemGroup>
 
 	<Target Name="Date" BeforeTargets="BeforeBuild">

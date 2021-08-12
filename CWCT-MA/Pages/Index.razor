@@ -1,17 +1,15 @@
 ﻿@page "/{*remaining}"
 @using Markdig
 @using System.IO
-
-@Remaining<br>
-@FileName
+@using Microsoft.AspNetCore.Html
 
 @if (File.Exists(FileName))
 {
-    ()Markdown.ToHtml(File.ReadAllText(FileName), Config.MarkdownPipeline);
+    @((MarkupString)Markdown.ToHtml(File.ReadAllText(FileName), Config.MarkdownPipeline))
 }
 else
 {
-    Markdown.ToHtml("]>danger< # Error 404\r\n] File not found!", Config.MarkdownPipeline);
+    @((MarkupString)Markdown.ToHtml("]>danger< # Error 404\r\n] File not found!", Config.MarkdownPipeline))
 }
 
 
@@ -19,7 +17,7 @@ else
     [Parameter]
     public string Remaining { get; set; }
     
-    public string FileName => Path.Combine(Config.Files.ContentDirectory, $"{(Remaining ?? "index")}.md");
+    public string FileName => Path.Combine(Config.Files.ContentDirectory, $"{(Remaining ?? "index")}.xmd");
     
     public IEnumerable<string> RemainingList {
         get

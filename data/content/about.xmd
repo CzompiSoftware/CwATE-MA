@@ -11,7 +11,7 @@
 </metadata>
 
 # About me
-Hello there! My name is David, and I was born in '99, so I'm currently @cs{#(DateTime.Now - DateTime.Parse("1999-03-30")).Year#} years old.
+Hello there! My name is David, and I was born in '99, so I'm currently @cs{#$"{(DateTime.Now - DateTime.Parse("1999-03-30")).TotalDays / 365.2425:0.00}"#} years old.
 I started developing softwares around 2012-2013 in Visual Basic 2010. My first project was a "Web Browser", what uses WebBrowser,
 that is available basically in Visual Basic, C#, C++ etc, so that was not a real custom browser engine, but in that time, this was a big milestone for me and my classmates were amazed.
 Than I moved this browser to C# and started using Gecko, later I changed it to Chromium. The last version of this browser released in Q1 2014 based on Chromium.

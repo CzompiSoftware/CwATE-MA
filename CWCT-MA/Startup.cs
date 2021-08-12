@@ -1,6 +1,7 @@
 using CWCTMA.Data;
 using CWCTMA.Model;
 using Markdig;
+using Markdig.CWCTMA.XMD;
 using Markdig.SyntaxHighlighting;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -49,7 +50,7 @@ namespace CWCTMA
 
             app.UseRouting();
 
-            Config.MarkdownPipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().UseSyntaxHighlighting().Build();
+            Config.MarkdownPipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().UseSyntaxHighlighting().UseXMDLanguage().Build();
 
             app.UseEndpoints(endpoints =>
             {
