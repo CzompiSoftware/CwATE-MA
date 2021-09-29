@@ -1,4 +1,3 @@
-using CWCTMA.Data;
 using CWCTMA.Model;
 using Markdig;
 using Markdig.CWCTMA.XMD;
@@ -27,7 +26,6 @@ namespace CWCTMA
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSingleton<WeatherForecastService>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddHttpContextAccessor();
         }
