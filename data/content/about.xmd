@@ -1,29 +1,31 @@
 <!DOCTYPE cwctma-docs>
-<metadata type="" lang="en" isdisplayed="true">
-    <id></id>
-    <title></title>
-    <keywords></keywords>
-    <description></description>
-    <search></search>
-    <image alt=""></image>
-    <releasedat></releasedat>
-    <modifiedat></modifiedat>
-</metadata>
+<Metadata Type="" Lang="en" IsNavMenuItem="true" ShowModifiedAt="true">
+    <Id>about</Id>
+    <Title>About me</Title>
+    <Keywords>about;me;about me;czompi;david;czompo;david czompo;czompisoftware;software;czompi software</Keywords>
+    <Description>About Czompi</Description>
+    <Search>about;me;about me;czompi;david;czompo;david czompo;czompisoftware;software;czompi software</Search>
+    <Image alt="f">f</Image>
+    <ReleasedAt>2021-08-15T00:20:00</ReleasedAt>
+    <ModifiedAt>2021-08-15T00:20:00</ModifiedAt>
+</Metadata>
 
 # About me
 Hello there! My name is David, and I was born in '99, so I'm currently @cs{#$"{(DateTime.Now - DateTime.Parse("1999-03-30")).TotalDays / 365.2425:0.00}"#} years old.
-I started developing softwares around 2012-2013 in Visual Basic 2010. My first project was a "Web Browser", what uses WebBrowser,
-that is available basically in Visual Basic, C#, C++ etc, so that was not a real custom browser engine, but in that time, this was a big milestone for me and my classmates were amazed.
-Than I moved this browser to C# and started using Gecko, later I changed it to Chromium. The last version of this browser released in Q1 2014 based on Chromium.
 
-In the end of 2014, I started playing Minecraft. That was a time, when I started my first year in secondary education and many people of my class played this game, so I bought it and joined to play with them.
-Around that time, I faced with Forge and modding Minecraft. In the first time, I only use some mods and create modpacks with them, later I started creating custom mods, what are add some new blocks and items to game, but these still doesn't available.
-I'm currently working on a mod, what adds a custom main GUI and a new, dynamic server list, that is obtained from our backend.
-Also I'm busy creating a Minecraft Launcher called HunLux Launcher based on C# WPF.
-In that time, I also created some Spigot/Bukkit plugins, and some of them still available in SpigotMC.org.
-I will create spigot plugins and forge mods if someone pays me to make it. // paypal@czompi.hu ;)
+I started developing softwares around 2012-2013 in Visual Basic 2010. My first project was a "Web Browser", that used the WebBrowser component, that is integrated in Visual Basic, C#, C++ by default, so that was not a real custom browser with it's own engine, but in that time, this was a big milestone for me and my classmates were amazed.<br>
+Than I moved this browser to C# and started using an engine, named Gecko, then some time after that it's engine to Chromium. The last version of this browser released in Q1 2014 and was based on Chromium.
 
-So, I have a lot of projects from 2-3 years ago, what I probably never finish...
+In the end of 2014, I started playing Minecraft. In that time, I started my first year in secondary education and many people of my class played this game, so I bought it and joined to play with them.<br>
+Around that time, I soumbled upon Forge and Minecraft modding. In the first time, I only used community-developed mods and create modpacks with them. Later I started creating custom mods, those added some new blocks and items to game, but I never released them to the public.<br>
+Later, I made a mod, that adds a custom main GUI and a new, dynamic server list and it was fetching server list from an API.<br>
+Also I'm working on a custom Minecraft Launcher called [HunLux Launcher](https://hunluxlauncher.hu) and it is based on [AvaloniaUI](https://avaloniaui.net/).<br>
+In 2014, I also made some Spigot/Bukkit plugins, and some of them still available in SpigotMC.org.
+
+So, I have a lot of projects from @cs{#$"{(DateTime.Now - DateTime.Parse("2018-08-08")).TotalDays / 365.2425:0}-{(DateTime.Now - DateTime.Parse("2017-08-08")).TotalDays / 365.2425:0}";#} years ago, that I'll probably never finish...<br>
+
+I started learning C++ in 2015 at secondary school and I went to courses to learn more about it.
+
+I got my high school diploma at 2019, so @cs{#$"{(DateTime.Now - DateTime.Parse("2019-07-18")).TotalDays / 365.2425:0.00}"#} years ago
 
 Currently I couldn't write there anything, so thanks to read all of it.
-This is not end of my portfolio, I just very lazy to write all of it, like I started learning C++ in school, and I created a lot of softwares in C# for my workplace, where I work in summers, ecetera, etcetera...

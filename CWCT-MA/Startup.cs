@@ -2,7 +2,7 @@ using CWCTMA.Data;
 using CWCTMA.Model;
 using Markdig;
 using Markdig.CWCTMA.XMD;
-using Markdig.SyntaxHighlighting;
+using Markdig.Prism;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -29,6 +29,7 @@ namespace CWCTMA
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddHttpContextAccessor();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,7 +51,7 @@ namespace CWCTMA
 
             app.UseRouting();
 
-            Config.MarkdownPipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().UseSyntaxHighlighting().UseXMDLanguage().Build();
+            Globals.MarkdownPipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().UsePrism().UseXMDLanguage().Build();
 
             app.UseEndpoints(endpoints =>
             {

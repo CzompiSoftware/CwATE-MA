@@ -1,16 +1,16 @@
 <!DOCTYPE cwctma-docs>
 <Metadata Type="" Lang="en" IsNavMenuItem="true" ShowModifiedAt="true">
-    <Id></Id>
-    <Title>Main page</Title>
-    <Keywords>index;main;page;main page;czompi;david;czompo;david czompo;czompisoftware;software;czompi software</Keywords>
-    <Description>Personal webpage of David Czompó (Czompi)</Description>
-    <Search>index;main;page;main page;czompi;david;czompo;david czompo;czompisoftware;software;czompi software</Search>
-    <Image alt="f">f</Image>
+    <Id>projects</Id>
+    <Title>My projects</Title>
+    <Keywords>projects;my;my projects;czompi;david;czompo;david czompo;czompisoftware;software;czompi software</Keywords>
+    <Description>About Czompi</Description>
+    <Search>projects;my;my projects;czompi;david;czompo;david czompo;czompisoftware;software;czompi software</Search>
+    <Image alt=""></Image>
     <ReleasedAt>2021-08-15T00:20:00</ReleasedAt>
     <ModifiedAt>2021-08-15T00:20:00</ModifiedAt>
 </Metadata>
 
-# Main page
+# My projects
 Welcome to my site!
 
 You'll find open projects and downloadable applications in my site.

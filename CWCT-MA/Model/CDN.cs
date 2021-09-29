@@ -9,7 +9,7 @@ namespace CWCTMA.Model
             string[] locArr = loc.Split('/');
 
             if (locArr.Length < 2) return loc;
-            return $"{Globals.CDN}{locArr[0]}/{SHA1.Encode(locArr[1]).ToLower()}/{string.Join('/', locArr[2..])}";
+            return $"{Globals.Config.CdnUrl?? "https://cdn.czompisoftware.hu/"}{locArr[0]}/{SHA1.Encode(locArr[1]).ToLower()}/{string.Join('/', locArr[2..])}";
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net5.0</TargetFramework>
+		<TargetFrameworks>net5.0;net6.0</TargetFrameworks>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -12,7 +12,6 @@
 			<Private>false</Private>
 		</PackageReference>
 		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.0.0-2.final" />
-		<PackageReference Include="System.CodeDom" Version="6.0.0-preview.7.21377.19" />
 	</ItemGroup>
 
 </Project>

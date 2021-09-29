@@ -1,7 +1,7 @@
 ﻿using Markdig.Renderers;
 using Markdig.Renderers.Html;
 
-namespace Markdig.CWCTMA.XMD
+namespace Markdig.CWCTMA.XMD.CSCode
 {
     public class CSCodeInlineRenderer : HtmlObjectRenderer<CSCodeInline>
     {

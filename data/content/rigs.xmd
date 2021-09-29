@@ -1,0 +1,82 @@
+<!DOCTYPE cwctma-docs>
+<Metadata Type="" Lang="en" IsNavMenuItem="true" ShowModifiedAt="true">
+    <Id>rigs</Id>
+    <Title>My rigs</Title>
+    <Keywords>rigs;myrigs;my rigs;my;desktop;desktops;server;servers;hp;hpe;proliant;dl360;dl380;dl360e;dl360p;dl380p</Keywords>
+    <Description>List of my servers, workstation(s) and desktops - Czompi</Description>
+    <Search>rigs;myrigs;my rigs;my;desktop;desktops;server;servers;hp;hpe;proliant;dl360;dl380;dl360e;dl360p;dl380p</Search>
+    <Image alt="f">f</Image>
+    <ReleasedAt>2021-08-15T00:20:00</ReleasedAt>
+    <ModifiedAt>2021-08-15T00:20:00</ModifiedAt>
+</Metadata>
+
+# My rigs
+
+## <span class="text-warning">Servers</span>
+]>warning< ### Server #1 - FS
+] Model: **HPE ProLiant DL380p Gen8** - *25 SFF*<br>
+] Processor: **2x Intel Xeon E5-2620 v1 @ 2.00 GHz**<br>
+] Memory: **2x HPE 8GB DDR3 ECC 1600MHz RAM**<br>
+] Storage(s): **1x Kingston V300 60GB SSD *(OS)*** and **10x Seagate 600GB 2.5" 10kRPM SAS2 6Gb/s 64M - RAID 6 *(FS)***<br>
+] OS: Windows Server 2019 Standard
+
+]>warning< ### Server #2 - BACKUP
+] Model: **HPE ProLiant DL380p Gen8** - *8 SFF* (performance model)<br>
+] Processor: **2x Intel Xeon E5-2620 v1 @ 2.00 GHz**<br>
+] Memory: **12x HP 8GB DDR3 ECC RAM**<br>
+] Storage(s): **1x Kingston V300 60GB SSD *(OS)*** and **4x HGST 900GB 2.5" 10kRPM SAS2 6Gb/s 64M - RAID 5 *(Backup volume)***<br>
+] OS: **Windows Server 2019 Standard**<br>
+] VMs:
+] * Unifi controller - **Windows Server 2019 Standard**
+
+]>warning< ### Server #3 - MAIN
+] Model: **HPE ProLiant DL360e Gen8** - *8 SFF* (performance model)<br>
+] Processor: **2x Intel Xeon E5-2450L v1 @ 1.80 GHz**<br>
+] Memory: **8x Hynix 16GB DDR3 ECC RAM**<br>
+] Storage(s): **1x SanDisk Extreme 32GB SD *(hypervisor)*** and **3x HGST 450GB 2.5" 10kRPM SAS2 6Gb/s 64M - RAID 5 *(VMs)***<br>
+] OS: **ESXi 7.0**<br>
+] VMs:
+] * VMware vCenter Server - **VMware ProtonOS**
+] * DC1 - **Windows Server 2019 Datacenter**
+] * DC2 - **Windows Server 2019 Datacenter**
+] * DHCP - **Windows Server 2019 Datacenter**
+] * CA - **Windows Server 2019 Datacenter**
+] * Client-VM - **Windows Server 2019 Datacenter**
+] * Print-VM - **Windows Server 2019 Datacenter**
+] * Web - **Ubuntu Server 21.04**
+] * Pi-Hole - **Ubuntu Server 21.04**
+] * Minecraft - **Ubuntu Server 21.04**
+] * Docker #1 - **Ubuntu Server 21.04**
+
+## <span class="text-success">Desktops</span>
+
+]>success< ### Main
+] Mobo: **Gigabyte GA-B75M-G3V**<br>
+] Processor: **Intel Core i5-3570 @ 2.70 GHz *(up to 3.1 GHz)***<br>
+] Memory: **8GB DDR3L Onboard RAM**<br>
+] Storage: **Apple Proprietary 256GB NVMe SSD**<br>
+] OS: **Apple macOS Big Sur (16.x beta)**<br>
+
+## <span class="text-info">Laptops</span>
+
+]>info< ### Apple MacBook Pro 2015 13"
+] Model: MacBook Pro 2015 13"<br>
+] Processor: **Intel Core i5-5257U @ 2.70 GHz *(up to 3.1 GHz)*** repasted, it's ~20°C (~100°->~80° with full load) cooler now.<br>
+] Memory: **8GB DDR3L Onboard RAM**<br>
+] Storage: **Apple Proprietary 256GB NVMe SSD**<br>
+] OS: **Apple macOS Big Sur (16.x beta)**
+
+]>info< ### HP ZBook 15 G2 - Main
+] Model: **HP ZBook 15 G2**<br>
+] Processor: **Intel Core i7-4810MQ @ 2.80 GHz *(up to 3.8 GHz)***<br>
+] GPU: **Nvidia Quadro K2100M 2GB**<br>
+] Memory: **2x 4GB DDR3L RAM**<br>
+] OS: **Windows 11 Pro *(updated from Windows 8.1 Pro BIOS licence)***
+
+]>info< ### HP ZBook 15 G2 - Backup
+] Model: **HP ZBook 15 G2**<br>
+] Processor: **Intel Core i7-4810MQ @ 2.80 GHz *(up to 3.8 GHz)***<br>
+] GPU: **Nvidia Quadro K2100M 2GB**<br>
+] Memory: **2x 4GB DDR3L RAM**<br>
+] Description: *BIOS password*<br>
+] OS: **Windows 11 Pro *(updated from Windows 8.1 Pro BIOS licence)***

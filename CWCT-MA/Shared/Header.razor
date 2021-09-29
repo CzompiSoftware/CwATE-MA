@@ -1,5 +1,6 @@
-﻿@using Microsoft.Extensions.Logging
-
+﻿@using CWCTMA.Model.XMD
+@using Microsoft.Extensions.Logging
+@using Microsoft.AspNetCore.Http.Extensions
         <header>
             <!-- #region Czompi Group products -->
             <nav class="nav nav-sticky group">
@@ -11,13 +12,13 @@
                         }
                         else
                         {
-                            @((MarkupString)$"<div class=\"nav-item group-{group.Id}\"><a href={group.Url}\">{group.Name}</a></div>")
+                            @((MarkupString)$"<div class=\"nav-item group-{group.Id}\"><a href=\"{group.Url}\">{group.Name}</a></div>")
                         }
                     }
                 </div>
             </nav>
             <!-- #endregion -->
-            
+            @Page
             <!-- #region Navigation menu -->
             <div class="container">
                 <nav class="nav menu">
@@ -25,42 +26,37 @@
                         <img src="@CDN.GetUrl($"img/{Globals.Config.Id}/{Globals.Config.Id}-logo.svg")">
                     </a>
                     <a class="nav-mobile" @onclick="ToggleNavMenu"></a>
-                    <NavMenu NavMenuCssClass="@NavMenuCssClass" Header="@this"/>
+                    <div class="nav-items@(NavMenuCssClass)">
+                        @foreach (Metadata page in Globals.Pages.Page.Where(x => x.IsNavMenuItem == true))
+                        {
+                            <div class="nav-item">
+                                @if (page.Id == Globals.CurrentPage)
+                                {
+                                    <div class="active">@(page.Title)</div>
+                                }
+                                else
+                                {
+                                    <a href="/@(page.Id)">@(page.Title)</a>
+                                }
+                            </div>
+                        }
+                    </div>
                 </nav>
             </div>
-                    @GetPage()
             <!-- #endregion -->
         </header>
 @code {
     private bool collapseNavMenu = true;
 
     private string NavMenuCssClass => !collapseNavMenu ? " show" : null;
-    private string Page {get; set;}
-    [Inject] 
-    public NavigationManager NavigationManager {get; set;}
-    [Inject] 
-    public ILogger<Header> Logger {get; set;}
-    
-    private void ToggleNavMenu()
-    {
-        collapseNavMenu = !collapseNavMenu;
-    }
 
-    protected override void OnInitialized()
-    {
-        NavigationManager.LocationChanged += HandleLocationChanged;
-    }
+    [Inject] 
+    public IHttpContextAccessor HttpContextAccessor {get; set;}
+
+    private string Page => HttpContextAccessor?.HttpContext?.Request.Path.ToString().TrimStart('/')?? "";
+
+    void ToggleNavMenu() => collapseNavMenu = !collapseNavMenu;
+
     public string GetPage() => Page;
 
-    private void HandleLocationChanged(object sender, LocationChangedEventArgs e)
-    {
-        Page = new Uri(e.Location).AbsolutePath[1..];
-        Logger.LogInformation($"Page: '{Page}'");
-        Logger.LogInformation("URL of new location: {Location}", e.Location);
-    }
-
-    public void Dispose()
-    {
-        NavigationManager.LocationChanged -= HandleLocationChanged;
-    }
 }

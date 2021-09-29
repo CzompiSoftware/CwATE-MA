@@ -1,15 +1,21 @@
 ﻿@page "/{*remaining}"
+@using CWCTMA.Model.XMD
+@using CWCTMA.Helpers
 @using Markdig
 @using System.IO
 @using Microsoft.AspNetCore.Html
 
 @if (File.Exists(FileName))
 {
-    @((MarkupString)Markdown.ToHtml(File.ReadAllText(FileName), Config.MarkdownPipeline))
+    var markdownFile = File.ReadAllText(FileName);
+    var header = $"{markdownFile[0..(markdownFile.IndexOf("</metadata>", StringComparison.OrdinalIgnoreCase)+"</metadata>".Length)]}";
+    //header.ParseXml<Metadata>();
+    markdownFile = markdownFile[(header.Count())..];
+    @((MarkupString)Markdown.ToHtml(markdownFile, Globals.MarkdownPipeline))
 }
 else
 {
-    @((MarkupString)Markdown.ToHtml("]>danger< # Error 404\r\n] File not found!", Config.MarkdownPipeline))
+    @((MarkupString)Markdown.ToHtml("]>danger< # Error 404\r\n] Sorry, there's nothing at this address.", Globals.MarkdownPipeline))
 }
 
 
@@ -17,7 +23,7 @@ else
     [Parameter]
     public string Remaining { get; set; }
     
-    public string FileName => Path.Combine(Config.Files.ContentDirectory, $"{(Remaining ?? "index")}.xmd");
+    public string FileName => Path.Combine(Globals.ContentDirectory, $"{(Remaining ?? "index")}.xmd");
     
     public IEnumerable<string> RemainingList {
         get

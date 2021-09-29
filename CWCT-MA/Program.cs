@@ -1,4 +1,6 @@
+using CWCTMA.Helpers;
 using CWCTMA.Model;
+using CWCTMA.Model.XMD;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Serilog;
@@ -16,53 +18,7 @@ namespace CWCTMA
     {
         public static void Main(string[] args)
         {
-            if (!File.Exists(Globals.ConfigFile))
-            {
-                File.WriteAllText(Globals.ConfigFile, JsonSerializer.Serialize(new Config
-                {
-                    Id = "CWCTMADE".ToLower(),
-                    ShortName = "CWCT/MA DE",
-                    FullName = "Czompi WebAPP Common Template for Microsoft ASP.NET - Development Environment",
-                    SiteURL = "./",
-                    Meta = new()
-                    {
-                        Title = "CWCT/MA DE",
-                        Description = "Czompi WebAPP Common Template for Microsoft ASP.NET - Development Environment",
-                        Image = null,
-                        PrimaryColor = "#EAEAEA"
-                    },
-                    Pages = new List<Page>()
-                    {
-                        new() { Id = "", Name = "Main page", Alias = new List<string> { "main" } },
-                        new() { Id = "page2", Name = "Page #2" }
-                    }
-                }, Globals.JsonSerializerOptions));
-            }
-            if (!File.Exists(Globals.GroupFile))
-            {
-                File.WriteAllText(Globals.GroupFile, JsonSerializer.Serialize(new GroupConfig
-                {
-                    Current = "czd",
-                    Groups = new()
-                    {
-                        new() { Id = "czd", Name = "Czompi", Url = "https://czompi.hu" },
-                        new() { Id = "czs", Name = "Czompi Software", Url = "https://czompisoftware.hu" },
-                        new() { Id = "hls", Name = "HunLuxSCHOOL", Url = "https://hunluxschool.hu" },
-                        new() { Id = "hll", Name = "HunLux Launcher", Url = "https://hunluxlauncher.hu" }
-                    }
-                }, Globals.JsonSerializerOptions));
-            }
-            Globals.Config = JsonSerializer.Deserialize<Config>(File.ReadAllText(Globals.ConfigFile), Globals.JsonSerializerOptions);
-            Globals.Group = JsonSerializer.Deserialize<GroupConfig>(File.ReadAllText(Globals.GroupFile), Globals.JsonSerializerOptions);
-            Globals.AppMeta = new()
-            {
-                Name = "CWCT/MA",
-                FullName = "Czompi WebAPP Common Template for Microsoft ASP.NET",
-                Version = Assembly.GetExecutingAssembly().GetName().Version,
-                CompileTime = CWCTMA.Builtin.CompileTime,
-                BuildId = CWCTMA.Builtin.BuildId
-                //CompileTimeString = Assembly.GetExecutingAssembly().GetBuildDateTime().ToSqlTimeString()
-            };
+            Globals.LoadConfigs();
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
                 //.MinimumLevel.Override("Microsoft", LogEventLevel.Warning)

@@ -1,0 +1,73 @@
+<!DOCTYPE cwctma-pages>
+<Pages>
+    <Page Type="" Lang="en" IsNavMenuItem="true" ShowModifiedAt="true">
+        <Id></Id>
+        <Title>Main page</Title>
+        <Keywords>index;main;page;main page;czompi;david;czompo;david czompo;czompisoftware;software;czompi software</Keywords>
+        <Description>Personal webpage of David Czompó (Czompi)</Description>
+        <Search>index;main;page;main page;czompi;david;czompo;david czompo;czompisoftware;software;czompi software</Search>
+        <Image alt="f">f</Image>
+        <ReleasedAt>2021-08-15T00:20:00</ReleasedAt>
+        <ModifiedAt>2021-08-15T00:20:00</ModifiedAt>
+    </Page>
+    <Page Type="" Lang="en" IsNavMenuItem="true" ShowModifiedAt="true">
+        <Id>rigs</Id>
+        <Title>My rigs</Title>
+        <Keywords>rigs;myrigs;my rigs;my;desktop;desktops;server;servers;hp;hpe;proliant;dl360;dl380;dl360e;dl360p;dl380p;czompi;david;czompo;david czompo;czompisoftware;software;czompi software</Keywords>
+        <Description>List of my servers, workstation(s) and desktops - Czompi</Description>
+        <Search>rigs;myrigs;my rigs;my;desktop;desktops;server;servers;hp;hpe;proliant;dl360;dl380;dl360e;dl360p;dl380p;czompi;david;czompo;david czompo;czompisoftware;software;czompi software</Search>
+        <Image alt="f">f</Image>
+        <ReleasedAt>2021-08-15T00:20:00</ReleasedAt>
+        <ModifiedAt>2021-08-15T00:20:00</ModifiedAt>
+    </Page>
+    <Page Type="" Lang="en" IsNavMenuItem="true" ShowModifiedAt="true">
+        <Id>youtube</Id>
+        <Title>My Youtube content</Title>
+        <Keywords>youtube;my;my youtube;channel;my twitch youtube;content;czompi;david;czompo;david czompo;czompisoftware;software;czompi software</Keywords>
+        <Description>About Czompi</Description>
+        <Search>youtube;my;my youtube;channel;my twitch youtube;content;czompi;david;czompo;david czompo;czompisoftware;software;czompi software</Search>
+        <Image alt="f">f</Image>
+        <ReleasedAt>2021-08-15T00:20:00</ReleasedAt>
+        <ModifiedAt>2021-08-15T00:20:00</ModifiedAt>
+    </Page>
+    <Page Type="" Lang="en" IsNavMenuItem="true" ShowModifiedAt="true">
+        <Id>twitch</Id>
+        <Title>My live streams on Twitch</Title>
+        <Keywords>twitch;my;my twitch;channel;stream;streams;live;lives;my twitch channel;czompi;david;czompo;david czompo;czompisoftware;software;czompi software</Keywords>
+        <Description>About Czompi</Description>
+        <Search>twitch;my;my twitch;channel;stream;streams;live;lives;my twitch channel;czompi;david;czompo;david czompo;czompisoftware;software;czompi software</Search>
+        <Image alt=""></Image>
+        <ReleasedAt>2021-08-15T00:20:00</ReleasedAt>
+        <ModifiedAt>2021-08-15T00:20:00</ModifiedAt>
+    </Page>
+    <Page Type="" Lang="en" IsNavMenuItem="true" ShowModifiedAt="true">
+        <Id>projects</Id>
+        <Title>My projects</Title>
+        <Keywords>projects;my;my projects;czompi;david;czompo;david czompo;czompisoftware;software;czompi software</Keywords>
+        <Description>About Czompi</Description>
+        <Search>projects;my;my projects;czompi;david;czompo;david czompo;czompisoftware;software;czompi software</Search>
+        <Image alt=""></Image>
+        <ReleasedAt>2021-08-15T00:20:00</ReleasedAt>
+        <ModifiedAt>2021-08-15T00:20:00</ModifiedAt>
+    </Page>
+    <Page Type="" Lang="en" IsNavMenuItem="true" ShowModifiedAt="true">
+        <Id>about</Id>
+        <Title>About me</Title>
+        <Keywords>about;me;about me;czompi;david;czompo;david czompo;czompisoftware;software;czompi software</Keywords>
+        <Description>About Czompi</Description>
+        <Search>about;me;about me;czompi;david;czompo;david czompo;czompisoftware;software;czompi software</Search>
+        <Image alt="f">f</Image>
+        <ReleasedAt>2021-08-15T00:20:00</ReleasedAt>
+        <ModifiedAt>2021-08-15T00:20:00</ModifiedAt>
+    </Page>
+    <Page Type="" Lang="en" IsNavMenuItem="false" ShowModifiedAt="true">
+        <Id>code-samples</Id>
+        <Title>Code samples</Title>
+        <Keywords>code;csharp;c#;samples;code samples;example;example code</Keywords>
+        <Description>Code samples - Czompi</Description>
+        <Search>code;csharp;c#;samples;code samples;example;example code</Search>
+        <Image alt="f">f</Image>
+        <ReleasedAt>2021-08-15T00:20:00</ReleasedAt>
+        <ModifiedAt>2021-08-15T00:20:00</ModifiedAt>
+    </Page>
+</Pages>

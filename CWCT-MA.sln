@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.31507.150
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CWCT-MA", "CWCT-MA\CWCT-MA.csproj", "{0343FB2B-273C-4809-AF42-FF87B97F22BA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Markdig.CWCTMA.XMD", "Markdig.CWCTMA.XMD\Markdig.CWCTMA.XMD.csproj", "{5DD72153-745E-4EBD-9599-6CDD21805FD9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Markdig.CWCTMA.XMD", "Markdig.CWCTMA.XMD\Markdig.CWCTMA.XMD.csproj", "{5DD72153-745E-4EBD-9599-6CDD21805FD9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

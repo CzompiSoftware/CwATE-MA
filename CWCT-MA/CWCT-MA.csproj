@@ -5,7 +5,7 @@
 		<RootNamespace>CWCTMA</RootNamespace>
 		<UserSecretsId>856522d9-149d-4315-86cb-58ef7be680cd</UserSecretsId>
 		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-		<Version>4.0.0.1</Version>
+		<Version>4.0.0.2</Version>
 		<Authors>Czompi Software</Authors>
 		<Company>Czompi Software, LLC.</Company>
 		<Product>Czompi WebAPP Common Template for Microsoft ASP.NET</Product>
@@ -18,13 +18,19 @@
 		<PackageReference Include="CzomPack" Version="3.0.0" />
 		<PackageReference Include="CzomPack.Cryptography" Version="3.0.0" />
 		<PackageReference Include="Markdig" Version="0.25.0" />
-		<PackageReference Include="Markdig.SyntaxHighlighting" Version="1.1.7" />
 		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.11.1" />
+		<PackageReference Include="prismjs-vs" Version="1.0.2" />
 		<PackageReference Include="Serilog.AspNetCore" Version="4.1.1-dev-00229" />
+		<PackageReference Include="WebStoating.Markdig.Prism" Version="1.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <ProjectReference Include="..\Markdig.CWCTMA.XMD\Markdig.CWCTMA.XMD.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Helpers\" />
+	  <Folder Include="Model\XMD\" />
 	</ItemGroup>
 
 	<Target Name="Date" BeforeTargets="BeforeBuild">

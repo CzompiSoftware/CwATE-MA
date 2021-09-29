@@ -1,12 +1,12 @@
 {
-  "id": "cwctmade",
-  "shortName": "CWCT/MA DE",
-  "fullName": "Czompi WebAPP Common Template for Microsoft ASP.NET - Development Environment",
-  "siteURL": "./",
+  "id": "czompihu",
+  "shortName": "Czompi",
+  "fullName": "Personal webpage of David Czompo (Czompi)",
+  "siteURL": "https://czompi.hu",
   "meta": {
-    "title": "CWCT/MA DE",
-    "description": "Czompi WebAPP Common Template for Microsoft ASP.NET - Development Environment",
-    "primaryColor": "#EAEAEA",
+    "title": "Czompi",
+    "description": "Personal webpage of David Czompo (Czompi)",
+    "primaryColor": "#05246B",
     "image": null
   },
   "pages": [
@@ -18,8 +18,28 @@
       ]
     },
     {
-      "id": "page2",
-      "name": "Page #2",
+      "id": "youtube",
+      "name": "YouTube",
+      "alias": null
+    },
+    {
+      "id": "twitch",
+      "name": "Twitch",
+      "alias": null
+    },
+    {
+      "id": "projects",
+      "name": "My projects",
+      "alias": null
+    },
+    {
+      "id": "rigs",
+      "name": "My rigs",
+      "alias": null
+    },
+    {
+      "id": "about",
+      "name": "About me",
       "alias": null
     }
   ]
