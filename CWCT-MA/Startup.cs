@@ -1,4 +1,5 @@
 using CWCTMA.Model;
+using CloudFlare;
 using Markdig;
 using Markdig.CWCTMA.XMD;
 using Markdig.Prism;
@@ -46,6 +47,7 @@ namespace CWCTMA
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseCloudFlareConnectingIp();
 
             app.UseRouting();
 
