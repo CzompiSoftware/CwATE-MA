@@ -2,16 +2,28 @@
 
 	<PropertyGroup>
 		<TargetFrameworks>net5.0;net6.0</TargetFrameworks>
+		<LangVersion>10.0</LangVersion>
+		<Version>1.0.1</Version>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<PackageReference Include="ColorCode.Portable" Version="1.0.3" ExcludeAssets="runtime">
 			<Private>false</Private>
 		</PackageReference>
-		<PackageReference Include="Markdig" Version="0.25.0" ExcludeAssets="runtime">
+		<PackageReference Include="Markdig" Version="0.26.0" ExcludeAssets="runtime">
 			<Private>false</Private>
 		</PackageReference>
-		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.0.0-2.final" />
+		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.0.0-4.final" />
+		<PackageReference Include="SS.NuGet.Publish" Version="1.0.1912.22">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
 	</ItemGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<NuGetPublishType>remote</NuGetPublishType>
+		<NuGetPublishLocation>https://nuget.czompisoftware.hu/v3/index.json</NuGetPublishLocation>
+	</PropertyGroup>
 
 </Project>
