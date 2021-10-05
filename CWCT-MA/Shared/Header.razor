@@ -26,8 +26,8 @@
                     <a href="/" class="brand">
                         <img src="@CDN.GetUrl($"img/{Globals.Config.Id}/{Globals.Config.Id}-logo.svg")">
                     </a>
-                    <a class="nav-mobile" @onclick="ToggleNavMenu"></a>
-                    <div class="nav-items@(NavMenuCssClass)">
+                    <a class="nav-mobile" href="#" role="button" data-bs-toggle="collapse" data-bs-target="#navbar-main" aria-controls="navbar-main" aria-expanded="false" aria-label="Toggle navigation"></a>
+                    <div class="nav-items dropdown-menu navbar-collapse collapse" aria-labelledby="navbar-main" id="navbar-main">
                         @foreach (Metadata page in Globals.Pages.Page.Where(x => x.IsNavMenuItem == true))
                         {
                             <div class="nav-item">
@@ -47,16 +47,10 @@
             <!-- #endregion -->
         </header>
 @code {
-    private bool collapseNavMenu = true;
-
-    private string NavMenuCssClass => !collapseNavMenu ? " show" : null;
-
     [Inject] 
     public IHttpContextAccessor HttpContextAccessor {get; set;}
 
     private string Page => HttpContextAccessor?.HttpContext?.Request.Path.ToString().TrimStart('/')?? "";
-
-    void ToggleNavMenu() => collapseNavMenu = !collapseNavMenu;
 
     public string GetPage() => Page;
 
