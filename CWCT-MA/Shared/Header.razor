@@ -31,14 +31,9 @@
                         @foreach (Metadata page in Globals.Pages.Page.Where(x => x.IsNavMenuItem == true))
                         {
                             <div class="nav-item">
-                                @if (page.Id == Globals.CurrentPage)
-                                {
-                                    <div class="active">@(page.Title)</div>
-                                }
-                                else
-                                {
-                                    <a href="/@(page.Id)">@(page.Title)</a>
-                                }
+                                <NavLink Match="NavLinkMatch.All" class="" href="@($"/{page.Id}")" ActiveClass="active">
+                                    @(page.Title)
+                                </NavLink>
                             </div>
                         }
                     </div>

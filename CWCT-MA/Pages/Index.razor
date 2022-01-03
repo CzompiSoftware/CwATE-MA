@@ -4,25 +4,42 @@
 @using Markdig
 @using System.IO
 @using Microsoft.AspNetCore.Html
-
 @if (File.Exists(FileName))
 {
     var markdownFile = File.ReadAllText(FileName);
     var header = $"{markdownFile[0..(markdownFile.IndexOf("</metadata>", StringComparison.OrdinalIgnoreCase)+"</metadata>".Length)]}";
+    var meta = Globals.GetMetadata(Remaining ?? "");
+    title = meta.Title;
     //header.ParseXml<Metadata>();
     markdownFile = markdownFile[(header.Count())..];
     @((MarkupString)Markdown.ToHtml(markdownFile, Globals.MarkdownPipeline))
+    
+    if (meta.ShowModifiedAt)
+    {
+        <p style="text-align: right;">Created@(meta.ReleasedAt == meta.ModifiedAt? " and last modified":"") at <b>@meta.ReleasedAt.ToSqlTimeString().Replace("T"," ")</b></p>
+        if (meta.ReleasedAt != meta.ModifiedAt)
+        {
+            <p style="text-align: right;">Last modified at <b>@meta.ModifiedAt.ToSqlTimeString().Replace("T"," ")</b></p>
+        }
+    }
 }
 else
 {
+    title = "Not found";
     @((MarkupString)Markdown.ToHtml("]>danger< # Error 404\r\n] Sorry, there's nothing at this address.", Globals.MarkdownPipeline))
 }
 
+<PageTitle>@title - @Globals.Config.ShortName</PageTitle>
 
 @code {
     [Parameter]
     public string Remaining { get; set; }
+
+    public string CurrentPage => string.IsNullOrEmpty(Remaining) ?  "index" : Remaining;
+
     
+    string title = "Not found";
+
     public string FileName => Path.Combine(Globals.ContentDirectory, $"{(Remaining ?? "index")}.xmd");
     
     public IEnumerable<string> RemainingList {

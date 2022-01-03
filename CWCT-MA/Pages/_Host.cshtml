@@ -4,6 +4,7 @@
 @using CWCTMA.Model;
 @using Microsoft.AspNetCore.Components
 @using System.Text.Json
+@using Microsoft.AspNetCore.Components.Web
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     Layout = null;
@@ -23,7 +24,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>@Globals.GetMetadata(Globals.CurrentPage).Title - @Globals.Config.ShortName</title>
+        <title>Loading...</title>
         <link rel="stylesheet" href="@CDN.GetUrl("css/cwctma/v4.0.0/master.css")">
         <link rel="stylesheet" href="@CDN.GetUrl($"css/cwctma/v4.0.0/style.{Globals.Config.Id}.css")">
         <!-- <link rel="stylesheet" href="css/cwct-ma/v4.0.0/style-dark.czompihu.css"> -->
@@ -60,9 +61,11 @@
                 display: none;
             }
         </style>
+
+        <component type="typeof(HeadOutlet)" render-mode="ServerPrerendered" />
     </head>
     <body class="line-numbers">
-        <component type="typeof(App)" render-mode="ServerPrerendered" />
+        <component type="typeof(App)" render-mode="Server" />
         <div class="container">
             <div id="blazor-error-ui" class="alert alert-danger display-hidden">
                 <environment include="Staging,Production">

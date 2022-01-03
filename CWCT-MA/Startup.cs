@@ -14,6 +14,8 @@ namespace CWCTMA
 {
     public class Startup
     {
+        private readonly string CzompiSoftwareCDNCors = "_czompiSoftwareCDNCors";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -29,6 +31,15 @@ namespace CWCTMA
             services.AddServerSideBlazor();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddHttpContextAccessor();
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: CzompiSoftwareCDNCors,
+                builder =>
+                {
+                    builder.WithOrigins("https://cdn.czompisoftware.hu",
+                                        "https://cdn-beta.czompisoftware.hu");
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,12 +54,12 @@ namespace CWCTMA
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
-
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCloudFlareConnectingIp();
 
             app.UseRouting();
+            app.UseCors(CzompiSoftwareCDNCors);
 
             Globals.MarkdownPipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().UsePrism().UseXMDLanguage().Build();
 

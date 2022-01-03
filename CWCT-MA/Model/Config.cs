@@ -11,6 +11,9 @@ namespace CWCTMA.Model
         public string ShortName { get; set; }
         public string FullName { get; set; }
         public string SiteURL { get; set; }
+        public string GlobalUrl { get; set; } = "https://czompigroup.hu/";
+        public string CopyrightHolder { get; set; } = "Czompi Software";
+        public string CopyrightUrl { get; set; } = "https://czompisoftware.hu/";
         public Meta Meta { get; set; }
     }
 }

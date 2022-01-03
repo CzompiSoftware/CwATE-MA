@@ -80,6 +80,7 @@ namespace CWCTMA.Model
                     CdnUrl = "https://cdn.czompisoftware.dev/",
 #endif
                     SiteURL = "./",
+                    GlobalUrl = "https://czompigroup.hu/",
                     Meta = new()
                     {
                         Title = "CWCT/MA DE",

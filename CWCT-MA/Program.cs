@@ -21,10 +21,6 @@ namespace CWCTMA
             Globals.LoadConfigs();
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
-                //.MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
-                //.MinimumLevel.Override("Microsoft.Hosting.Lifetime", LogEventLevel.Information)
-                //.MinimumLevel.Override("System", LogEventLevel.Warning)
-                //.MinimumLevel.Override("Microsoft.AspNetCore.Authentication", LogEventLevel.Information)
                 .Enrich.FromLogContext()
                 .WriteTo.File(
                     @$"{Assembly.GetExecutingAssembly().GetName().Name}.{DateTime.Now:yyyy-MM-dd}.log",
@@ -54,12 +50,10 @@ namespace CWCTMA
                 Log.Information("Starting host...");
                 Log.Information(Globals.ConfigFile);
                 CreateHostBuilder(args).Build().Run();
-                //return 0;
             }
             catch (Exception ex)
             {
                 Log.Fatal(ex, "Host terminated unexpectedly.");
-                //return 1;
             }
             finally
             {

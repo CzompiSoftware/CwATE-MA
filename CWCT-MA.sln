@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CWCT-MA", "CWCT-MA\CWCT-MA.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Markdig.CWCTMA.XMD", "Markdig.CWCTMA.XMD\Markdig.CWCTMA.XMD.csproj", "{5DD72153-745E-4EBD-9599-6CDD21805FD9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudFlare", "CloudFlare\CloudFlare.csproj", "{16DDAB10-D85F-456D-A8C0-922E89CD25F4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CloudFlare", "CloudFlare\CloudFlare.csproj", "{16DDAB10-D85F-456D-A8C0-922E89CD25F4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
