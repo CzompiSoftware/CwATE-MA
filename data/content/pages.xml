@@ -1,6 +1,6 @@
 <!DOCTYPE cwctma-pages>
 <Pages>
-    <Page Type="" Lang="en" IsNavMenuItem="true" ShowModifiedAt="true">
+    <Page Type="" Lang="en" IsNavMenuItem="true" ShowModifiedAt="false">
         <Id></Id>
         <Title>Main page</Title>
         <Keywords>index;main;page;main page;czompi;david;czompo;david czompo;czompisoftware;software;czompi software</Keywords>
@@ -20,7 +20,7 @@
         <ReleasedAt>2021-08-15T00:20:00</ReleasedAt>
         <ModifiedAt>2021-08-15T00:20:00</ModifiedAt>
     </Page>
-    <Page Type="" Lang="en" IsNavMenuItem="true" ShowModifiedAt="true">
+    <Page Type="" Lang="en" IsNavMenuItem="true" ShowModifiedAt="false">
         <Id>youtube</Id>
         <Title>My Youtube content</Title>
         <Keywords>youtube;my;my youtube;channel;my twitch youtube;content;czompi;david;czompo;david czompo;czompisoftware;software;czompi software</Keywords>
@@ -30,7 +30,7 @@
         <ReleasedAt>2021-08-15T00:20:00</ReleasedAt>
         <ModifiedAt>2021-08-15T00:20:00</ModifiedAt>
     </Page>
-    <Page Type="" Lang="en" IsNavMenuItem="true" ShowModifiedAt="true">
+    <Page Type="" Lang="en" IsNavMenuItem="true" ShowModifiedAt="false">
         <Id>twitch</Id>
         <Title>My live streams on Twitch</Title>
         <Keywords>twitch;my;my twitch;channel;stream;streams;live;lives;my twitch channel;czompi;david;czompo;david czompo;czompisoftware;software;czompi software</Keywords>
@@ -50,7 +50,7 @@
         <ReleasedAt>2021-08-15T00:20:00</ReleasedAt>
         <ModifiedAt>2021-08-15T00:20:00</ModifiedAt>
     </Page>
-    <Page Type="" Lang="en" IsNavMenuItem="true" ShowModifiedAt="true">
+    <Page Type="" Lang="en" IsNavMenuItem="true" ShowModifiedAt="false">
         <Id>about</Id>
         <Title>About me</Title>
         <Keywords>about;me;about me;czompi;david;czompo;david czompo;czompisoftware;software;czompi software</Keywords>
@@ -60,7 +60,7 @@
         <ReleasedAt>2021-08-15T00:20:00</ReleasedAt>
         <ModifiedAt>2021-08-15T00:20:00</ModifiedAt>
     </Page>
-    <Page Type="" Lang="en" IsNavMenuItem="false" ShowModifiedAt="true">
+    <Page Type="" Lang="en" IsNavMenuItem="false" ShowModifiedAt="false">
         <Id>code-samples</Id>
         <Title>Code samples</Title>
         <Keywords>code;csharp;c#;samples;code samples;example;example code</Keywords>

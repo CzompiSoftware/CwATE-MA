@@ -19,6 +19,7 @@ namespace CWCTMA.Model
         public static string CurrentPage { get; set; }
 
         public static ApplicationMetadata AppMeta { get; internal set; }
+        public static string AppVersionString => AppMeta.Version.ToString(3);
 
         public static JsonSerializerOptions JsonSerializerOptions => new()
         {
@@ -66,6 +67,22 @@ namespace CWCTMA.Model
 
         internal static void LoadConfigs()
         {
+            RefreshConfig();
+            RefreshGroup();
+            RefreshPages();
+            Globals.AppMeta = new()
+            {
+                Name = "CWCT/MA",
+                FullName = "Czompi WebAPP Common Template for Microsoft ASP.NET",
+                Version = Assembly.GetExecutingAssembly().GetName().Version,
+                CompileTime = CWCTMA.Builtin.CompileTime,
+                BuildId = CWCTMA.Builtin.BuildId
+            };
+        }
+        #endregion
+
+        internal static void RefreshConfig()
+        {
             if (!File.Exists(Globals.ConfigFile))
             {
                 File.WriteAllText(Globals.ConfigFile, JsonSerializer.Serialize(new Config
@@ -90,6 +107,11 @@ namespace CWCTMA.Model
                     }
                 }, Globals.JsonSerializerOptions));
             }
+            Globals.Config = JsonSerializer.Deserialize<Config>(File.ReadAllText(Globals.ConfigFile), Globals.JsonSerializerOptions);
+        }
+
+        internal static void RefreshGroup()
+        {
             if (!File.Exists(Globals.GroupFile))
             {
                 File.WriteAllText(Globals.GroupFile, JsonSerializer.Serialize(new GroupConfig
@@ -104,6 +126,11 @@ namespace CWCTMA.Model
                     }
                 }, Globals.JsonSerializerOptions));
             }
+            Globals.Group = JsonSerializer.Deserialize<GroupConfig>(File.ReadAllText(Globals.GroupFile), Globals.JsonSerializerOptions);
+        }
+
+        internal static void RefreshPages()
+        {
             if (!File.Exists(Globals.PagesFile))
             {
                 new PagesConfig
@@ -114,19 +141,8 @@ namespace CWCTMA.Model
                     }
                 }.ToFile(Globals.PagesFile);
             }
-            Globals.Config = JsonSerializer.Deserialize<Config>(File.ReadAllText(Globals.ConfigFile), Globals.JsonSerializerOptions);
-            Globals.Group = JsonSerializer.Deserialize<GroupConfig>(File.ReadAllText(Globals.GroupFile), Globals.JsonSerializerOptions);
-            Globals.Pages = File.ReadAllText(Globals.PagesFile).ParseXml<PagesConfig>();
-            Globals.AppMeta = new()
-            {
-                Name = "CWCT/MA",
-                FullName = "Czompi WebAPP Common Template for Microsoft ASP.NET",
-                Version = Assembly.GetExecutingAssembly().GetName().Version,
-                CompileTime = CWCTMA.Builtin.CompileTime,
-                BuildId = CWCTMA.Builtin.BuildId
-            };
-        }
-        #endregion
 
+            Globals.Pages = File.ReadAllText(Globals.PagesFile).ParseXml<PagesConfig>();
+        }
     }
 }

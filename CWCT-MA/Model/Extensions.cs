@@ -18,6 +18,10 @@ namespace CWCTMA.Model
             public ushort Characteristics;
         };
 
+        public static string ToFancyString(this Version version)
+        {
+            return $"{version.Major}.{version.Minor}{(version.Build > 0 ? $".{version.Build}" : "")}";
+        }
         public static DateTime GetBuildDateTime(this Assembly assembly)
         {
             var path = assembly.GetName().CodeBase;

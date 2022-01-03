@@ -25,10 +25,11 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Loading...</title>
-        <link rel="stylesheet" href="@CDN.GetUrl("css/cwctma/v4.0.0/master.css")">
-        <link rel="stylesheet" href="@CDN.GetUrl($"css/cwctma/v4.0.0/style.{Globals.Config.Id}.css")">
-        <!-- <link rel="stylesheet" href="css/cwct-ma/v4.0.0/style-dark.czompihu.css"> -->
-        <!-- <link rel="stylesheet" href="css/fontawesome/v5.15.3/all.css"> -->
+        @*// TODO: Add custom templating option (for other themes).*@
+        <link rel="stylesheet" href="@CDN.GetUrl($"css/cwctma/v{Globals.AppVersionString}/master.css")">
+        <link rel="stylesheet" href="@CDN.GetUrl($"css/cwctma/v{Globals.AppVersionString}/style.{Globals.Config.Id}.css")">
+        @*<!-- <link rel="stylesheet" href="css/cwct-ma/v4.0.0/style-dark.czompihu.css"> -->
+        <!-- <link rel="stylesheet" href="css/fontawesome/v5.15.3/all.css"> -->*@
         <link rel="stylesheet" href="@CDN.GetUrl("css/fluent-icons/v1.0.0/all.css")">
         <link rel="stylesheet" href="@CDN.GetUrl("css/prism/v1.24.1/prism.vscode-dark.css")">
 
@@ -37,7 +38,7 @@
         <meta name="description" content="@(Globals.Config.Meta.Description)">
         <meta name="theme-color" content="@(Globals.Config.Meta.PrimaryColor)">
         <meta name="generator" content="@Globals.AppMeta.FullName" />
-        <meta name="application-name" content="@Globals.AppMeta.Name v@(Globals.AppMeta.Version.ToString(3))" />
+        <meta name="application-name" content="@Globals.AppMeta.Name v@(Globals.AppVersionString)" />
         <meta name="author" content="Czompi Software" />
         <!-- #endregion -->
         

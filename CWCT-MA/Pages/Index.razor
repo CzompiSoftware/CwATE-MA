@@ -8,6 +8,7 @@
 {
     var markdownFile = File.ReadAllText(FileName);
     var header = $"{markdownFile[0..(markdownFile.IndexOf("</metadata>", StringComparison.OrdinalIgnoreCase)+"</metadata>".Length)]}";
+    Globals.RefreshPages();
     var meta = Globals.GetMetadata(Remaining ?? "");
     title = meta.Title;
     //header.ParseXml<Metadata>();
