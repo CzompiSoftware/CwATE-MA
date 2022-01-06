@@ -18,12 +18,15 @@ namespace CWCTMA
     {
         public static void Main(string[] args)
         {
+            CzomPack.Settings.Application = new CzomPack.Application(typeof(Program).Assembly);
+            CzomPack.Settings.WorkingDirectory = Globals.DataDirectory;
+
             Globals.LoadConfigs();
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
                 .Enrich.FromLogContext()
                 .WriteTo.File(
-                    @$"{Assembly.GetExecutingAssembly().GetName().Name}.{DateTime.Now:yyyy-MM-dd}.log",
+                    Path.Combine(Globals.LogsDirectory, @$"{Assembly.GetExecutingAssembly().GetName().Name}.{DateTime.Now:yyyy-MM-dd}.log"),
                     outputTemplate: "[{Timestamp:HH:mm:ss}] [{Level}] [{SourceContext}] {Message}{NewLine}{Exception}",
                     fileSizeLimitBytes: 1_000_000,
 #if RELEASE

@@ -49,6 +49,15 @@ namespace CWCTMA.Model
                 return dir;
             }
         }
+        public static string LogsDirectory
+        {
+            get
+            {
+                var dir = Path.GetFullPath(Path.Combine(DataDirectory, "logs"));
+                if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
+                return dir;
+            }
+        }
         #endregion
 
         #region Configs
