@@ -28,7 +28,7 @@
                     </a>
                     <a class="nav-mobile" href="#" role="button" data-bs-toggle="collapse" data-bs-target="#navbar-main" aria-controls="navbar-main" aria-expanded="false" aria-label="Toggle navigation"></a>
                     <div class="nav-items dropdown-menu navbar-collapse collapse" aria-labelledby="navbar-main" id="navbar-main">
-                        @foreach (Metadata page in Globals.Pages.Page.Where(x => x.IsNavMenuItem == true))
+                        @foreach (Metadata page in Globals.Pages.Where(x => x.IsNavMenuItem == true).OrderBy(x=>x.NavMenuId))
                         {
                             <div class="nav-item">
                                 <NavLink Match="NavLinkMatch.All" class="" href="@($"/{page.Id}")" ActiveClass="active">
@@ -49,4 +49,8 @@
 
     public string GetPage() => Page;
 
+    protected override void OnParametersSet()
+    {
+        Globals.RefreshPages();
+    }
 }

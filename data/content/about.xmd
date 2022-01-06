@@ -1,11 +1,10 @@
 <!DOCTYPE cwctma-docs>
-<Metadata Type="" Lang="en" IsNavMenuItem="true" ShowModifiedAt="true">
+<Metadata Lang="en" IsNavMenuItem="true" NavMenuId="9999" ShowModifiedAt="false">
     <Id>about</Id>
     <Title>About me</Title>
     <Keywords>about;me;about me;czompi;david;czompo;david czompo;czompisoftware;software;czompi software</Keywords>
     <Description>About Czompi</Description>
     <Search>about;me;about me;czompi;david;czompo;david czompo;czompisoftware;software;czompi software</Search>
-    <Image alt="f">f</Image>
     <ReleasedAt>2021-08-15T00:20:00</ReleasedAt>
     <ModifiedAt>2021-08-15T00:20:00</ModifiedAt>
 </Metadata>

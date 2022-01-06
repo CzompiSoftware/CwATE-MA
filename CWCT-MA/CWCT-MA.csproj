@@ -5,31 +5,26 @@
 		<RootNamespace>CWCTMA</RootNamespace>
 		<UserSecretsId>856522d9-149d-4315-86cb-58ef7be680cd</UserSecretsId>
 		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-		<Version>4.0.1.11</Version>
+		<Version>4.0.1.12</Version>
 		<Authors>Czompi Software</Authors>
 		<Company>Czompi Software, LLC.</Company>
 		<Product>Czompi WebAPP Common Template for Microsoft ASP.NET</Product>
 		<Description>Czompi WebAPP Common Template for Microsoft ASP.NET</Description>
-		<Copyright>Czompi Software 2021</Copyright>
+		<Copyright>Czompi Software 2022</Copyright>
 		<LangVersion>10.0</LangVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<PackageReference Include="CloudFlare" Version="1.0.1" />
 		<PackageReference Include="ColorCode.Portable" Version="1.0.3" />
-		<PackageReference Include="CzomPack" Version="3.0.3" />
-		<PackageReference Include="CzomPack.Cryptography" Version="3.0.0" />
+		<PackageReference Include="CzomPack" Version="3.0.7" />
+		<PackageReference Include="CzomPack.Cryptography" Version="3.0.2.3" />
 		<PackageReference Include="Markdig" Version="0.26.0" />
-		<PackageReference Include="Markdig.CWCTMA.XMD" Version="1.0.2" />
+		<PackageReference Include="Markdig.CWCTMA.XMD" Version="1.0.3" />
 		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
 		<PackageReference Include="prismjs-vs" Version="1.0.2" />
 		<PackageReference Include="Serilog.AspNetCore" Version="4.1.1-dev-00241" />
 		<PackageReference Include="WebStoating.Markdig.Prism" Version="1.0.0" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<Folder Include="Helpers\" />
-		<Folder Include="Model\XMD\" />
 	</ItemGroup>
 
 	<Target Name="Date" BeforeTargets="BeforeBuild">

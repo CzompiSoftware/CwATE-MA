@@ -58,12 +58,12 @@ namespace CWCTMA.Model
         public static string GroupFile => Path.Combine(DataDirectory, "group.json");
         public static GroupConfig Group { get; internal set; }
 
-        public static string PagesFile => Path.Combine(ContentDirectory, "pages.xml");
-        public static PagesConfig Pages { get; internal set; }
+        //public static string PagesFile => Path.Combine(ContentDirectory, "pages.xml");
+        public static List<Metadata> Pages { get; internal set; } = new();
         #endregion
 
         #region Methods
-        public static Metadata GetMetadata(string pageId) => Pages?.Page.FirstOrDefault(x => x.Id.Equals(pageId, StringComparison.OrdinalIgnoreCase)) ?? new() { };
+        //public static Metadata GetMetadata(string pageId) => Pages?.Page.FirstOrDefault(x => x.Id.Equals(pageId, StringComparison.OrdinalIgnoreCase)) ?? new() { };
 
         internal static void LoadConfigs()
         {
@@ -131,18 +131,22 @@ namespace CWCTMA.Model
 
         internal static void RefreshPages()
         {
-            if (!File.Exists(Globals.PagesFile))
+            Pages.Clear();
+            if (!Directory.Exists(ContentDirectory))
             {
-                new PagesConfig
+                Pages = new List<Metadata>()
                 {
-                    Page = new List<Metadata>()
-                    {
-                        new() { Id = "index", Title = "Main page" }
-                    }
-                }.ToFile(Globals.PagesFile);
+                    new() { Id = "index", Title = "Main page" }
+                };
+                return;
             }
-
-            Globals.Pages = File.ReadAllText(Globals.PagesFile).ParseXml<PagesConfig>();
+            foreach (var file in Directory.GetFiles(ContentDirectory, "*.xmd"))
+            {
+                var markdownFile = File.ReadAllText(file);
+                var header = $"{markdownFile[0..(markdownFile.IndexOf("</metadata>", StringComparison.OrdinalIgnoreCase) + "</metadata>".Length)]}";
+                //var meta = Globals.GetMetadata(Remaining ?? "");
+                Pages.Add(header.ParseXml<Metadata>());
+            }
         }
     }
 }

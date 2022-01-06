@@ -19,15 +19,18 @@ public partial class Metadata
 
     /// <remarks/>
     [XmlAttribute]
-    public string Lang { get; set; }
+    public string Lang { get; set; } = "en";
 
     /// <remarks/>
     [XmlAttribute]
-    public bool IsNavMenuItem { get; set; }
+    public bool IsNavMenuItem { get; set; } = false;
+
+    [XmlAttribute]
+    public short NavMenuId { get; set; } = -1;
 
     /// <remarks/>
     [XmlAttribute]
-    public bool ShowModifiedAt { get; set; }
+    public bool ShowModifiedAt { get; set; } = false;
     
     /// <remarks/>
     public string Id { get; set; }
@@ -45,15 +48,15 @@ public partial class Metadata
     public string Search { get; set; }
 
     /// <remarks/>
-    public ImageData Image { get; set; }
+    public ImageData Image { get; set; } = new();
 
     /// <remarks/>
     [XmlElement(Form = XmlSchemaForm.Qualified)]
-    public DateTime ReleasedAt { get; set; }
+    public DateTime ReleasedAt { get; set; } = DateTime.Now;
 
     /// <remarks/>
     [XmlElement(Form = XmlSchemaForm.Qualified)]
-    public DateTime ModifiedAt { get; set; }
+    public DateTime ModifiedAt { get; set; } = DateTime.Now;
 
 }
 

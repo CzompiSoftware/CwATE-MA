@@ -8,6 +8,7 @@ using System.IO;
 using Microsoft.CodeAnalysis.Emit;
 using System.Runtime.Loader;
 using System.Linq;
+using Microsoft.CodeAnalysis.CSharp.Scripting;
 
 namespace Markdig.CWCTMA.XMD.CSCode
 {
@@ -52,10 +53,14 @@ namespace Markdig.CWCTMA.XMD.CSCode
 
         internal static object Execute(string sourceCode)
         {
+            string id = Guid.NewGuid().ToString().Split('-')[0].ToLower();
             Debug.WriteLine($"CreateExecuteBlockMethodTemplate\r\n{sourceCode}");
 
             SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(sourceCode);
-            var compilation = CSharpCompilation.Create("CodeHelper", new[] { syntaxTree }, MetadataReferences);
+            var compilation = CSharpCompilation.Create($"CodeHelper-{id}")
+                .WithOptions(new CSharpCompilationOptions(OutputKind.ConsoleApplication))
+                .AddReferences(MetadataReference.CreateFromFile(typeof(object).GetTypeInfo().Assembly.Location))
+                .AddSyntaxTrees(new[] { syntaxTree });
             using var memoryStream = new MemoryStream();
             EmitResult emitResult = compilation.Emit(memoryStream);
 
@@ -75,7 +80,7 @@ namespace Markdig.CWCTMA.XMD.CSCode
             {
                 memoryStream.Seek(0, SeekOrigin.Begin);
 
-                var loadContext = new CodeLoadContext("CodeHelper");
+                var loadContext = new CodeLoadContext($"CodeHelper-{id}");
                 Assembly assembly = loadContext.LoadFromStream(memoryStream);
 
                 Type type = assembly.GetType("CodeHelper.CSharp");
@@ -84,26 +89,9 @@ namespace Markdig.CWCTMA.XMD.CSCode
                 return methodInfo.Invoke(null, null);
             }
 
-
+            //return CSharpScript.EvaluateAsync("using System;Console.WriteLine(\"Hello Roslyn.\")").GetAwaiter().GetResult();
         }
 
-        private static WeakReference<PortableExecutableReference[]> _metadataReferences = new WeakReference<PortableExecutableReference[]>(null);
-        internal static PortableExecutableReference[] MetadataReferences
-        {
-            get
-            {
-                if (_metadataReferences.TryGetTarget(out var value) && value != null)
-                    return value;
-                var references = GetPortableExecutableReferences();
-                _metadataReferences.SetTarget(references);
-                return references;
-            }
-        }
-        private static PortableExecutableReference[] GetPortableExecutableReferences()
-        {
-            var trustedAssembliesPaths = ((string)AppContext.GetData("TRUSTED_PLATFORM_ASSEMBLIES")).Split(Path.PathSeparator);
-            return trustedAssembliesPaths.Select(reference => MetadataReference.CreateFromFile(reference)).ToArray();
-        }
         internal static object ExecuteInline(string content) => Execute(CreateExecuteInlineMethodTemplate(content));
         internal static object ExecuteBlock(string content) => Execute(CreateExecuteBlockMethodTemplate(content));
     }

@@ -8,10 +8,9 @@
 {
     var markdownFile = File.ReadAllText(FileName);
     var header = $"{markdownFile[0..(markdownFile.IndexOf("</metadata>", StringComparison.OrdinalIgnoreCase)+"</metadata>".Length)]}";
-    Globals.RefreshPages();
-    var meta = Globals.GetMetadata(Remaining ?? "");
+    //var meta = Globals.GetMetadata(Remaining ?? "");
+    var meta = header.ParseXml<Metadata>();
     title = meta.Title;
-    //header.ParseXml<Metadata>();
     markdownFile = markdownFile[(header.Count())..];
     @((MarkupString)Markdown.ToHtml(markdownFile, Globals.MarkdownPipeline))
     
