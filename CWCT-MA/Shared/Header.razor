@@ -4,7 +4,7 @@
 @using Microsoft.AspNetCore.Http.Extensions
         <header>
             <!-- #region Czompi Group products -->
-            <nav class="nav nav-sticky group">
+            <nav class="nav nav-sticky group" aria-label="Czompi Group">
                 <div class="container w-100">
                     @foreach (GroupConfigItem group in Globals.Group.Groups) {
                         @if(group.Id == Globals.Group.Current)
@@ -21,7 +21,7 @@
             <!-- #endregion -->
             
             <!-- #region Navigation menu -->
-            <div class="container">
+            <div class="container" aria-label="Main">
                 <nav class="nav menu">
                     <a href="/" class="brand">
                         <img src="@CDN.GetUrl($"img/{Globals.Config.Id}/{Globals.Config.Id}-logo.svg")">
