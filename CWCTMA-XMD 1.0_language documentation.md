@@ -13,7 +13,7 @@ There are n types of xmd available as of CWCTMA-XMD 1.0
 ### Type #1 - static
 This is a plain markdown file with metadata inside it
 #### Example code:
-```xmd
+```xml
 <!DOCTYPE cwctma-xmd>
 <metadata type="1" lang="en" isdisplayed="true">
     <id></id>
@@ -35,18 +35,18 @@ Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quibusdam possimus, so
 This is a C# flawored markdown file with metadata inside it.
 
 #### Inline C# code - returns with value by default
-```xmd
+```cshtml
 @cs{#"String goes here"#}
 ```
-```xmd
+```cshtml
 @cs{#$"It can also contain {interpolated} string"#}
 ```
 
 #### Normal C# code - you need to have a return value
-```xmd
+```cshtml
 @cs{>var code = "goes here and it also needs a "; var return = code; return value;<}
 ```
-```xmd
+```cshtml
 @cs{>
     var it = "can be multiline, but do not forget the "; 
     var return = it;
@@ -55,7 +55,7 @@ This is a C# flawored markdown file with metadata inside it.
 ```
 
 #### Example code:
-```xmd
+```cshtml
 <!DOCTYPE cwctma-xmd>
 <metadata type="2" lang="en" isvisible="true">
     <id></id>
@@ -94,7 +94,7 @@ You can use markdown elements inside alerts.
 - danger
 
 #### Example:
-```xmd
+```markdown
 ]>type< content goes here
 
 ]>type< # Multiline
