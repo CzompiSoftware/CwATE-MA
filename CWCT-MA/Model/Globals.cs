@@ -138,6 +138,8 @@ namespace CWCTMA.Model
             Globals.Group = JsonSerializer.Deserialize<GroupConfig>(File.ReadAllText(Globals.GroupFile), Globals.JsonSerializerOptions);
         }
 
+        //TODO: Rework! Maybe only load file from disk when chage occurred and store it in memory (prolly precompile parts of the code and replace the C# code with an id that refers to the id of the compiled code.
+        // Magyarul a vége: Precompile-olja a fájlban található kódrészleteket és készít hozzájuk azonosítókat, majd ezekre az azonosítókra cseréli a tényleges kódot => nem kell mindig recompile-olni.
         internal static void RefreshPages()
         {
             Pages.Clear();
