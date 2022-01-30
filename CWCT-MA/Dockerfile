@@ -1,22 +1,17 @@
-#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
+FROM mcr.microsoft.com/dotnet/aspnet:6.0-alpine
 
-FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
-WORKDIR /app
+ENV \
+    # CWCT-MA version
+    CWCTMA_VERSION=4.0.1-build13
+
+VOLUME [ "/data" ]
+
+
+# Download CWCT-MA binaries
+RUN wget https://packages.czompi.cloud/products/czsoft/cwct-ma/$CWCTMA_VERSION.tar.gz -O cwct-ma.tar.gz \
+    && tar -ozxf cwct-ma.tar.gz -C /bin \
+    && rm cwct-ma.tar.gz \
+    && wget https://packages.czompi.cloud/products/czsoft/cwct-ma/appsettings.json -O /bin/appsettings.json
+WORKDIR /bin
 EXPOSE 80
-EXPOSE 443
-
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
-WORKDIR /src
-COPY ["CWCT-MA/CWCT-MA.csproj", "CWCT-MA/"]
-RUN dotnet restore "CWCT-MA/CWCT-MA.csproj"
-COPY . .
-WORKDIR "/src/CWCT-MA"
-RUN dotnet build "CWCT-MA.csproj" -c Release -o /app/build
-
-FROM build AS publish
-RUN dotnet publish "CWCT-MA.csproj" -c Release -o /app/publish
-
-FROM base AS final
-WORKDIR /app
-COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "CWCT-MA.dll"]
