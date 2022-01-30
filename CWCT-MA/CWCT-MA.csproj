@@ -5,7 +5,7 @@
 		<RootNamespace>CWCTMA</RootNamespace>
 		<UserSecretsId>856522d9-149d-4315-86cb-58ef7be680cd</UserSecretsId>
 		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-		<Version>4.0.1.13</Version>
+		<Version>4.0.1.14</Version>
 		<Authors>Czompi Software</Authors>
 		<Company>Czompi Software, LLC.</Company>
 		<Product>Czompi WebAPP Common Template for Microsoft ASP.NET</Product>
