@@ -9,7 +9,7 @@
                     @foreach (GroupConfigItem group in Globals.Group.Groups) {
                         @if(group.Id == Globals.Group.Current)
                         {
-                        @((MarkupString)$"<div class=\"nav-item group-{group.Id}\"><span class=\"active\">{group.Name}</span></div>")
+                            @((MarkupString)$"<div class=\"nav-item group-{group.Id}\"><span class=\"active\">{group.Name}</span></div>")
                         }
                         else
                         {
