@@ -19,11 +19,11 @@
 		<PackageReference Include="ColorCode.Portable" Version="1.0.3" />
 		<PackageReference Include="CzomPack" Version="3.0.7" />
 		<PackageReference Include="CzomPack.Cryptography" Version="3.0.2.3" />
-		<PackageReference Include="Markdig" Version="0.26.0" />
+		<PackageReference Include="Markdig" Version="0.27.0" />
 		<PackageReference Include="Markdig.CWCTMA.XMD" Version="1.0.3" />
 		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
 		<PackageReference Include="prismjs-vs" Version="1.0.2" />
-		<PackageReference Include="Serilog.AspNetCore" Version="4.1.1-dev-00241" />
+		<PackageReference Include="Serilog.AspNetCore" Version="4.1.0" />
 		<PackageReference Include="WebStoating.Markdig.Prism" Version="1.0.0" />
 	</ItemGroup>
 
