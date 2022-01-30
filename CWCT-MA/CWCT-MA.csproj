@@ -28,7 +28,7 @@
 	</ItemGroup>
 
 	<Target Name="Date" BeforeTargets="BeforeBuild">
-		<WriteLinesToFile File="$(IntermediateOutputPath)Builtin.cs" Lines="using System%3B%0D%0Anamespace $(RootNamespace)%0D%0A{%0D%0A	static partial class Builtin%0D%0A	{%0D%0A		public static DateTime CompileTime = DateTime.Parse(%22$([System.DateTime]::Now.ToString())%22)%3B%0D%0A		public static Guid BuildId = Guid.Parse(%22$([System.Guid]::NewGuid())%22)%3B%0D%0A		public static string Build = %22$(Build)%22%3B%0D%0A	}%0D%0A}" Overwrite="true" />
+		<WriteLinesToFile File="$(IntermediateOutputPath)Builtin.cs" Lines="using System%3B%0D%0Anamespace $(RootNamespace)%0D%0A{%0D%0A	static partial class Builtin%0D%0A	{%0D%0A		public static DateTime CompileTime = DateTime.Parse(%22$([System.DateTime]::Now.ToString())%22)%3B%0D%0A		public static Guid BuildId = Guid.Parse(%22$([System.Guid]::NewGuid())%22)%3B%0D%0A		}%0D%0A}" Overwrite="true" />
 		<ItemGroup>
 			<Compile Include="$(IntermediateOutputPath)Builtin.cs" />
 		</ItemGroup>
