@@ -3,45 +3,11 @@
   "shortName": "Czompi",
   "fullName": "Personal webpage of David Czompo (Czompi)",
   "siteURL": "https://czompi.hu",
-  "cdnUrl": "https://cdn-beta.czompisoftware.hu/",
+  "cdnUrl": "https://cdn.czompisoftware.hu/",
   "meta": {
     "title": "Czompi",
     "description": "Personal webpage of David Czompo (Czompi)",
     "primaryColor": "#0B3B7A",
     "image": null
-  },
-  "pages": [
-    {
-      "id": "",
-      "name": "Main page",
-      "alias": [
-        "main"
-      ]
-    },
-    {
-      "id": "youtube",
-      "name": "YouTube",
-      "alias": null
-    },
-    {
-      "id": "twitch",
-      "name": "Twitch",
-      "alias": null
-    },
-    {
-      "id": "projects",
-      "name": "My projects",
-      "alias": null
-    },
-    {
-      "id": "rigs",
-      "name": "My rigs",
-      "alias": null
-    },
-    {
-      "id": "about",
-      "name": "About me",
-      "alias": null
-    }
-  ]
+  }
 }
