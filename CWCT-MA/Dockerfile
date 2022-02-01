@@ -2,7 +2,7 @@ FROM mcr.microsoft.com/dotnet/aspnet:6.0-alpine
 
 ENV \
     # CWCT-MA version
-    CWCTMA_VERSION=4.0.1-build13
+    CWCTMA_VERSION=4.0.1-build14
 
 VOLUME [ "/data" ]
 
