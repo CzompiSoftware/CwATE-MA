@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Markdig.CWCTMA.XMD.CSCode
+namespace Markdig.Xmd.CSCode
 {
 
     /// <summary>

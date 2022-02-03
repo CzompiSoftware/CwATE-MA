@@ -1,9 +1,9 @@
 ﻿using Markdig.Renderers;
 using ColorCode;
-using Markdig.CWCTMA.XMD.CSCode;
-using Markdig.CWCTMA.XMD.Alert;
+using Markdig.Xmd.CSCode;
+using Markdig.Xmd.Alert;
 
-namespace Markdig.CWCTMA.XMD
+namespace Markdig.Xmd
 {
     public class XMDLanguageExtension : IMarkdownExtension
     {

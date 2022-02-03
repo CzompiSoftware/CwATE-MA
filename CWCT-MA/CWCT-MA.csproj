@@ -15,16 +15,17 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="CloudFlare" Version="1.0.1" />
 		<PackageReference Include="ColorCode.Portable" Version="1.0.3" />
 		<PackageReference Include="CzomPack" Version="3.0.7" />
 		<PackageReference Include="CzomPack.Cryptography" Version="3.0.2.3" />
+		<PackageReference Include="CzomPack.Network" Version="3.0.2.4" />
 		<PackageReference Include="Markdig" Version="0.27.0" />
-		<PackageReference Include="Markdig.CWCTMA.XMD" Version="1.0.3" />
+		<PackageReference Include="Markdig.Xmd" Version="1.0.3" />
 		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
 		<PackageReference Include="prismjs-vs" Version="1.0.2" />
 		<PackageReference Include="Serilog.AspNetCore" Version="4.1.0" />
 		<PackageReference Include="WebStoating.Markdig.Prism" Version="1.0.0" />
+		<PackageReference Include="IPAddressRange" Version="4.2.0" />
 	</ItemGroup>
 
 	<Target Name="Date" BeforeTargets="BeforeBuild">

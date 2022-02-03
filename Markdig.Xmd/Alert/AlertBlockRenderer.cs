@@ -1,8 +1,8 @@
-﻿using Markdig.CWCTMA.XMD.CSCode;
+﻿using Markdig.Xmd.CSCode;
 using Markdig.Renderers.Html;
 using Markdig.Renderers;
 
-namespace Markdig.CWCTMA.XMD.Alert
+namespace Markdig.Xmd.Alert
 {
     public class AlertBlockRenderer : HtmlObjectRenderer<AlertBlock>
     {

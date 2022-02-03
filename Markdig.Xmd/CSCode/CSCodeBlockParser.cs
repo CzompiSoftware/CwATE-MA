@@ -6,7 +6,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace Markdig.CWCTMA.XMD.CSCode
+namespace Markdig.Xmd.CSCode
 {
     /// <summary>
     /// An inline parser for <see cref="CSCodeBlock"/>.

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Markdig.CWCTMA.XMD.Alert
+namespace Markdig.Xmd.Alert
 {
     public class AlertBlock : LeafInline
     {

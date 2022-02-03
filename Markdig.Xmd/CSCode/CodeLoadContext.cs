@@ -2,7 +2,7 @@
 using System.Reflection;
 using System.Runtime.Loader;
 
-namespace Markdig.CWCTMA.XMD.CSCode
+namespace Markdig.Xmd.CSCode
 {
     internal sealed class CodeLoadContext : AssemblyLoadContext
     {

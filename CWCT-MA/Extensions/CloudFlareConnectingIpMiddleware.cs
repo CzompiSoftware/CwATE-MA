@@ -9,8 +9,10 @@ using Microsoft.AspNetCore.HttpOverrides;
 using NetTools;
 using CzomPack.Network;
 using CzomPack.Logging;
+using System.Linq;
+using System.Collections.Generic;
 
-namespace CloudFlare
+namespace CWCTMA.Extensions
 {
     internal class CloudFlareConnectingIpMiddleware
     {
@@ -26,7 +28,7 @@ namespace CloudFlare
             try
             {
                 var ipv4 = NetHandler.SendRequestGet("https://www.cloudflare.com/ips-v4");
-                string[] ipv4Addresses = ((int)ipv4.StatusCode) / 100 > 3 ? ipv4.Result.Split("\n").Select(x => x.Trim('\r')).ToArray() : Array.Empty<string>();
+                string[] ipv4Addresses = (int)ipv4.StatusCode / 100 > 3 ? ipv4.Result.Split("\n").Select(x => x.Trim('\r')).ToArray() : Array.Empty<string>();
                 _cloudFlareIpAddressRanges.AddRange(ipv4Addresses.Select(x => IPAddressRange.Parse(x)));
             }
             catch (Exception ex)
@@ -35,8 +37,8 @@ namespace CloudFlare
             }
             try
             {
-                var ipv6 = NetHandler.SendRequestGet("https://www.cloudflare.com/ips-v4");
-                string[] ipv6Addresses = ((int)ipv6.StatusCode) / 100 > 3 ? ipv6.Result.Split("\n").Select(x => x.Trim('\r')).ToArray() : Array.Empty<string>();
+                var ipv6 = NetHandler.SendRequestGet("https://www.cloudflare.com/ips-v6");
+                string[] ipv6Addresses = (int)ipv6.StatusCode / 100 > 3 ? ipv6.Result.Split("\n").Select(x => x.Trim('\r')).ToArray() : Array.Empty<string>();
                 _cloudFlareIpAddressRanges.AddRange(ipv6Addresses.Select(x => IPAddressRange.Parse(x)));
             }
             catch (Exception ex)

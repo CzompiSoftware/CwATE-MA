@@ -1,7 +1,7 @@
 ﻿using Markdig.Helpers;
 using Markdig.Syntax.Inlines;
 
-namespace Markdig.CWCTMA.XMD.CSCode
+namespace Markdig.Xmd.CSCode
 {
     /// <summary>
     /// A math inline element.

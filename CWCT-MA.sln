@@ -5,9 +5,7 @@ VisualStudioVersion = 17.0.31717.71
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CWCT-MA", "CWCT-MA\CWCT-MA.csproj", "{0343FB2B-273C-4809-AF42-FF87B97F22BA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Markdig.CWCTMA.XMD", "Markdig.CWCTMA.XMD\Markdig.CWCTMA.XMD.csproj", "{5DD72153-745E-4EBD-9599-6CDD21805FD9}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CloudFlare", "CloudFlare\CloudFlare.csproj", "{16DDAB10-D85F-456D-A8C0-922E89CD25F4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Markdig.Xmd", "Markdig.Xmd\Markdig.Xmd.csproj", "{5DD72153-745E-4EBD-9599-6CDD21805FD9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +21,6 @@ Global
 		{5DD72153-745E-4EBD-9599-6CDD21805FD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5DD72153-745E-4EBD-9599-6CDD21805FD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5DD72153-745E-4EBD-9599-6CDD21805FD9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{16DDAB10-D85F-456D-A8C0-922E89CD25F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{16DDAB10-D85F-456D-A8C0-922E89CD25F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{16DDAB10-D85F-456D-A8C0-922E89CD25F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{16DDAB10-D85F-456D-A8C0-922E89CD25F4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

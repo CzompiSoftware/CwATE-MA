@@ -10,7 +10,7 @@ using System.Runtime.Loader;
 using System.Linq;
 using Microsoft.CodeAnalysis.CSharp.Scripting;
 
-namespace Markdig.CWCTMA.XMD.CSCode
+namespace Markdig.Xmd.CSCode
 {
     internal class CodeHelper
     {

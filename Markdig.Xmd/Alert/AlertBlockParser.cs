@@ -1,4 +1,4 @@
-﻿using Markdig.CWCTMA.XMD.CSCode;
+﻿using Markdig.Xmd.CSCode;
 using Markdig.Helpers;
 using Markdig.Parsers;
 using Markdig.Syntax;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Markdig.CWCTMA.XMD.Alert
+namespace Markdig.Xmd.Alert
 {
     /// <summary>
     /// An inline parser for <see cref="AlertBlock"/>.
