@@ -1,4 +1,4 @@
-﻿namespace CWCTMA.Model
+﻿namespace CwctMa.Model
 {
     public class GroupConfigItem
     {

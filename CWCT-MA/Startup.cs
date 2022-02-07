@@ -1,4 +1,4 @@
-using CWCTMA.Model;
+using CwctMa.Model;
 using Markdig;
 using Markdig.Xmd;
 using Markdig.Prism;
@@ -8,9 +8,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using CWCTMA.Extensions;
+using CwctMa.Extensions;
 
-namespace CWCTMA
+namespace CwctMa
 {
     public class Startup
     {

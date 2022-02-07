@@ -1,5 +1,5 @@
-﻿using CWCTMA.Helpers;
-using CWCTMA.Model.XMD;
+﻿using CwctMa.Helpers;
+using CwctMa.Model.Xmd;
 using Markdig;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text.Json;
 
-namespace CWCTMA.Model
+namespace CwctMa.Model
 {
     public class Globals
     {
@@ -84,8 +84,8 @@ namespace CWCTMA.Model
                 Name = "CWCT/MA",
                 FullName = "Czompi WebAPP Common Template for Microsoft ASP.NET",
                 Version = Assembly.GetExecutingAssembly().GetName().Version,
-                CompileTime = CWCTMA.Builtin.CompileTime,
-                BuildId = CWCTMA.Builtin.BuildId
+                CompileTime = CwctMa.Builtin.CompileTime,
+                BuildId = CwctMa.Builtin.BuildId
             };
         }
         #endregion
@@ -96,7 +96,7 @@ namespace CWCTMA.Model
             {
                 File.WriteAllText(Globals.ConfigFile, JsonSerializer.Serialize(new Config
                 {
-                    Id = "CWCTMADE".ToLower(),
+                    Id = "CwctMaDE".ToLower(),
                     ShortName = "CWCT/MA DE",
                     FullName = "Czompi WebAPP Common Template for Microsoft ASP.NET - Development Environment",
 

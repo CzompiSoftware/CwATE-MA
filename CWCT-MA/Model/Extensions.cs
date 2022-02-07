@@ -3,7 +3,7 @@ using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-namespace CWCTMA.Model
+namespace CwctMa.Model
 {
     public static class Extensions
     {

@@ -1,6 +1,6 @@
-using CWCTMA.Helpers;
-using CWCTMA.Model;
-using CWCTMA.Model.XMD;
+using CwctMa.Helpers;
+using CwctMa.Model;
+using CwctMa.Model.Xmd;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Serilog;
@@ -12,7 +12,7 @@ using System.IO;
 using System.Reflection;
 using System.Text.Json;
 
-namespace CWCTMA
+namespace CwctMa
 {
     public class Program
     {

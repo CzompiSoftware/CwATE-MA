@@ -1,6 +1,6 @@
 ﻿using CzomPack.Cryptography;
 
-namespace CWCTMA.Model
+namespace CwctMa.Model
 {
     public class CDN
     {

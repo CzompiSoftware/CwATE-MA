@@ -4,7 +4,7 @@ using System.Text.Json;
 using System.Xml;
 using System.Xml.Serialization;
 
-namespace CWCTMA.Helpers;
+namespace CwctMa.Helpers;
 internal static class ParseHelpers
 {
     public static Stream ToStream(this string @this)

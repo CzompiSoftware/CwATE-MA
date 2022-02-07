@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace CWCTMA.Model
+namespace CwctMa.Model
 {
     public struct Page
     {

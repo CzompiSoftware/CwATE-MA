@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CWCTMA.Model
+namespace CwctMa.Model
 {
     public class ApplicationMetadata
     {

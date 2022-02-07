@@ -1,10 +1,10 @@
-﻿using CWCTMA.Model.XMD;
+﻿using CwctMa.Model.Xmd;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Xml.Serialization;
 
-namespace CWCTMA.Model
+namespace CwctMa.Model
 {
     [Serializable]
     [DesignerCategory("code")]

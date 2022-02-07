@@ -2,13 +2,13 @@ FROM mcr.microsoft.com/dotnet/aspnet:6.0-alpine
 
 ENV \
     # CWCT-MA version
-    CWCTMA_VERSION=4.0.1-build14
+    CwctMa_VERSION=4.0.1-build14
 
 VOLUME [ "/data" ]
 
 
 # Download CWCT-MA binaries
-RUN wget https://packages.czompi.cloud/products/czsoft/cwct-ma/$CWCTMA_VERSION.tar.gz -O cwct-ma.tar.gz \
+RUN wget https://packages.czompi.cloud/products/czsoft/cwct-ma/$CwctMa_VERSION.tar.gz -O cwct-ma.tar.gz \
     && tar -ozxf cwct-ma.tar.gz -C /bin \
     && rm cwct-ma.tar.gz \
     && wget https://packages.czompi.cloud/products/czsoft/cwct-ma/appsettings.json -O /bin/appsettings.json

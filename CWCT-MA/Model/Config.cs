@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace CWCTMA.Model
+namespace CwctMa.Model
 {
     public class Config
     {
