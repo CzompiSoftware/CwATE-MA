@@ -10,8 +10,7 @@ VOLUME [ "/data" ]
 # Download CWCT-MA binaries
 RUN wget https://packages.czompi.cloud/products/czsoft/cwct-ma/$CWCTMA_VERSION.tar.gz -O cwct-ma.tar.gz \
     && tar -ozxf cwct-ma.tar.gz -C /bin \
-    && rm cwct-ma.tar.gz \
-    && wget https://packages.czompi.cloud/products/czsoft/cwct-ma/appsettings.json -O /bin/appsettings.json
+    && rm cwct-ma.tar.gz
 WORKDIR /bin
 EXPOSE 80
 ENTRYPOINT ["dotnet", "CWCT-MA.dll"]
