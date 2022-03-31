@@ -31,15 +31,12 @@ namespace Markdig.Xmd.Alert
         /// <summary>
         /// Initializes a new instance of the <see cref="AlertBlock"/> class.
         /// </summary>
-        public AlertBlockParser()
+
+        public AlertBlockParser(MarkdownPipelineBuilder? pipeline)
         {
             OpeningCharacterString = "]";
             OpeningCharacters = new char[] { OpeningCharacterString[0] };
             DefaultClass = "alert";
-        }
-
-        public AlertBlockParser(MarkdownPipelineBuilder pipeline) : base()
-        {
             _pipeline = pipeline;
         }
 
