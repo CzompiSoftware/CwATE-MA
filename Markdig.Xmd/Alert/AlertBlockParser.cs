@@ -17,6 +17,8 @@ namespace Markdig.Xmd.Alert
     /// <seealso cref="IPostInlineProcessor" />
     public class AlertBlockParser : InlineParser
     {
+        private MarkdownPipelineBuilder? _pipeline;
+
         public string OpeningCharacterString { get; }
         public string ClosingCharacterString { get; }
         public char[] ClosingCharacters { get; }
@@ -33,10 +35,13 @@ namespace Markdig.Xmd.Alert
         {
             OpeningCharacterString = "]";
             OpeningCharacters = new char[] { OpeningCharacterString[0] };
-            DefaultClass = "math";
+            DefaultClass = "alert";
         }
 
-
+        public AlertBlockParser(MarkdownPipelineBuilder pipeline) : base()
+        {
+            _pipeline = pipeline;
+        }
 
         public override bool Match(InlineProcessor processor, ref StringSlice slice)
         {
@@ -73,7 +78,7 @@ namespace Markdig.Xmd.Alert
             {
                 slice.NextChar();
             }
-            processor.Inline = new AlertBlock() { Content = content, Type = type };
+            processor.Inline = new AlertBlock(_pipeline) { Content = content, Type = type };
             processor.Inline.Span = new SourceSpan() { Start = processor.GetSourcePosition(slice.Start, out int line, out int column) };
             processor.Inline.Line = line;
             processor.Inline.Span.End = processor.Inline.Span.Start + $"{text}".Length;

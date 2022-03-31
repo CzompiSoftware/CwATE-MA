@@ -19,7 +19,7 @@ namespace Markdig.Xmd
 
             if (!pipeline.InlineParsers.Contains<AlertBlockParser>())
             {
-                pipeline.InlineParsers.Add(new AlertBlockParser());
+                pipeline.InlineParsers.Add(new AlertBlockParser(pipeline));
             }
 
             if (!pipeline.InlineParsers.Contains<CSCodeInlineParser>())
@@ -38,7 +38,7 @@ namespace Markdig.Xmd
 
             if (!renderer.ObjectRenderers.Contains<AlertBlockRenderer>())
             {
-                renderer.ObjectRenderers.Add(new AlertBlockRenderer());
+                renderer.ObjectRenderers.Add(new AlertBlockRenderer(pipeline));
             }
 
             if (!renderer.ObjectRenderers.Contains<CSCodeInlineRenderer>())

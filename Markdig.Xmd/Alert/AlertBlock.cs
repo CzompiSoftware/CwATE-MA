@@ -9,8 +9,15 @@ namespace Markdig.Xmd.Alert
 {
     public class AlertBlock : LeafInline
     {
+        private MarkdownPipelineBuilder _pipeline;
+
         public AlertBlock()
         {
+        }
+
+        public AlertBlock(MarkdownPipelineBuilder pipeline)
+        {
+            _pipeline = pipeline;
         }
 
         /// <summary>
