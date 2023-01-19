@@ -20,7 +20,7 @@
 		<PackageReference Include="CzomPack.Cryptography" Version="3.0.2.3" />
 		<PackageReference Include="CzomPack.Network" Version="3.0.2.4" />
 		<PackageReference Include="Markdig" Version="0.30.4" />
-		<PackageReference Include="Markdig.Xmd" Version="1.0.5" />
+		<PackageReference Include="Markdig.Xmd" Version="1.0.6.2" />
 		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.0" />
 		<PackageReference Include="prismjs-vs" Version="1.0.2" />
 		<PackageReference Include="Serilog.AspNetCore" Version="6.1.0" />
