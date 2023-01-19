@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<TargetFrameworks>netcoreapp3.1;net6.0;net7.0</TargetFrameworks>
 		<LangVersion>10.0</LangVersion>
-		<Version>1.0.6.1</Version>
+		<Version>1.0.6.2</Version>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 	</PropertyGroup>
 
@@ -11,11 +11,11 @@
 		<PackageReference Include="ColorCode.Portable" Version="1.0.3" ExcludeAssets="runtime">
 			<Private>false</Private>
 		</PackageReference>
-		<PackageReference Include="Markdig" Version="0.27.0" ExcludeAssets="runtime">
+		<PackageReference Include="Markdig" Version="0.30.4" ExcludeAssets="runtime">
 			<Private>false</Private>
 		</PackageReference>
-		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.1.0-1.final" />
-		<PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting" Version="4.1.0-1.final" />
+		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.4.0" />
+		<PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting" Version="4.4.0" />
 		<PackageReference Include="SS.NuGet.Publish" Version="1.0.1912.22">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
