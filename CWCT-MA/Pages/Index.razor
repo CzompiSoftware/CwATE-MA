@@ -4,6 +4,7 @@
 @using Markdig
 @using System.IO
 @using Microsoft.AspNetCore.Html
+@inject ILogger<Index> _logger;
 @if (File.Exists(FileName))
 {
     var markdownFile = File.ReadAllText(FileName);
@@ -37,11 +38,26 @@ else
 
     public string CurrentPage => string.IsNullOrEmpty(Remaining) ?  "index" : Remaining;
 
-    
+
     string title = "Not found";
 
-    public string FileName => Path.Combine(Globals.ContentDirectory, $"{(Remaining ?? "index").Replace(".xmd", "", StringComparison.OrdinalIgnoreCase).Replace(".php", "", StringComparison.OrdinalIgnoreCase).Replace(".cshtml", "", StringComparison.OrdinalIgnoreCase).Replace(".html", "", StringComparison.OrdinalIgnoreCase).Replace(".htm", "", StringComparison.OrdinalIgnoreCase)}.xmd");
-    
+    public string FileName
+    {
+        get
+        {
+            var fn = Path.Combine(Globals.ContentDirectory, $"{(Remaining ?? "index").Replace(".xmd", "", StringComparison.OrdinalIgnoreCase).Replace(".php", "", StringComparison.OrdinalIgnoreCase).Replace(".cshtml", "", StringComparison.OrdinalIgnoreCase).Replace(".html", "", StringComparison.OrdinalIgnoreCase).Replace(".htm", "", StringComparison.OrdinalIgnoreCase)}.xmd");
+            try
+            {
+                fn = fn.GetActualFileName();
+            }
+            catch (FileNotFoundException fex)
+            {
+                _logger.LogWarning(fex, "No file!");
+            }
+            return fn;
+        }
+    }
+
     public IEnumerable<string> RemainingList {
         get
         {
