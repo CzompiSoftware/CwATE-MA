@@ -5,7 +5,7 @@ using System;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace Markdig.Xmd.Alert;
+namespace Markdig.Extensions.Xmd.Alert;
 
 /// <summary>
 /// An inline parser for <see cref="AlertBlock"/>.
@@ -14,7 +14,7 @@ namespace Markdig.Xmd.Alert;
 /// <seealso cref="IPostInlineProcessor" />
 public class AlertBlockParser : InlineParser
 {
-    private MarkdownPipelineBuilder? _pipeline;
+    private MarkdownPipelineBuilder _pipeline;
 
     public string OpeningCharacterString { get; }
     public string ClosingCharacterString { get; }
@@ -29,7 +29,7 @@ public class AlertBlockParser : InlineParser
     /// Initializes a new instance of the <see cref="AlertBlock"/> class.
     /// </summary>
 
-    public AlertBlockParser(MarkdownPipelineBuilder? pipeline)
+    public AlertBlockParser(MarkdownPipelineBuilder pipeline)
     {
         OpeningCharacterString = "]";
         OpeningCharacters = new char[] { OpeningCharacterString[0] };
@@ -46,14 +46,14 @@ public class AlertBlockParser : InlineParser
         if (!text.StartsWith($"{OpeningCharacterString}>")) return false;
         //if (!text.Contains(ClosingCharacterString)) return false;
         var (type, content) = RenderContent(text);
-        
-        if(content== null) return false;
-        
+
+        if (content == null) return false;
+
         for (int i = 0; i < text.Length; i++)
         {
             slice.NextChar();
         }
-        
+
         processor.Inline = new AlertBlock(_pipeline) { Content = content, Type = type };
         processor.Inline.Span = new SourceSpan() { Start = processor.GetSourcePosition(slice.Start, out int line, out int column) };
         processor.Inline.Line = line;
@@ -73,6 +73,6 @@ public class AlertBlockParser : InlineParser
         string[] contentLines = text[groups[0].Length..].Split('\n');
         contentLines = contentLines.Select(x => x.Trim().TrimStart(']').TrimStart(' ').TrimEnd('\r')).ToArray();
         var content = string.Join("\n", contentLines);
-        return text.Contains("]>") ? (type, content): (type, content);
+        return text.Contains("]>") ? (type, content) : (type, content);
     }
 }

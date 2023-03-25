@@ -3,7 +3,7 @@ using Markdig.Syntax;
 using Markdig.Syntax.Inlines;
 using System.Diagnostics;
 
-namespace Markdig.Xmd.Alert;
+namespace Markdig.Extensions.Xmd.Alert;
 
 [DebuggerDisplay("#{" + nameof(AlertBlock) + "}")]
 public class AlertBlock : LeafInline

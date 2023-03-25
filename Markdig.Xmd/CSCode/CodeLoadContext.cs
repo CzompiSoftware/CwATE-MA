@@ -2,7 +2,7 @@
 using System.Reflection;
 using System.Runtime.Loader;
 
-namespace Markdig.Xmd.CSCode;
+namespace Markdig.Extensions.Xmd.CSCode;
 
 internal sealed class CodeLoadContext : AssemblyLoadContext
 {
@@ -28,8 +28,8 @@ internal sealed class CodeLoadContext : AssemblyLoadContext
         return null;
     }
 
-    protected override IntPtr LoadUnmanagedDll(string unmanagedDllName)
+    protected override nint LoadUnmanagedDll(string unmanagedDllName)
     {
-        return IntPtr.Zero;
+        return 0;
     }
 }

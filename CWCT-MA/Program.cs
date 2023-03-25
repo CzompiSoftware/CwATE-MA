@@ -1,6 +1,6 @@
 using CwctMa.Model;
 using Markdig;
-using Markdig.Xmd;
+using Markdig.Extensions.Xmd;
 using Markdig.Prism;
 using CwctMa.Extensions;
 using Serilog;

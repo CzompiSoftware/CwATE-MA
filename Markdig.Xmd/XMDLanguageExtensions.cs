@@ -1,6 +1,6 @@
 ﻿using Markdig.Helpers;
 
-namespace Markdig.Xmd;
+namespace Markdig.Extensions.Xmd;
 
 public static class XmdLanguageExtensions
 {

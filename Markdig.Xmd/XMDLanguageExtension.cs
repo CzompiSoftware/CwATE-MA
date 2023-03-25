@@ -1,8 +1,8 @@
 ﻿using Markdig.Renderers;
-using Markdig.Xmd.CSCode;
-using Markdig.Xmd.Alert;
+using Markdig.Extensions.Xmd.CSCode;
+using Markdig.Extensions.Xmd.Alert;
 
-namespace Markdig.Xmd;
+namespace Markdig.Extensions.Xmd;
 
 public class XmdLanguageExtension : IMarkdownExtension
 {

@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CWCT-MA", "CWCT-MA\CWCT-MA.
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{29B7367F-E10B-4C80-BB42-47C9C846443D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Markdig.Xmd", "Markdig.Xmd\Markdig.Xmd.csproj", "{1439D41C-E87A-46DA-BDDD-AE7B3A1ED5CD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Markdig.Extensions.Xmd", "Markdig.Xmd\Markdig.Extensions.Xmd.csproj", "{1439D41C-E87A-46DA-BDDD-AE7B3A1ED5CD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

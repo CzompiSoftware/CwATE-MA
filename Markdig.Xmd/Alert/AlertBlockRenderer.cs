@@ -1,16 +1,17 @@
 ﻿using Markdig.Renderers.Html;
 using Markdig.Renderers;
+using Markdig.Extensions.Xmd;
 
-namespace Markdig.Xmd.Alert;
+namespace Markdig.Extensions.Xmd.Alert;
 
 public class AlertBlockRenderer : HtmlObjectRenderer<AlertBlock>
 {
     private MarkdownPipeline _pipeline;
 
-    public AlertBlockRenderer(): base()
+    public AlertBlockRenderer() : base()
     {
     }
-    
+
     public AlertBlockRenderer(MarkdownPipeline pipeline) : base()
     {
         _pipeline = pipeline;

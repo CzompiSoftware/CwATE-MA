@@ -1,7 +1,7 @@
 ﻿using Markdig.Syntax;
 using Markdig.Syntax.Inlines;
 
-namespace Markdig.Xmd.CSCode;
+namespace Markdig.Extensions.Xmd.CSCode;
 
 
 /// <summary>

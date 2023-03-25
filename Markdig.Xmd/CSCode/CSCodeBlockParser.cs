@@ -3,7 +3,7 @@ using Markdig.Parsers;
 using Markdig.Syntax;
 using System.Linq;
 
-namespace Markdig.Xmd.CSCode;
+namespace Markdig.Extensions.Xmd.CSCode;
 
 /// <summary>
 /// An inline parser for <see cref="CSCodeBlock"/>.

@@ -7,7 +7,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using System.IO;
 using Microsoft.CodeAnalysis.Emit;
 
-namespace Markdig.Xmd.CSCode;
+namespace Markdig.Extensions.Xmd.CSCode;
 
 internal class CodeHelper
 {

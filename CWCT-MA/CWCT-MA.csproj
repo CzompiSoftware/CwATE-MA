@@ -22,7 +22,7 @@
 		<PackageReference Include="CzomPack.Cryptography" Version="3.0.2.3" />
 		<PackageReference Include="CzomPack.Network" Version="3.0.2.5" />
 		<PackageReference Include="Markdig" Version="0.31.0" />
-		<PackageReference Include="Markdig.Xmd" Version="1.0.7" />
+		<PackageReference Include="Markdig.Extensions.Xmd" Version="1.0.8" />
 		<PackageReference Include="prismjs-vs" Version="1.0.2" />
 		<PackageReference Include="Serilog.AspNetCore" Version="6.1.0" />
 		<PackageReference Include="Serilog.Sinks.Grafana.Loki" Version="8.1.0" />

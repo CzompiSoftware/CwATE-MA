@@ -1,4 +1,4 @@
-﻿namespace Markdig.Xmd.Alert
+﻿namespace Markdig.Extensions.Xmd.Alert
 {
     public class AlertContent
     {
