@@ -18,7 +18,7 @@ internal class CloudFlareConnectingIpMiddleware
 {
     public const string CLOUDFLARE_CONNECTING_IP_HEADER_NAME = "CF_CONNECTING_IP";
 
-    private List<IPAddressRange> _cloudFlareIpAddressRanges = new();
+    private readonly List<IPAddressRange> _cloudFlareIpAddressRanges = new();
 
     private readonly RequestDelegate _next;
     private readonly ForwardedHeadersMiddleware _forwardedHeadersMiddleware;
@@ -27,23 +27,23 @@ internal class CloudFlareConnectingIpMiddleware
     {
         try
         {
-            var ipv4 = NetHandler.SendRequestGet("https://www.cloudflare.com/ips-v4");
+            var ipv4 = NetHandler.SendRequest("https://www.cloudflare.com/ips-v4", RequestMethod.GET);
             string[] ipv4Addresses = (int)ipv4.StatusCode / 100 > 3 ? ipv4.Result.Split("\n").Select(x => x.Trim('\r')).ToArray() : Array.Empty<string>();
             _cloudFlareIpAddressRanges.AddRange(ipv4Addresses.Select(x => IPAddressRange.Parse(x)));
         }
         catch (Exception ex)
         {
-            Logger.Error($"{ex}");
+            Logger.Error<CloudFlareConnectingIpMiddleware>($"{ex}");
         }
         try
         {
-            var ipv6 = NetHandler.SendRequestGet("https://www.cloudflare.com/ips-v6");
+            var ipv6 = NetHandler.SendRequest("https://www.cloudflare.com/ips-v6", RequestMethod.GET);
             string[] ipv6Addresses = (int)ipv6.StatusCode / 100 > 3 ? ipv6.Result.Split("\n").Select(x => x.Trim('\r')).ToArray() : Array.Empty<string>();
             _cloudFlareIpAddressRanges.AddRange(ipv6Addresses.Select(x => IPAddressRange.Parse(x)));
         }
         catch (Exception ex)
         {
-            Logger.Error($"{ex}");
+            Logger.Error<CloudFlareConnectingIpMiddleware>("{exception}", ex);
         }
         _next = next ?? throw new ArgumentNullException(nameof(next));
 

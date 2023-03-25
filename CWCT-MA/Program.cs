@@ -2,18 +2,14 @@ using CwctMa.Model;
 using Markdig;
 using Markdig.Xmd;
 using Markdig.Prism;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using CwctMa.Extensions;
 using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.SystemConsole.Themes;
-using System.IO;
 using System.Reflection;
-using System;
+using Serilog.Sinks.Grafana.Loki;
+using System.Diagnostics;
+using Microsoft.AspNetCore.HttpOverrides;
 
 string CzSoftCdnCors = "_cscdnmacors";
 
@@ -45,6 +41,7 @@ Log.Logger = new LoggerConfiguration()
         restrictedToMinimumLevel: LogEventLevel.Verbose
 #endif
     )
+    .WriteTo.GrafanaLoki(Globals.Config.LokiUrl)
     .CreateLogger();
 
 try
@@ -66,13 +63,19 @@ try
             builder.WithOrigins(
                 "https://cdn.czsoft.hu",
                 "https://cdn-beta.czsoft.hu",
-                "https://cdn.czompisoftware.hu",
-                "https://cdn-beta.czompisoftware.hu"
+                "https://cdn.czsoft.dev",
+                Globals.Config.CdnUrl
             );
         });
     });
 
     var app = builder.Build();
+    
+    app.UseForwardedHeaders(new ForwardedHeadersOptions
+    {
+        ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+    });
+
     if (app.Environment.IsDevelopment())
     {
         app.UseDeveloperExceptionPage();
@@ -90,13 +93,11 @@ try
     app.UseRouting();
     app.UseCors(CzSoftCdnCors);
 
-    Globals.MarkdownPipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().UsePrism().UseXMDLanguage().Build();
+    Globals.MarkdownPipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().UsePrism().UseXmdLanguage().Build();
 
-    app.UseEndpoints(endpoints =>
-    {
-        endpoints.MapBlazorHub();
-        endpoints.MapFallbackToPage("/_Host");
-    });
+    app.MapBlazorHub();
+    app.MapFallbackToPage("/{param?}", "/_Host");
+    app.MapFallbackToPage("/_Host");
 
     app.Run();
 }

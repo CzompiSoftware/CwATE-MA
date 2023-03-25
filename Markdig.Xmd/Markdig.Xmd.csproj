@@ -3,19 +3,16 @@
 	<PropertyGroup>
 		<TargetFrameworks>netcoreapp3.1;net6.0;net7.0</TargetFrameworks>
 		<LangVersion>10.0</LangVersion>
-		<Version>1.0.6.2</Version>
+		<Version>1.0.7</Version>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="ColorCode.Portable" Version="1.0.3" ExcludeAssets="runtime">
+		<PackageReference Include="Markdig" Version="0.31.0" ExcludeAssets="runtime">
 			<Private>false</Private>
 		</PackageReference>
-		<PackageReference Include="Markdig" Version="0.30.4" ExcludeAssets="runtime">
-			<Private>false</Private>
-		</PackageReference>
-		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.4.0" />
-		<PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting" Version="4.4.0" />
+		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.5.0" />
+		<PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting" Version="4.5.0" />
 		<PackageReference Include="SS.NuGet.Publish" Version="1.0.1912.22">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -24,7 +21,7 @@
 
 	<PropertyGroup Condition="'$(Configuration)'=='Release'">
 		<NuGetPublishType>remote</NuGetPublishType>
-		<NuGetPublishLocation>https://nuget.czompisoftware.hu/v3/index.json</NuGetPublishLocation>
+		<NuGetPublishLocation>https://nuget.czsoft.hu/v3/index.json</NuGetPublishLocation>
 	</PropertyGroup>
 
 </Project>

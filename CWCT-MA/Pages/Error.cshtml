@@ -8,7 +8,6 @@
     Czompi WebAPP Common Template for Microsoft ASP.NET Version @($"{System.Reflection.Assembly.GetEntryAssembly().GetName().Version.ToString(2)}") Build @($"{System.Reflection.Assembly.GetEntryAssembly().GetName().Version.Revision:D4}")
     - Compiled at @Globals.AppMeta.CompileTime.ToSqlTimeString()
     This product licensed under Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0) license.
-    Any tamper with this code is considered as illegal activity. The only exception for this is the GNU 3.0 licensed site translation part, witch is available at GitHub.
     
     Copyright (c) @Globals.AppMeta.CompileTime.Year@(DateTime.Now.Year != Globals.AppMeta.CompileTime.Year ? $"-{DateTime.Now.Year}" : "") Czompi Software. All rights reserved.
 -->
@@ -19,11 +18,11 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>@Globals.Config.ShortName</title>
-        <link rel="stylesheet" href="@CDN.GetUrl("css/cwctma/v4.0.0/master.css")">
-        <link rel="stylesheet" href="@CDN.GetUrl($"css/cwctma/v4.0.0/style.{Globals.Config.Id}.css")">
+        <link rel="stylesheet" href="@Cdn.GetUrl("css/cwctma/v4.0.0/master.css")">
+        <link rel="stylesheet" href="@Cdn.GetUrl($"css/cwctma/v4.0.0/style.{Globals.Config.Id}.css")">
         <!-- <link rel="stylesheet" href="css/cwct-ma/v4.0.0/style-dark.czompihu.css"> -->
         <!-- <link rel="stylesheet" href="css/fontawesome/v5.15.3/all.css"> -->
-        <link rel="stylesheet" href="@CDN.GetUrl("css/fluent-icons/v1.0.0/all.css")">
+        <link rel="stylesheet" href="@Cdn.GetUrl("css/fluent-icons/v1.0.0/all.css")">
         
 
         <!-- #region Primary metadata -->

@@ -40,7 +40,7 @@ else
     
     string title = "Not found";
 
-    public string FileName => Path.Combine(Globals.ContentDirectory, $"{(Remaining ?? "index")}.xmd");
+    public string FileName => Path.Combine(Globals.ContentDirectory, $"{(Remaining ?? "index").Replace(".xmd", "", StringComparison.OrdinalIgnoreCase).Replace(".php", "", StringComparison.OrdinalIgnoreCase).Replace(".cshtml", "", StringComparison.OrdinalIgnoreCase).Replace(".html", "", StringComparison.OrdinalIgnoreCase).Replace(".htm", "", StringComparison.OrdinalIgnoreCase)}.xmd");
     
     public IEnumerable<string> RemainingList {
         get

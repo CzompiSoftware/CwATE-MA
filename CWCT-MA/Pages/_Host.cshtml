@@ -15,7 +15,7 @@
     - Compiled at @Globals.AppMeta.CompileTime.ToSqlTimeString()
     This product licensed under Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0) license.
 
-    Copyright (c) 2016@(2016 != Globals.AppMeta.CompileTime.Year ? $"-{DateTime.Now.Year}" : "") Czompi Software. All rights reserved.
+    Copyright (c) 2020@(2020 != Globals.AppMeta.CompileTime.Year ? $"-{DateTime.Now.Year}" : "") Czompi Software. All rights reserved.
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -23,7 +23,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Loading...</title>
+    <base href="~/" />
+    <title>Loading... - @Globals.Config.ShortName</title>
 
     @foreach (var (name, version, file_name, url) in Globals.Config.Themes)
     {
@@ -31,7 +32,7 @@
         {
             if (!url.StartsWith("//") && url.StartsWith("http://") && url.StartsWith("https://"))
             {
-                <link rel="stylesheet" href="@CDN.GetUrl(url)">
+                <link rel="stylesheet" href="@Cdn.GetUrl(url)">
             }
             else
             {
@@ -40,12 +41,12 @@
         }
         else
         {
-            <link rel="stylesheet" href="@CDN.GetUrl($"css/{name}/v{version}/{file_name ?? "master.css"}")">
+            <link rel="stylesheet" href="@Cdn.GetUrl($"css/{name}/v{version}/{file_name ?? "master.css"}")">
         }
 
     }
-    <link rel="stylesheet" href="@CDN.GetUrl("css/fluent-icons/v1.0.0/all.css")">
-    <link rel="stylesheet" href="@CDN.GetUrl("css/prism/v1.24.1/prism.vscode-dark.css")">
+    <link rel="stylesheet" href="@Cdn.GetUrl("css/fluent-icons/v1.0.0/all.css")">
+    <link rel="stylesheet" href="@Cdn.GetUrl("css/prism/v1.24.1/prism.vscode-dark.css")">
 
     <!-- #region Primary metadata -->
     <meta name="title" content="@(Globals.Config.Meta.Title)">
@@ -92,8 +93,8 @@
         </div>
     </div>
 
-    <script src="@CDN.GetUrl("js/prism/v1.24.1/prism.js")"></script>
-    <script src="@CDN.GetUrl("js/bootstrap/v5.1.2/bootstrap.bundle.min.js")"></script>
+    <script src="@Cdn.GetUrl("js/prism/v1.24.1/prism.js")"></script>
+    <script src="@Cdn.GetUrl("js/bootstrap/v5.1.2/bootstrap.bundle.min.js")"></script>
     <script src="_framework/blazor.server.js"></script>
 </body>
 </html>

@@ -1,25 +1,25 @@
-﻿using Markdig.Xmd.CSCode;
-using Markdig.Renderers.Html;
+﻿using Markdig.Renderers.Html;
 using Markdig.Renderers;
 
-namespace Markdig.Xmd.Alert
+namespace Markdig.Xmd.Alert;
+
+public class AlertBlockRenderer : HtmlObjectRenderer<AlertBlock>
 {
-    public class AlertBlockRenderer : HtmlObjectRenderer<AlertBlock>
+    private MarkdownPipeline _pipeline;
+
+    public AlertBlockRenderer(): base()
     {
-        private MarkdownPipeline _pipeline;
+    }
+    
+    public AlertBlockRenderer(MarkdownPipeline pipeline) : base()
+    {
+        _pipeline = pipeline;
+    }
 
-        public AlertBlockRenderer(): base()
-        {
-        }
-        
-        public AlertBlockRenderer(MarkdownPipeline pipeline) : base()
-        {
-            _pipeline = pipeline;
-        }
-
-        protected override void Write(HtmlRenderer renderer, AlertBlock obj)
-        {
-            renderer.Write($"<div class=\"alert alert-{obj.Type.ToLower()}\">{Markdown.ToHtml(obj.Content, _pipeline)}</div>");
-        }
+    protected override void Write(HtmlRenderer renderer, AlertBlock obj)
+    {
+        var pipeline = new MarkdownPipelineBuilder();
+        pipeline = pipeline.UseAdvancedExtensions().UseXmdLanguage();
+        renderer.Write("<div class=\"alert alert-").Write(obj.Type).Write("\">").Write(obj.Content).Write("</div>");
     }
 }

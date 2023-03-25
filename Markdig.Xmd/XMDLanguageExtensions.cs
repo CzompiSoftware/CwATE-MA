@@ -1,14 +1,20 @@
-﻿using Markdig.Xmd;
-using System;
+﻿using Markdig.Helpers;
 
-namespace Markdig.Xmd
+namespace Markdig.Xmd;
+
+public static class XmdLanguageExtensions
 {
-    public static class XMDLanguageExtensions
+    public static MarkdownPipelineBuilder UseXmdLanguage(this MarkdownPipelineBuilder pipeline)
     {
-        public static MarkdownPipelineBuilder UseXMDLanguage(this MarkdownPipelineBuilder pipeline)
+        pipeline.Extensions.Add(new XmdLanguageExtension());
+        return pipeline;
+    }
+    internal static void MoveForward(this StringSlice slice, int v)
+    {
+        for (int i = 0; i < v; i++)
         {
-            pipeline.Extensions.Add(new XMDLanguageExtension());
-            return pipeline;
+            slice.NextChar();
         }
     }
+
 }

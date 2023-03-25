@@ -1,56 +1,27 @@
 ﻿using Markdig.Renderers;
-using ColorCode;
 using Markdig.Xmd.CSCode;
 using Markdig.Xmd.Alert;
 
-namespace Markdig.Xmd
+namespace Markdig.Xmd;
+
+public class XmdLanguageExtension : IMarkdownExtension
 {
-    public class XMDLanguageExtension : IMarkdownExtension
+    public XmdLanguageExtension()
     {
-        private readonly IStyleSheet _customCss;
-
-        public XMDLanguageExtension(IStyleSheet customCss = null)
-        {
-            _customCss = customCss;
-        }
-
-        public void Setup(MarkdownPipelineBuilder pipeline)
-        {
-
-            if (!pipeline.InlineParsers.Contains<AlertBlockParser>())
-            {
-                pipeline.InlineParsers.Add(new AlertBlockParser(pipeline));
-            }
-
-            if (!pipeline.InlineParsers.Contains<CSCodeInlineParser>())
-            {
-                pipeline.InlineParsers.Add(new CSCodeInlineParser());
-            }
-
-            if (!pipeline.InlineParsers.Contains<CSCodeBlockParser>())
-            {
-                pipeline.InlineParsers.Add(new CSCodeBlockParser());
-            }
-        }
-
-        public void Setup(MarkdownPipeline pipeline, IMarkdownRenderer renderer)
-        {
-
-            if (!renderer.ObjectRenderers.Contains<AlertBlockRenderer>())
-            {
-                renderer.ObjectRenderers.Add(new AlertBlockRenderer(pipeline));
-            }
-
-            if (!renderer.ObjectRenderers.Contains<CSCodeInlineRenderer>())
-            {
-                renderer.ObjectRenderers.Add(new CSCodeInlineRenderer());
-            }
-
-            if (!renderer.ObjectRenderers.Contains<CSCodeBlockRenderer>())
-            {
-                renderer.ObjectRenderers.Add(new CSCodeBlockRenderer());
-            }
-        }
-
     }
+
+    public void Setup(MarkdownPipelineBuilder pipeline)
+    {
+        pipeline.InlineParsers.ReplaceOrAdd<CSCodeInlineParser>(new CSCodeInlineParser());
+        pipeline.InlineParsers.ReplaceOrAdd<CSCodeBlockParser>(new CSCodeBlockParser());
+        pipeline.InlineParsers.ReplaceOrAdd<AlertBlockParser>(new AlertBlockParser(pipeline));
+    }
+
+    public void Setup(MarkdownPipeline pipeline, IMarkdownRenderer renderer)
+    {
+        renderer.ObjectRenderers.ReplaceOrAdd<CSCodeInlineRenderer>(new CSCodeInlineRenderer());
+        renderer.ObjectRenderers.ReplaceOrAdd<CSCodeBlockRenderer>(new CSCodeBlockRenderer());
+        renderer.ObjectRenderers.ReplaceOrAdd<AlertBlockRenderer>(new AlertBlockRenderer(pipeline));
+    }
+
 }

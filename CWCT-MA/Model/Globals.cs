@@ -4,7 +4,7 @@ using Markdig;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
+using System.Net;
 using System.Reflection;
 using System.Text.Json;
 
@@ -79,8 +79,9 @@ public class Globals
         RefreshConfig();
         RefreshGroup();
         RefreshPages();
-        Globals.AppMeta = new()
+        AppMeta = new()
         {
+            Id = Dns.GetHostName(),
             Name = "CWCT/MA",
             FullName = "Czompi WebAPP Common Template for Microsoft ASP.NET",
             Version = Assembly.GetExecutingAssembly().GetName().Version,
@@ -88,22 +89,21 @@ public class Globals
             BuildId = CwctMa.Builtin.BuildId
         };
     }
-    #endregion
 
     internal static void RefreshConfig()
     {
-        if (!File.Exists(Globals.ConfigFile))
+        if (!File.Exists(ConfigFile))
         {
-            File.WriteAllText(Globals.ConfigFile, JsonSerializer.Serialize(new Config
+            File.WriteAllText(ConfigFile, JsonSerializer.Serialize(new Config
             {
                 Id = "CwctMaDE".ToLower(),
                 ShortName = "CWCT/MA DE",
                 FullName = "Czompi WebAPP Common Template for Microsoft ASP.NET - Development Environment",
 
 #if RELEASE
-                CdnUrl = "https://cdn.czompisoftware.hu/",
+                CdnUrl = "https://cdn.czsoft.hu/",
 #else
-                CdnUrl = "https://cdn.czompisoftware.dev/",
+                CdnUrl = "https://cdn.czsoft.dev/",
 #endif
                 SiteURL = "./",
                 GlobalUrl = "https://czompigroup.hu/",
@@ -114,28 +114,26 @@ public class Globals
                     Image = null,
                     PrimaryColor = "#EAEAEA"
                 }
-            }, Globals.JsonSerializerOptions));
+            }, JsonSerializerOptions));
         }
-        Globals.Config = JsonSerializer.Deserialize<Config>(File.ReadAllText(Globals.ConfigFile), Globals.JsonSerializerOptions);
+        Config = JsonSerializer.Deserialize<Config>(File.ReadAllText(ConfigFile), JsonSerializerOptions);
     }
 
     internal static void RefreshGroup()
     {
-        if (!File.Exists(Globals.GroupFile))
+        if (!File.Exists(GroupFile))
         {
-            File.WriteAllText(Globals.GroupFile, JsonSerializer.Serialize(new GroupConfig
+            File.WriteAllText(GroupFile, JsonSerializer.Serialize(new GroupConfig
             {
                 Current = "czd",
                 Groups = new()
                 {
                     new() { Id = "czd", Name = "Czompi", Url = "https://czompi.hu" },
-                    new() { Id = "czs", Name = "Czompi Software", Url = "https://czompisoftware.hu" },
-                    new() { Id = "hls", Name = "HunLuxSCHOOL", Url = "https://hunluxschool.hu" },
-                    new() { Id = "hll", Name = "HunLux Launcher", Url = "https://hunluxlauncher.hu" }
+                    new() { Id = "czs", Name = "Czompi Software", Url = "https://czsoft.hu" },
                 }
-            }, Globals.JsonSerializerOptions));
+            }, JsonSerializerOptions));
         }
-        Globals.Group = JsonSerializer.Deserialize<GroupConfig>(File.ReadAllText(Globals.GroupFile), Globals.JsonSerializerOptions);
+        Group = JsonSerializer.Deserialize<GroupConfig>(File.ReadAllText(GroupFile), JsonSerializerOptions);
     }
 
     //TODO: Rework! Maybe only load file from disk when chage occurred and store it in memory (prolly precompile parts of the code and replace the C# code with an id that refers to the id of the compiled code.
@@ -155,8 +153,8 @@ public class Globals
         {
             var markdownFile = File.ReadAllText(file);
             var header = $"{markdownFile[0..(markdownFile.IndexOf("</metadata>", StringComparison.OrdinalIgnoreCase) + "</metadata>".Length)]}";
-            //var meta = Globals.GetMetadata(Remaining ?? "");
             Pages.Add(header.ParseXml<Metadata>());
         }
     }
+    #endregion
 }
