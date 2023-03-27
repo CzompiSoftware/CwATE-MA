@@ -1,4 +1,5 @@
 ﻿@page "/{*remaining}"
+@using CSCDNMA.Model;
 @using CwctMa.Model.Xmd
 @using CwctMa.Helpers
 @using Markdig
@@ -7,12 +8,22 @@
 @inject ILogger<Index> _logger;
 @if (File.Exists(FileName))
 {
+    var cdnUri = new Uri(Globals.Config.CdnUrl);
     var markdownFile = File.ReadAllText(FileName);
     var header = $"{markdownFile[0..(markdownFile.IndexOf("</metadata>", StringComparison.OrdinalIgnoreCase)+"</metadata>".Length)]}";
     //var meta = Globals.GetMetadata(Remaining ?? "");
     var meta = header.ParseXml<Metadata>();
     title = meta.Title;
     markdownFile = markdownFile[(header.Count())..];
+
+    foreach (var t in Enum.GetNames<AssetType>())
+    {
+        @*markdownFile = markdownFile.Replace($"${{assetPath:{t}}}", $"${{assetTypeRoot:{t}}}{product}@{version}/", StringComparison.OrdinalIgnoreCase);*@
+        markdownFile = markdownFile.Replace($"${{assetTypeRoot:{t}}}", $"${{cdnRoot}}{t.ToLowerInvariant()}/", StringComparison.OrdinalIgnoreCase);
+    }
+    markdownFile = markdownFile.Replace($"${{cdnRoot}}", "https://${cdnHost}/", StringComparison.OrdinalIgnoreCase);
+    markdownFile = markdownFile.Replace($"${{cdnScheme}}", $"{cdnUri.Scheme}", StringComparison.OrdinalIgnoreCase);
+    markdownFile = markdownFile.Replace($"${{cdnHost}}", $"{cdnUri.DnsSafeHost}", StringComparison.OrdinalIgnoreCase);
     @((MarkupString)Markdown.ToHtml(markdownFile, Globals.MarkdownPipeline))
     
     if (meta.ShowModifiedAt)
