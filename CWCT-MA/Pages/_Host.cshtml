@@ -46,7 +46,12 @@
 
     }
     <link rel="stylesheet" href="@Cdn.GetUrl("css/fluent-icons/v1.0.0/all.css")">
-    <link rel="stylesheet" href="@Cdn.GetUrl("css/prism/v1.24.1/prism.vscode-dark.css")">
+    <link rel="stylesheet" href="@Cdn.GetUrl("css/prism/v1.29.0/prism.css")">
+    <link rel="stylesheet" href="@Cdn.GetUrl("css/prism/v1.29.0/prism.light.css")" media="(prefers-color-scheme: light)">
+    <link rel="stylesheet" href="@Cdn.GetUrl("css/prism/v1.29.0/prism.dark.css")" media="(prefers-color-scheme: dark)">
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js"></script>
 
     <!-- #region Primary metadata -->
     <meta name="title" content="@(Globals.Config.Meta.Title)">
@@ -76,10 +81,10 @@
         }
     </style>
 
-    <component type="typeof(HeadOutlet)" render-mode="ServerPrerendered" />
+    <component type="typeof(HeadOutlet)" render-mode="Server" />
 </head>
-<body class="line-numbers">
-    <component type="typeof(App)" render-mode="ServerPrerendered" />
+<body class="line-numbers" data-prismjs-copy="Copy to clipboard">
+    <component type="typeof(App)" render-mode="Server" />
     <div class="container">
         <div id="blazor-error-ui" class="alert alert-danger display-hidden">
             <environment include="Staging,Production">
@@ -93,8 +98,9 @@
         </div>
     </div>
 
-    <script src="@Cdn.GetUrl("js/prism/v1.24.1/prism.js")"></script>
-    <script src="@Cdn.GetUrl("js/bootstrap/v5.1.2/bootstrap.bundle.min.js")"></script>
     <script src="_framework/blazor.server.js"></script>
+    <script src="@Cdn.GetUrl("js/cwctma/v4.2.0/app.min.js")"></script>
+    <script src="@Cdn.GetUrl("js/bootstrap/v5.1.2/bootstrap.bundle.min.js")"></script>
+    <script src="@Cdn.GetUrl("js/prism/v1.29.0/prism.min.js")" data-manual></script>
 </body>
 </html>

@@ -10,9 +10,6 @@ namespace CwctMa.Model;
 public class Globals
 {
     #region Properties
-
-    public static MarkdownPipeline MarkdownPipeline { get; internal set; }
-
     public static string CurrentPage { get; set; }
 
     public static ApplicationMetadata AppMeta { get; internal set; }

@@ -93,8 +93,6 @@ try
     app.UseRouting();
     app.UseCors(CzSoftCdnCors);
 
-    Globals.MarkdownPipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().UsePrism().UseXmdLanguage().Build();
-
     app.MapBlazorHub();
     app.MapFallbackToPage("/{param?}", "/_Host");
     app.MapFallbackToPage("/_Host");

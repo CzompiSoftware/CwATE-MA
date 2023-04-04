@@ -1,8 +1,9 @@
 #See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
 
-FROM mcr.microsoft.com/dotnet/aspnet:7.0-alpine AS base
+FROM mcr.microsoft.com/dotnet/sdk:7.0-alpine AS base
 WORKDIR /app
 EXPOSE 80
+
 RUN apk add --no-cache icu-libs
 
 ENV \
@@ -13,13 +14,16 @@ ENV \
     # Disable the invariant mode (set in base image)
     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false \
     # Colors in log
-    ASPNETCORE_LOGGING__CONSOLE__DISABLECOLORS=false
+    ASPNETCORE_LOGGING__CONSOLE__DISABLECOLORS=false \
+    ASPNETCORE_URLS=http://+:80
 
 VOLUME [ "/data" ]
 
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0-alpine AS build
+
 RUN apk add --no-cache icu-libs
+
 WORKDIR /src
 COPY ["CWCT-MA/CWCT-MA.csproj", "CWCT-MA/"]
 COPY ["nuget.config", "CWCT-MA/nuget.config"]
@@ -32,6 +36,19 @@ FROM build AS publish
 RUN dotnet publish "CWCT-MA.csproj" -c Release -o /app/publish
 
 FROM base AS final
+
+# https://www.nuget.org/packages/dotnet-script/
+RUN dotnet tool install dotnet-script --tool-path /usr/bin
+
+# Create a simple script, execute it and cleanup after
+# to create the script project dir, which requires
+# 'dotnet restore' to be run.
+# This is necessary if you want to run this in a networkless
+# docker container.
+RUN echo "return;" > tmpscript.cs
+RUN dotnet script tmpscript.cs
+RUN rm tmpscript.cs
+
 WORKDIR /app
 COPY --from=publish /app/publish .
 

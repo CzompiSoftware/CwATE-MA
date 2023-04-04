@@ -4,41 +4,27 @@
 @using CwctMa.Helpers
 @using Markdig
 @using System.IO
+@using Markdig.Extensions.Xmd;
+@using Markdig.Extensions.Xmd.CSCode;
+@using Markdig.Prism;
+@using MathJaxBlazor;
 @using Microsoft.AspNetCore.Html
 @inject ILogger<Index> _logger;
-@if (File.Exists(FileName))
-{
-    var cdnUri = new Uri(Globals.Config.CdnUrl);
-    var markdownFile = File.ReadAllText(FileName);
-    var header = $"{markdownFile[0..(markdownFile.IndexOf("</metadata>", StringComparison.OrdinalIgnoreCase)+"</metadata>".Length)]}";
-    //var meta = Globals.GetMetadata(Remaining ?? "");
-    var meta = header.ParseXml<Metadata>();
-    title = meta.Title;
-    markdownFile = markdownFile[(header.Count())..];
+@inject IJSRuntime _jsRuntime;
+@inherits MathJaxContentComponent
+// Fix math rendering
 
-    foreach (var t in Enum.GetNames<AssetType>())
-    {
-        @*markdownFile = markdownFile.Replace($"${{assetPath:{t}}}", $"${{assetTypeRoot:{t}}}{product}@{version}/", StringComparison.OrdinalIgnoreCase);*@
-        markdownFile = markdownFile.Replace($"${{assetTypeRoot:{t}}}", $"${{cdnRoot}}{t.ToLowerInvariant()}/", StringComparison.OrdinalIgnoreCase);
-    }
-    markdownFile = markdownFile.Replace($"${{cdnRoot}}", "https://${cdnHost}/", StringComparison.OrdinalIgnoreCase);
-    markdownFile = markdownFile.Replace($"${{cdnScheme}}", $"{cdnUri.Scheme}", StringComparison.OrdinalIgnoreCase);
-    markdownFile = markdownFile.Replace($"${{cdnHost}}", $"{cdnUri.DnsSafeHost}", StringComparison.OrdinalIgnoreCase);
-    @((MarkupString)Markdown.ToHtml(markdownFile, Globals.MarkdownPipeline))
-    
-    if (meta.ShowModifiedAt)
-    {
-        <p style="text-align: right;">Created@(meta.ReleasedAt == meta.ModifiedAt? " and last modified":"") at <b>@meta.ReleasedAt.ToSqlTimeString().Replace("T"," ")</b></p>
-        if (meta.ReleasedAt != meta.ModifiedAt)
-        {
-            <p style="text-align: right;">Last modified at <b>@meta.ModifiedAt.ToSqlTimeString().Replace("T"," ")</b></p>
-        }
-    }
+@if(content != null && CurrentPage == Remaining) {
+    @((MarkupString)content)
 }
-else
+else if(content == null)
 {
-    title = "Not found";
-    @((MarkupString)Markdown.ToHtml("]>danger< # Error 404\r\n] Sorry, there's nothing at this address.", Globals.MarkdownPipeline))
+    <div class="text-center">
+        <div class="spinner-border inline" role="status">
+            <span class="display-hidden">Loading...</span>
+        </div>
+        <p>Loading...</p>
+    </div>
 }
 
 <PageTitle>@title - @Globals.Config.ShortName</PageTitle>
@@ -47,11 +33,15 @@ else
     [Parameter]
     public string Remaining { get; set; }
 
-    public string CurrentPage => string.IsNullOrEmpty(Remaining) ?  "index" : Remaining;
+    public IEnumerable<string> RemainingList => Remaining?.Split("/");
+
+    public string CurrentPage { get; set; }
 
 
-    string title = "Not found";
+    string title = "Loading...";
 
+    public MarkdownPipeline _markdownPipeline;
+    public string content;
     public string FileName
     {
         get
@@ -69,10 +59,79 @@ else
         }
     }
 
-    public IEnumerable<string> RemainingList {
-        get
+    protected override Task OnInitializedAsync()
+    {
+        CSCodeOptions options = new()
         {
-            return Remaining?.Split("/");
+            OptimizationLevel = Microsoft.CodeAnalysis.OptimizationLevel.Release,
+#if RELEASE
+            MinimumLogLevel = LogLevel.Warning,
+#else
+            MinimumLogLevel = LogLevel.Trace,
+#endif
+            WorkingDirectory = Globals.ContentDirectory
+        };
+        _markdownPipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().UsePrism().UseXmdLanguage(options).Build();
+        //content = await LoadPageContent();
+        return base.OnInitializedAsync();
+    }
+    protected override async Task OnParametersSetAsync()
+    {
+        Remaining ??= "index";
+
+        if (CurrentPage != Remaining)
+        {
+            await _jsRuntime.InvokeVoidAsync("removeElementsByClass", "code-toolbar"); // Fixes issue caused by PrismJS
+            title = "Loading...";
+            content = null;
+            StateHasChanged();
+            content = await LoadPageContent();
+            StateHasChanged();
         }
+    }
+
+    private async Task<string> LoadPageContent()
+    {
+        CurrentPage = Remaining;
+        if (File.Exists(FileName))
+        {
+            var cdnUri = new Uri(Globals.Config.CdnUrl);
+            var markdownFile = await File.ReadAllTextAsync(FileName);
+            var header = $"{markdownFile[..(markdownFile.IndexOf("</metadata>", StringComparison.OrdinalIgnoreCase) + "</metadata>".Length)]}";
+            var meta = header.ParseXml<Metadata>();
+            title = meta.Title;
+            markdownFile = markdownFile[header.Count()..];
+
+            foreach (var t in Enum.GetNames<AssetType>())
+            {
+                markdownFile = markdownFile.Replace($"${{assetTypeRoot:{t}}}", $"${{cdnRoot}}{t.ToLowerInvariant()}/", StringComparison.OrdinalIgnoreCase);
+            }
+            markdownFile = markdownFile.Replace($"${{cdnRoot}}", "https://${cdnHost}/", StringComparison.OrdinalIgnoreCase);
+            markdownFile = markdownFile.Replace($"${{cdnScheme}}", $"{cdnUri.Scheme}", StringComparison.OrdinalIgnoreCase);
+            markdownFile = markdownFile.Replace($"${{cdnHost}}", $"{cdnUri.DnsSafeHost}", StringComparison.OrdinalIgnoreCase);
+            var content = Markdown.ToHtml(markdownFile, _markdownPipeline);
+
+            if (meta.ShowModifiedAt)
+            {
+                content += $"""<p style="text-align: right;">Created{(meta.ReleasedAt == meta.ModifiedAt ? " and last modified" : "")} at <b>{meta.ReleasedAt.ToSqlTimeString().Replace("T", " ")}</b></p>""";
+                if (meta.ReleasedAt != meta.ModifiedAt)
+                {
+                    content += "\r\n" + $"""<p style="text-align: right;">Last modified at <b>{meta.ModifiedAt.ToSqlTimeString().Replace("T"," ")}</b></p>""";
+                }
+            }
+
+            return content;
+        }
+        else
+        {
+            title = "Not found";
+            return Markdown.ToHtml("]>danger< # Error 404\r\n] Sorry, there's nothing at this address.", _markdownPipeline);
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        //await _jsRuntime.InvokeVoidAsync("removeElementsByClass", "code-toolbar");
+        await _jsRuntime.InvokeVoidAsync("Prism.highlightAll");
     }
 }
