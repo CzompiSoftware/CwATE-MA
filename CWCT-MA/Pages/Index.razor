@@ -12,7 +12,6 @@
 @inject ILogger<Index> _logger;
 @inject IJSRuntime _jsRuntime;
 @inherits MathJaxContentComponent
-// Fix math rendering
 
 @if(content != null && CurrentPage == Remaining) {
     @((MarkupString)content)
