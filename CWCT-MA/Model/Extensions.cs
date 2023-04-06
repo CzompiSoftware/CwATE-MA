@@ -19,7 +19,7 @@ public static class Extensions
         // Enumerate all files in the directory, using the file name as a pattern
         // This will list all case variants of the filename even on file systems that
         // are case sensitive
-        IEnumerable<string> files = Directory.GetFiles(directory);
+        IEnumerable<string> files = Directory.GetFiles(directory, "*.xmd", new EnumerationOptions { MatchCasing = MatchCasing.CaseInsensitive });
         IEnumerable<string> foundFiles = files.Where(x=>x.Equals(pathAndFileName, StringComparison.OrdinalIgnoreCase));
 
         if (foundFiles.Any())

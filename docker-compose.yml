@@ -14,6 +14,7 @@ services:
       - "CONNECTION_STRING=MSSQL"
     volumes:
       - ./data:/data
+      - ./data/favicon.ico:/bin/wwwroot/favicon.ico:ro
   proxy:
     image: nginx:latest
     volumes:
