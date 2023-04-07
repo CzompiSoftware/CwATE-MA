@@ -15,6 +15,16 @@ namespace CwctMa.Components;
 public class XmdContentComponent : ComponentBase, IAsyncDisposable
 {
     protected IJSObjectReference? _module;
+    private readonly CSCodeOptions _options = new()
+    {
+        OptimizationLevel = Microsoft.CodeAnalysis.OptimizationLevel.Release,
+#if RELEASE
+        MinimumLogLevel = LogLevel.Warning,
+#else
+        MinimumLogLevel = LogLevel.Trace,
+#endif
+        WorkingDirectory = Globals.ContentDirectory
+    };
     protected MarkdownPipeline _markdownPipeline;
     protected string _title = "Loading...";
     protected string _content;
@@ -36,21 +46,17 @@ public class XmdContentComponent : ComponentBase, IAsyncDisposable
         }
     }
 
-    [Parameter]
-    public string Remaining { get; set; }
+    [Parameter] public string Remaining { get; set; }
 
-    public IEnumerable<string> RemainingList => Remaining?.Split("/");
+    [Parameter] public RenderFragment ChildContent { get; set; }
 
     public string CurrentPage { get; set; }
 
-    [Inject]
-    protected IJSRuntime JsRuntime { get; set; }
+    [Inject] protected IJSRuntime JsRuntime { get; set; }
 
-    [Inject]
-    protected ILogger<XmdContentComponent> Logger { get; set; }
+    [Inject] protected ILogger<XmdContentComponent> Logger { get; set; }
 
-    [Parameter]
-    public RenderFragment ChildContent { get; set; }
+    [Inject] protected NavigationManager NavigationManager { get; set; }
 
     protected override void BuildRenderTree(RenderTreeBuilder builder)
     {
@@ -96,26 +102,17 @@ public class XmdContentComponent : ComponentBase, IAsyncDisposable
         }
     }
 
-    protected override Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
-        CSCodeOptions options = new()
-        {
-            OptimizationLevel = Microsoft.CodeAnalysis.OptimizationLevel.Release,
-#if RELEASE
-            MinimumLogLevel = LogLevel.Warning,
-#else
-            MinimumLogLevel = LogLevel.Trace,
-#endif
-            WorkingDirectory = Globals.ContentDirectory
-        };
-        _markdownPipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().UsePrism().UseXmdLanguage(options).Build();
+        await Task.Run(() => _markdownPipeline ??= new MarkdownPipelineBuilder().UseAdvancedExtensions().UsePrism().UseXmdLanguage(_options, new(NavigationManager.Uri)).Build());
         //content = await LoadPageContent();
-        return base.OnInitializedAsync();
+        await base.OnInitializedAsync();
     }
 
     protected override async Task OnParametersSetAsync()
     {
         Remaining ??= "index";
+        _markdownPipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().UsePrism().UseXmdLanguage(_options, new(NavigationManager.Uri)).Build();
 
         if (CurrentPage != Remaining)
         {
