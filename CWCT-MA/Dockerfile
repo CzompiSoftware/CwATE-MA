@@ -1,5 +1,6 @@
 #See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
 
+#### Base
 FROM mcr.microsoft.com/dotnet/sdk:7.0-alpine AS base
 WORKDIR /app
 EXPOSE 80
@@ -19,12 +20,19 @@ ENV \
 
 VOLUME [ "/data" ]
 
-
+#### Build
 FROM mcr.microsoft.com/dotnet/sdk:7.0-alpine AS build
 
 RUN apk add --no-cache icu-libs
 
+# Fixes issue mentioned in #11
+RUN dotnet tool install dotnet-script --tool-path /usr/bin \
+    && echo "return;" > tmpscript.cs \
+    && dotnet script tmpscript.cs \
+    && rm tmpscript.cs
+
 WORKDIR /src
+
 COPY ["CWCT-MA/CWCT-MA.csproj", "CWCT-MA/"]
 COPY ["nuget.config", "CWCT-MA/nuget.config"]
 RUN dotnet restore "CWCT-MA/CWCT-MA.csproj"
@@ -32,26 +40,20 @@ COPY . .
 WORKDIR "/src/CWCT-MA"
 RUN dotnet build "CWCT-MA.csproj" -c Release -o /app/build
 
+#### Publish
 FROM build AS publish
 RUN dotnet publish "CWCT-MA.csproj" -c Release -o /app/publish
 
+#### Final
 FROM base AS final
 
-# https://www.nuget.org/packages/dotnet-script/
-RUN dotnet tool install dotnet-script --tool-path /usr/bin
-
-# Create a simple script, execute it and cleanup after
-# to create the script project dir, which requires
-# 'dotnet restore' to be run.
-# This is necessary if you want to run this in a networkless
-# docker container.
-RUN echo "return;" > tmpscript.cs
-RUN dotnet script tmpscript.cs
-RUN rm tmpscript.cs
-
 WORKDIR /app
+
+RUN mkdir -p /root/.cache/dotnet-script
+
 COPY --from=publish /app/publish .
+COPY --from=publish /root/.cache/dotnet-script /root/.cache/dotnet-script
 
 HEALTHCHECK CMD curl --fail http://localhost || exit 1 # test if it is working. Source: https://www.docker.com/blog/9-tips-for-containerizing-your-net-application/
 
-ENTRYPOINT dotnet "CWCT-MA.dll" "--connectionString $CONNECTION_STRING"
+ENTRYPOINT  ["dotnet", "CWCT-MA.dll"]

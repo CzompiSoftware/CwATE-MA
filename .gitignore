@@ -364,3 +364,4 @@ FodyWeavers.xsd
 
 data/
 /docker-compose.override.yml
+omnisharp.json
