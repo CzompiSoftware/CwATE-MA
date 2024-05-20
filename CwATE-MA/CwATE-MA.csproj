@@ -1,0 +1,40 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net7.0</TargetFramework>
+		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+		<Configurations>Release;Staging;Beta</Configurations>
+		<RootNamespace>Cwatema</RootNamespace>
+		<Authors>Czompi Software</Authors>
+		<Company>Czompi Software, LLC.</Company>
+		<Product>Czompi WebAPP Common Template for Microsoft ASP.NET</Product>
+		<Description>Czompi WebAPP Common Template for Microsoft ASP.NET</Description>
+		<Copyright>Czompi Software 2023</Copyright>
+		<LangVersion>11.0</LangVersion>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Version>4.2.0.21</Version>
+		<UserSecretsId>856522d9-149d-4315-86cb-58ef7be680cd</UserSecretsId>
+		<DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="CzomPack" Version="3.0.8.1" />
+		<PackageReference Include="CzomPack.Cryptography" Version="3.0.2.3" />
+		<PackageReference Include="CzomPack.Network" Version="3.0.2.5" />
+		<PackageReference Include="Markdig" Version="0.31.0" />
+		<PackageReference Include="Markdig.Extensions.Xmd" Version="2.0.1" />
+		<PackageReference Include="MathJaxBlazor" Version="2.0.1" />
+		<PackageReference Include="prismjs-vs" Version="1.0.2" />
+		<PackageReference Include="Serilog.AspNetCore" Version="6.1.0" />
+		<PackageReference Include="Serilog.Sinks.Grafana.Loki" Version="8.1.0" />
+		<PackageReference Include="WebStoating.Markdig.Prism" Version="1.0.0" />
+		<PackageReference Include="IPAddressRange" Version="5.0.0" />
+	</ItemGroup>
+
+	<Target Name="Date" BeforeTargets="BeforeBuild">
+		<WriteLinesToFile File="$(IntermediateOutputPath)Builtin.cs" Lines="using System%3B%0D%0Anamespace $(RootNamespace)%0D%0A{%0D%0A	static partial class Builtin%0D%0A	{%0D%0A		public static DateTime CompileTime = DateTime.Parse(%22$([System.DateTime]::Now.ToString())%22)%3B%0D%0A		public static Guid BuildId = Guid.Parse(%22$([System.Guid]::NewGuid())%22)%3B%0D%0A		}%0D%0A}" Overwrite="true" />
+		<ItemGroup>
+			<Compile Include="$(IntermediateOutputPath)Builtin.cs" />
+		</ItemGroup>
+	</Target>
+</Project>

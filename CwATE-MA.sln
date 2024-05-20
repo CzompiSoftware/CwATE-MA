@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31717.71
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CwATE-MA", "CwATE-MA\CwATE-MA.csproj", "{0343FB2B-273C-4809-AF42-FF87B97F22BA}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{29B7367F-E10B-4C80-BB42-47C9C846443D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Beta|Any CPU = Beta|Any CPU
+		Debug|Any CPU = Debug|Any CPU
+		NoVariablesDefault|Any CPU = NoVariablesDefault|Any CPU
+		Release|Any CPU = Release|Any CPU
+		Staging|Any CPU = Staging|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0343FB2B-273C-4809-AF42-FF87B97F22BA}.Beta|Any CPU.ActiveCfg = Beta|Any CPU
+		{0343FB2B-273C-4809-AF42-FF87B97F22BA}.Beta|Any CPU.Build.0 = Beta|Any CPU
+		{0343FB2B-273C-4809-AF42-FF87B97F22BA}.Debug|Any CPU.ActiveCfg = Staging|Any CPU
+		{0343FB2B-273C-4809-AF42-FF87B97F22BA}.Debug|Any CPU.Build.0 = Staging|Any CPU
+		{0343FB2B-273C-4809-AF42-FF87B97F22BA}.NoVariablesDefault|Any CPU.ActiveCfg = Release|Any CPU
+		{0343FB2B-273C-4809-AF42-FF87B97F22BA}.NoVariablesDefault|Any CPU.Build.0 = Release|Any CPU
+		{0343FB2B-273C-4809-AF42-FF87B97F22BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0343FB2B-273C-4809-AF42-FF87B97F22BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0343FB2B-273C-4809-AF42-FF87B97F22BA}.Staging|Any CPU.ActiveCfg = Staging|Any CPU
+		{0343FB2B-273C-4809-AF42-FF87B97F22BA}.Staging|Any CPU.Build.0 = Staging|Any CPU
+		{29B7367F-E10B-4C80-BB42-47C9C846443D}.Beta|Any CPU.ActiveCfg = Beta|Any CPU
+		{29B7367F-E10B-4C80-BB42-47C9C846443D}.Beta|Any CPU.Build.0 = Beta|Any CPU
+		{29B7367F-E10B-4C80-BB42-47C9C846443D}.Debug|Any CPU.ActiveCfg = Release|Any CPU
+		{29B7367F-E10B-4C80-BB42-47C9C846443D}.Debug|Any CPU.Build.0 = Release|Any CPU
+		{29B7367F-E10B-4C80-BB42-47C9C846443D}.NoVariablesDefault|Any CPU.ActiveCfg = NoVariablesDefault
+		{29B7367F-E10B-4C80-BB42-47C9C846443D}.NoVariablesDefault|Any CPU.Build.0 = NoVariablesDefault
+		{29B7367F-E10B-4C80-BB42-47C9C846443D}.Release|Any CPU.ActiveCfg = NoVariablesDefault
+		{29B7367F-E10B-4C80-BB42-47C9C846443D}.Release|Any CPU.Build.0 = NoVariablesDefault
+		{29B7367F-E10B-4C80-BB42-47C9C846443D}.Staging|Any CPU.ActiveCfg = NoVariablesDefault
+		{29B7367F-E10B-4C80-BB42-47C9C846443D}.Staging|Any CPU.Build.0 = NoVariablesDefault
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {879406D3-EE81-4216-86F6-CB056C5C7509}
+	EndGlobalSection
+EndGlobal

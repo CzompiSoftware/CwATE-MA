@@ -2,10 +2,10 @@ version: '3.4'
 
 services:
   node:
-    image: ${DOCKER_REGISTRY-}cwct-ma
+    image: ${DOCKER_REGISTRY-}CwATE-MA
     build:
       context: .
-      dockerfile: CWCT-MA/Dockerfile
+      dockerfile: CwATE-MA/Dockerfile
     expose:
       - "80"
     environment:

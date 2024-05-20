@@ -1,0 +1,106 @@
+﻿@page "/"
+@namespace Cwatema.Pages
+@using Cwatema;
+@using Cwatema.Model;
+@using Microsoft.AspNetCore.Components
+@using System.Text.Json
+@using Microsoft.AspNetCore.Components.Web
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = null;
+    Globals.CurrentPage = $"{Request.Path.Value[1..]}";
+}
+<!--
+    Czompi WebAPP Common Template for Microsoft ASP.NET Version @($"{System.Reflection.Assembly.GetEntryAssembly().GetName().Version.ToString(2)}") Build @($"{System.Reflection.Assembly.GetEntryAssembly().GetName().Version.Revision:D4}")
+    - Compiled at @Globals.AppMeta.CompileTime.ToSqlTimeString()
+    This product licensed under Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0) license.
+
+    Copyright (c) 2020@(2020 != Globals.AppMeta.CompileTime.Year ? $"-{DateTime.Now.Year}" : "") Czompi Software. All rights reserved.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="~/" />
+    <title>Loading... - @Globals.Config.ShortName</title>
+
+    @foreach (var (name, version, file_name, url) in Globals.Config.Themes)
+    {
+        if (!string.IsNullOrEmpty(url))
+        {
+            if (!url.StartsWith("//") && url.StartsWith("http://") && url.StartsWith("https://"))
+            {
+                <link rel="stylesheet" href="@Cdn.GetUrl(url)">
+            }
+            else
+            {
+                <link rel="stylesheet" href="@url">
+            }
+        }
+        else
+        {
+            <link rel="stylesheet" href="@Cdn.GetUrl($"css/{name}/v{version}/{file_name ?? "master.css"}")">
+        }
+    }
+
+    <link rel="stylesheet" href="@Cdn.GetUrl("css/fluent-icons/v1.0.0/all.css")">
+    <link rel="stylesheet" href="@Cdn.GetUrl("css/prism/v1.29.0/prism.css")">
+    <link rel="stylesheet" href="@Cdn.GetUrl("css/prism/v1.29.0/prism.light.css")" media="(prefers-color-scheme: light)">
+    <link rel="stylesheet" href="@Cdn.GetUrl("css/prism/v1.29.0/prism.dark.css")" media="(prefers-color-scheme: dark)">
+
+    <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <!-- #region Primary metadata -->
+    <meta name="title" content="@(Globals.Config.Meta.Title)">
+    <meta name="description" content="@(Globals.Config.Meta.Description)">
+    <meta name="theme-color" content="@(Globals.Config.Meta.PrimaryColor)">
+    <meta name="generator" content="@Globals.AppMeta.FullName" />
+    <meta name="application-name" content="@Globals.AppMeta.Name v@(Globals.AppVersionString)" />
+    <meta name="author" content="Czompi Software" />
+    <!-- #endregion -->
+    <!-- #region Open Graph metadata -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="@(Globals.Config.SiteURL)">
+    <meta property="og:title" content="@(Globals.Config.Meta.Title)">
+    <meta property="og:description" content="@(Globals.Config.Meta.Description)">
+    <meta property="og:image" content="@(Globals.Config.Meta.Image)">
+    <!-- #endregion -->
+    <!-- #region Twitter metadata -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="@(Globals.Config.SiteURL)">
+    <meta property="twitter:title" content="@(Globals.Config.Meta.Title)">
+    <meta property="twitter:description" content="@(Globals.Config.Meta.Description)">
+    <meta property="twitter:image" content="@(Globals.Config.Meta.Image)">
+    <!-- #endregion -->
+    <style>
+        .display-hidden {
+            display: none;
+        }
+    </style>
+
+    <component type="typeof(HeadOutlet)" render-mode="Server" />
+</head>
+@*<body class="line-numbers" data-prismjs-copy="Copy to clipboard">*@
+<body class="line-numbers">
+    <component type="typeof(App)" render-mode="Server" />
+    <div class="container">
+        <div id="blazor-error-ui" class="alert alert-danger display-hidden">
+            <environment include="Staging,Production">
+                An error has occurred. This application may no longer respond until reloaded.
+            </environment>
+            <environment include="Development">
+                An unhandled exception has occurred. See browser dev tools for details.
+            </environment>
+            <a href="" class="reload">Reload</a>
+            <a class="dismiss">🗙</a>
+        </div>
+    </div>
+
+    <script src="_framework/blazor.server.js"></script>
+    <script src="@Cdn.GetUrl("js/Cwatema/v4.2.0/app.min.js")"></script>
+    <script src="@Cdn.GetUrl("js/bootstrap/v5.1.2/bootstrap.bundle.min.js")"></script>
+    <script src="@Cdn.GetUrl("js/prism/v1.29.0/prism.min.js")" data-manual></script>
+</body>
+</html>
