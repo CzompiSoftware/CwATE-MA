@@ -1,17 +1,13 @@
-using Cwatema.Model;
-using Markdig;
-using Markdig.Extensions.Xmd;
-using Markdig.Prism;
-using Cwatema.Extensions;
 using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.SystemConsole.Themes;
 using System.Reflection;
 using Serilog.Sinks.Grafana.Loki;
-using System.Diagnostics;
 using Microsoft.AspNetCore.HttpOverrides;
+using CzSoft.CwateMa.Extensions;
+using CzSoft.CwateMa.Model;
 
-string CzSoftCdnCors = "_cscdnmacors";
+string CzSoftCdnCors = "_cscdncors";
 
 CzomPack.Settings.Application = new CzomPack.Application(typeof(Program).Assembly);
 CzomPack.Settings.WorkingDirectory = Globals.DataDirectory;

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Cwatema.Model;
+namespace CzSoft.CwateMa.Model;
 
 public struct Page
 {

@@ -1,10 +1,9 @@
-﻿
-using System.IO;
+﻿using System.IO;
 using System.Text.Json;
 using System.Xml;
 using System.Xml.Serialization;
 
-namespace Cwatema.Helpers;
+namespace CzSoft.CwateMa.Helpers;
 internal static class ParseHelpers
 {
     public static Stream ToStream(this string @this)
@@ -19,7 +18,7 @@ internal static class ParseHelpers
 
 
     public static T ParseXml<T>(this string @this) where T : class => new XmlSerializer(typeof(T)).Deserialize(XmlReader.Create(@this.Trim().ToStream(), new XmlReaderSettings() { ConformanceLevel = ConformanceLevel.Document, DtdProcessing = DtdProcessing.Ignore })) as T;
-    
+
     public static void ToFile<T>(this T @this, string fileName) where T : class
     {
         XmlSerializer writer = new(typeof(T));

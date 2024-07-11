@@ -1,6 +1,6 @@
 ﻿using CzomPack.Cryptography;
 
-namespace Cwatema.Model;
+namespace CzSoft.CwateMa.Model;
 
 public class Cdn
 {

@@ -1,20 +1,19 @@
 ﻿using Microsoft.AspNetCore.Components.Rendering;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using Cwatema.Model;
 using Markdig.Extensions.Xmd.CSCode;
 using Markdig;
 using Markdig.Prism;
 using Markdig.Extensions.Xmd;
-using Cwatema.Helpers;
-using CSCDNMA.Model;
-using Cwatema.Model.Xmd;
+using CzSoft.CwateMa.Model;
+using CzSoft.CwateMa.Model.Xmd;
+using CzSoft.CwateMa.Helpers;
 
-namespace Cwatema.Components;
+namespace CzSoft.CwateMa.Components;
 
 public class XmdContentComponent : ComponentBase, IAsyncDisposable
 {
-    protected IJSObjectReference? _module;
+    protected IJSObjectReference _module;
     private readonly CSCodeOptions _options = new()
     {
         OptimizationLevel = Microsoft.CodeAnalysis.OptimizationLevel.Release,
@@ -26,14 +25,19 @@ public class XmdContentComponent : ComponentBase, IAsyncDisposable
         WorkingDirectory = Globals.ContentDirectory
     };
     protected MarkdownPipeline _markdownPipeline;
-    protected string _title = "Loading...";
+    protected string _title; // = "Loading...";
     protected string _content;
 
     protected string FileName
     {
         get
         {
-            var fn = Path.Combine(Globals.ContentDirectory, $"{(Remaining ?? "index").Replace(".xmd", "", StringComparison.OrdinalIgnoreCase).Replace(".php", "", StringComparison.OrdinalIgnoreCase).Replace(".cshtml", "", StringComparison.OrdinalIgnoreCase).Replace(".html", "", StringComparison.OrdinalIgnoreCase).Replace(".htm", "", StringComparison.OrdinalIgnoreCase)}.xmd");
+            var fn = Path.Combine(Globals.ContentDirectory, $"{(Remaining ?? "index")
+                .Replace(".xmd", "", StringComparison.OrdinalIgnoreCase)
+                .Replace(".php", "", StringComparison.OrdinalIgnoreCase)
+                .Replace(".cshtml", "", StringComparison.OrdinalIgnoreCase)
+                .Replace(".html", "", StringComparison.OrdinalIgnoreCase)
+                .Replace(".htm", "", StringComparison.OrdinalIgnoreCase)}.xmdl");
             try
             {
                 fn = fn.GetActualFileName();
@@ -52,8 +56,7 @@ public class XmdContentComponent : ComponentBase, IAsyncDisposable
 
     public string CurrentPage { get; set; }
 
-    [Inject] protected IJSRuntime JsRuntime { get; set; }
-
+    
     [Inject] protected ILogger<XmdContentComponent> Logger { get; set; }
 
     [Inject] protected NavigationManager NavigationManager { get; set; }
@@ -116,7 +119,7 @@ public class XmdContentComponent : ComponentBase, IAsyncDisposable
 
         if (CurrentPage != Remaining)
         {
-            await JsRuntime.InvokeVoidAsync("removeElementsByClass", "code-toolbar"); // Fixes issue caused by PrismJS
+            //await JsRuntime.InvokeVoidAsync("removeElementsByClass", "code-toolbar"); // Fixes issue caused by PrismJS
             _title = "Loading...";
             _content = null;
             StateHasChanged();
@@ -126,20 +129,20 @@ public class XmdContentComponent : ComponentBase, IAsyncDisposable
         await base.OnParametersSetAsync();
     }
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender)
-        {
-            _module = await JSRuntimeExtensions.InvokeAsync<IJSObjectReference>(JsRuntime, "import", new object[1] { "./_content/MathJaxBlazor/mathJaxBlazor.js" });
-        }
+    //protected override async Task OnAfterRenderAsync(bool firstRender)
+    //{
+    //    if (firstRender)
+    //    {
+    //        _module = await JSRuntimeExtensions.InvokeAsync<IJSObjectReference>(JsRuntime, "import", new object[1] { "./_content/MathJaxBlazor/mathJaxBlazor.js" });
+    //    }
 
-        if(_module != null)
-        {
-            await _module.InvokeVoidAsync("typesetPromise");
-        }
-        await JsRuntime.InvokeVoidAsync("Prism.highlightAll");
-        await base.OnAfterRenderAsync(firstRender);
-    }
+    //    if(_module != null)
+    //    {
+    //        await _module.InvokeVoidAsync("typesetPromise");
+    //    }
+    //    await JsRuntime.InvokeVoidAsync("Prism.highlightAll");
+    //    await base.OnAfterRenderAsync(firstRender);
+    //}
 
     public async ValueTask DisposeAsync()
     {

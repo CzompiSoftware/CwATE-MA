@@ -1,11 +1,13 @@
-﻿using Cwatema.Helpers;
-using Cwatema.Model.Xmd;
+﻿using CzSoft.CwateMa.Model;
+using CzSoft.CwateMa.Helpers;
+using CzSoft.CwateMa.Model.Xmd;
 using Markdig;
+using System.Collections.Generic;
 using System.Net;
 using System.Reflection;
 using System.Text.Json;
 
-namespace Cwatema.Model;
+namespace CzSoft.CwateMa.Model;
 
 public class Globals
 {
@@ -13,7 +15,7 @@ public class Globals
     public static string CurrentPage { get; set; }
 
     public static ApplicationMetadata AppMeta { get; internal set; }
-    public static string AppVersionString => AppMeta.Version.ToString(3);
+    public static string AppVersionString { get; internal set; }
 
     public static JsonSerializerOptions JsonSerializerOptions => new()
     {
@@ -70,45 +72,51 @@ public class Globals
 
     internal static void LoadConfigs()
     {
+        AppMeta = ApplicationMetadata.Parse(new GeneratedMetadata(), Dns.GetHostName());
+        Console.WriteLine(JsonSerializer.Serialize(AppMeta));
+        AppVersionString = AppMeta.Version.ToString(3);
+        Console.WriteLine(AppVersionString);
         RefreshConfig();
         RefreshGroup();
         RefreshPages();
-        AppMeta = new()
-        {
-            Id = Dns.GetHostName(),
-            Name = "CWCT/MA",
-            FullName = "Czompi WebAPP Common Template for Microsoft ASP.NET",
-            Version = Assembly.GetExecutingAssembly().GetName().Version,
-            CompileTime = Cwatema.Builtin.CompileTime,
-            BuildId = Cwatema.Builtin.BuildId
-        };
     }
 
     internal static void RefreshConfig()
     {
         if (!File.Exists(ConfigFile))
         {
-            File.WriteAllText(ConfigFile, JsonSerializer.Serialize(new Config
+            var defaultAppId = AppMeta.Name.Split("/")[0] + "DEV";
+            defaultAppId = defaultAppId.ToLower();
+            var defaultConfig = new Config
             {
-                Id = "CwatemaDE".ToLower(),
-                ShortName = "CWCT/MA DE",
-                FullName = "Czompi WebAPP Common Template for Microsoft ASP.NET - Development Environment",
+                Id = defaultAppId,
+                ShortName = AppMeta.Name + " DEV",
+                FullName = AppMeta.FullName + " - Development Environment",
 
 #if RELEASE
                 CdnUrl = "https://cdn.czsoft.hu/",
 #else
                 CdnUrl = "https://cdn.czsoft.dev/",
 #endif
-                SiteURL = "./",
+                SiteURL = "/",
                 GlobalUrl = "https://czompigroup.hu/",
                 Meta = new()
                 {
-                    Title = "CWCT/MA DE",
-                    Description = "Czompi WebAPP Common Template for Microsoft ASP.NET - Development Environment",
+                    Title = AppMeta.Name + " DEV",
+                    Description = AppMeta.FullName + " - Development Environment",
                     Image = null,
                     PrimaryColor = "#EAEAEA"
-                }
-            }, JsonSerializerOptions));
+                },
+                Themes = [
+                    Theme.Parse("cwate", Version.Parse("2.0.0")),
+                    Theme.Parse("cwate", Version.Parse("2.0.0"), $"style.{defaultAppId}.css"),
+                    Theme.Parse("fluent-icons", Version.Parse("1.0.0"), "all.css"),
+                    Theme.Parse("prism", Version.Parse("1.29.0"), "prism.css"),
+                    Theme.Parse("prism", Version.Parse("1.29.0"), "prism.light.css", "(prefers-color-scheme: light)"),
+                    Theme.Parse("prism", Version.Parse("1.29.0"), "prism.dark.css", "(prefers-color-scheme: dark)")
+                ],
+            };
+            File.WriteAllText(ConfigFile, JsonSerializer.Serialize(defaultConfig, JsonSerializerOptions));
         }
         Config = JsonSerializer.Deserialize<Config>(File.ReadAllText(ConfigFile), JsonSerializerOptions);
     }

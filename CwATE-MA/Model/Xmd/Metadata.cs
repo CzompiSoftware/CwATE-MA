@@ -1,10 +1,9 @@
-﻿
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Xml.Schema;
 using System.Xml.Serialization;
 
-namespace Cwatema.Model.Xmd;
+namespace CzSoft.CwateMa.Model.Xmd;
 
 [Serializable]
 [DesignerCategory("code")]
@@ -30,7 +29,7 @@ public partial class Metadata
     /// <remarks/>
     [XmlAttribute]
     public bool ShowModifiedAt { get; set; } = false;
-    
+
     /// <remarks/>
     public string Id { get; set; }
 

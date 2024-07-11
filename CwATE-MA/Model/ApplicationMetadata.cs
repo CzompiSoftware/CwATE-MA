@@ -1,13 +1,21 @@
-﻿using System;
+﻿namespace CzSoft.CwateMa.Model;
 
-namespace Cwatema.Model;
 
-public class ApplicationMetadata
+public class ApplicationMetadata : GeneratedMetadata, IMetadata
 {
-    public string Name { get; internal set; }
-    public string FullName { get; internal set; }
-    public Version Version { get; internal set; }
-    public DateTime CompileTime { get; internal set; }
-    public Guid BuildId { get; internal set; }
-    public string Id { get; internal set; }
+    public static ApplicationMetadata Parse(GeneratedMetadata generatedMetadata, string id = null)
+    {
+        var metadata = new ApplicationMetadata
+        {
+            FullName = generatedMetadata.FullName,
+            Name = generatedMetadata.Name,
+            Version = generatedMetadata.Version,
+            CompileTime = generatedMetadata.CompileTime,
+            BuildId = generatedMetadata.BuildId,
+            Id = id
+        };
+
+        return metadata;
+    }
+    public string Id { get; init; }
 }

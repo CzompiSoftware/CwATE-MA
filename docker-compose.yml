@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   node:
-    image: ${DOCKER_REGISTRY-}CwATE-MA
+    image: ${DOCKER_REGISTRY-}cwate-ma
     build:
       context: .
       dockerfile: CwATE-MA/Dockerfile
@@ -16,13 +16,12 @@ services:
       - ./data:/data
       - ./data/favicon.ico:/bin/wwwroot/favicon.ico:ro
   proxy:
-    image: nginx:latest
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    image: cr.czompicloud.hu/czsoft/reverse-proxy:1.0.1-1.25.4
     depends_on:
       - node
     ports:
       - "5000:4000"
+    restart: unless-stopped
 networks:
   default:
     driver: bridge

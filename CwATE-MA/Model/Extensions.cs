@@ -3,7 +3,7 @@ using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-namespace Cwatema.Model;
+namespace CzSoft.CwateMa.Model;
 
 public static class Extensions
 {
@@ -20,7 +20,7 @@ public static class Extensions
         // This will list all case variants of the filename even on file systems that
         // are case sensitive
         IEnumerable<string> files = Directory.GetFiles(directory, "*.xmd", new EnumerationOptions { MatchCasing = MatchCasing.CaseInsensitive });
-        IEnumerable<string> foundFiles = files.Where(x=>x.Equals(pathAndFileName, StringComparison.OrdinalIgnoreCase));
+        IEnumerable<string> foundFiles = files.Where(x => x.Equals(pathAndFileName, StringComparison.OrdinalIgnoreCase));
 
         if (foundFiles.Any())
         {

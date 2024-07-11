@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace Cwatema.Model;
+namespace CzSoft.CwateMa.Model;
 
 public class Config
 {
@@ -15,10 +15,6 @@ public class Config
     public string CopyrightHolder { get; set; } = "Czompi Software";
     public string CopyrightUrl { get; set; } = "https://czsoft.hu/";
     public string LokiUrl { get; set; } = "http://localhost:3100";
-    public List<Theme> Themes { get; set; } = new()
-    {
-        new() { Name = "Cwatema", Version = "<#={app_version}#>" },
-        new() { Name = "Cwatema", Version = "<#={app_version}#>", FileName = "style.<#={site_id}#>.css" }
-    };
+    public List<Theme> Themes { get; set; } = [];
     public Meta Meta { get; set; }
 }

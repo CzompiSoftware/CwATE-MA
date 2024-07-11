@@ -1,4 +1,4 @@
-﻿namespace Cwatema.Model;
+﻿namespace CzSoft.CwateMa.Model;
 
 public class GroupConfigItem
 {

@@ -1,4 +1,4 @@
-﻿namespace CSCDNMA.Model;
+﻿namespace CzSoft.CwateMa.Model;
 
 public enum HostEnvironment
 {

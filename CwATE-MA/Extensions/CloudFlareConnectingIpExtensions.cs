@@ -3,7 +3,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Builder;
 
-namespace Cwatema.Extensions;
+namespace CzSoft.CwateMa.Extensions;
 
 public static class CloudFlareConnectingIpExtensions
 {

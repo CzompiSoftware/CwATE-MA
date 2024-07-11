@@ -1,7 +1,7 @@
 ﻿@page "/"
-@namespace Cwatema.Pages
-@using Cwatema;
-@using Cwatema.Model;
+@namespace CzSoft.CwateMa.Pages
+@using CzSoft.CwateMa;
+@using CzSoft.CwateMa.Model;
 @using Microsoft.AspNetCore.Components
 @using System.Text.Json
 @using Microsoft.AspNetCore.Components.Web
@@ -11,11 +11,11 @@
     Globals.CurrentPage = $"{Request.Path.Value[1..]}";
 }
 <!--
-    Czompi WebAPP Common Template for Microsoft ASP.NET Version @($"{System.Reflection.Assembly.GetEntryAssembly().GetName().Version.ToString(2)}") Build @($"{System.Reflection.Assembly.GetEntryAssembly().GetName().Version.Revision:D4}")
+    @Globals.AppMeta.FullName @($"{System.Reflection.Assembly.GetEntryAssembly().GetName().Version.ToString(2)}") Build @($"{System.Reflection.Assembly.GetEntryAssembly().GetName().Version.Revision:D4}")
     - Compiled at @Globals.AppMeta.CompileTime.ToSqlTimeString()
     This product licensed under Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0) license.
 
-    Copyright (c) 2020@(2020 != Globals.AppMeta.CompileTime.Year ? $"-{DateTime.Now.Year}" : "") Czompi Software. All rights reserved.
+    Copyright (c) 2020@(2020 < Globals.AppMeta.CompileTime.Year ? $"-{DateTime.Now.Year}" : "") Czompi Software. All rights reserved.
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -23,14 +23,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <base href="~/" />
+    @*<base href="~/" />*@
     <title>Loading... - @Globals.Config.ShortName</title>
 
     @foreach (var (name, version, file_name, url) in Globals.Config.Themes)
     {
         if (!string.IsNullOrEmpty(url))
         {
-            if (!url.StartsWith("//") && url.StartsWith("http://") && url.StartsWith("https://"))
+            if (!url.StartsWith("//") && (url.StartsWith("http://") || url.StartsWith("https://")))
             {
                 <link rel="stylesheet" href="@Cdn.GetUrl(url)">
             }
@@ -41,14 +41,14 @@
         }
         else
         {
-            <link rel="stylesheet" href="@Cdn.GetUrl($"css/{name}/v{version}/{file_name ?? "master.css"}")">
+            <link rel="stylesheet" href="@Cdn.GetUrl($"css/{name}@v{version}/{file_name ?? "master.css"}")">
         }
     }
 
-    <link rel="stylesheet" href="@Cdn.GetUrl("css/fluent-icons/v1.0.0/all.css")">
-    <link rel="stylesheet" href="@Cdn.GetUrl("css/prism/v1.29.0/prism.css")">
-    <link rel="stylesheet" href="@Cdn.GetUrl("css/prism/v1.29.0/prism.light.css")" media="(prefers-color-scheme: light)">
-    <link rel="stylesheet" href="@Cdn.GetUrl("css/prism/v1.29.0/prism.dark.css")" media="(prefers-color-scheme: dark)">
+    <link rel="stylesheet" href="@Cdn.GetUrl("css/fluent-icons@v1.0.0/all.css")">
+    <link rel="stylesheet" href="@Cdn.GetUrl("css/prism@v1.29.0/prism.css")">
+    <link rel="stylesheet" href="@Cdn.GetUrl("css/prism@v1.29.0/prism.light.css")" media="(prefers-color-scheme: light)">
+    <link rel="stylesheet" href="@Cdn.GetUrl("css/prism@v1.29.0/prism.dark.css")" media="(prefers-color-scheme: dark)">
 
     <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
@@ -80,7 +80,7 @@
         }
     </style>
 
-    <component type="typeof(HeadOutlet)" render-mode="Server" />
+    <component type="typeof(HeadOutlet)" render-mode="Server"/>
 </head>
 @*<body class="line-numbers" data-prismjs-copy="Copy to clipboard">*@
 <body class="line-numbers">
@@ -98,9 +98,9 @@
         </div>
     </div>
 
-    <script src="_framework/blazor.server.js"></script>
-    <script src="@Cdn.GetUrl("js/Cwatema/v4.2.0/app.min.js")"></script>
-    <script src="@Cdn.GetUrl("js/bootstrap/v5.1.2/bootstrap.bundle.min.js")"></script>
-    <script src="@Cdn.GetUrl("js/prism/v1.29.0/prism.min.js")" data-manual></script>
+    <script src="~/_framework/blazor.server.js"></script>
+    <script src="@Cdn.GetUrl("js/cwate@v1.0.0/app.min.js")"></script>
+    <script src="@Cdn.GetUrl("js/bootstrap@v5.1.2/bootstrap.bundle.min.js")"></script>
+    <script src="@Cdn.GetUrl("js/prism@v1.29.0/prism.min.js")"></script>
 </body>
 </html>

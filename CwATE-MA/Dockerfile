@@ -1,7 +1,7 @@
 #See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
 
 #### Base
-FROM mcr.microsoft.com/dotnet/sdk:7.0-alpine AS base
+FROM mcr.microsoft.com/dotnet/sdk:8.0-alpine AS base
 WORKDIR /app
 EXPOSE 80
 
@@ -11,7 +11,7 @@ ENV \
     # Connection string
     CONNECTION_STRING="" \
     # CwATE-MA version
-    CWCTMA_VERSION=4.1.0-build15 \
+    CWATEMA_VERSION=4.3.0-build22 \
     # Disable the invariant mode (set in base image)
     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false \
     # Colors in log
@@ -21,7 +21,7 @@ ENV \
 VOLUME [ "/data" ]
 
 #### Build
-FROM mcr.microsoft.com/dotnet/sdk:7.0-alpine AS build
+FROM mcr.microsoft.com/dotnet/sdk:8.0-alpine AS build
 
 RUN apk add --no-cache icu-libs
 
@@ -38,11 +38,11 @@ COPY ["nuget.config", "CwATE-MA/nuget.config"]
 RUN dotnet restore "CwATE-MA/CwATE-MA.csproj"
 COPY . .
 WORKDIR "/src/CwATE-MA"
-RUN dotnet build "CwATE-MA.csproj" -c Release -o /app/build
+RUN dotnet build "CwATE-MA.csproj" -c Beta -o /app/build
 
 #### Publish
 FROM build AS publish
-RUN dotnet publish "CwATE-MA.csproj" -c Release -o /app/publish
+RUN dotnet publish "CwATE-MA.csproj" -c Beta -o /app/publish
 
 #### Final
 FROM base AS final

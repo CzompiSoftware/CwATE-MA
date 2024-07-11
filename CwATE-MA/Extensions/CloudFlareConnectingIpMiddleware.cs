@@ -12,7 +12,7 @@ using CzomPack.Logging;
 using System.Linq;
 using System.Collections.Generic;
 
-namespace Cwatema.Extensions;
+namespace CzSoft.CwateMa.Extensions;
 
 internal class CloudFlareConnectingIpMiddleware
 {
