@@ -1,5 +1,4 @@
-version: '3.4'
-
+name: cwatelab
 services:
   node:
     image: ${DOCKER_REGISTRY-}cwate-ma
@@ -12,9 +11,9 @@ services:
       - ENVIRONMENT=production
       - ASPNETCORE_ENVIRONMENT=Production
       - "CONNECTION_STRING=MSSQL"
-    volumes:
-      - ./data:/data
-      - ./data/favicon.ico:/bin/wwwroot/favicon.ico:ro
+    #volumes:
+      #- ./data:/data
+      #- ./data/favicon.ico:/bin/wwwroot/favicon.ico:ro
   proxy:
     image: cr.czompicloud.hu/czsoft/reverse-proxy:1.0.1-1.25.4
     depends_on:
@@ -25,4 +24,4 @@ services:
 networks:
   default:
     driver: bridge
-    name: czompidev
+    name: cwatema_lab

@@ -1,4 +1,5 @@
-﻿<div class="alert alert-@Type.ToString().ToLower()">
+﻿@using CzSoft.CwateMa.Model
+<div class="alert alert-@Type.ToString().ToLower()">
     <h2>@Title</h2>
     <p>@Content.Replace("{product.name}", Globals.Config.FullName, StringComparison.OrdinalIgnoreCase)</p>
 </div>

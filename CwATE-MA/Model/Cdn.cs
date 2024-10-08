@@ -6,6 +6,8 @@ public class Cdn
 {
     public static string GetUrl(string loc)
     {
+        loc = loc.Replace("<#={app_version}#>", Globals.AppMeta.Version.ToString(2));
+        loc = loc.Replace("<#={site_id}#>", Globals.Config.Id);
         string[] locArr = loc.Split('/');
 
         if (locArr.Length <= 2) return loc;

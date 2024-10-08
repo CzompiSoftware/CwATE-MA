@@ -363,5 +363,6 @@ MigrationBackup/
 FodyWeavers.xsd
 
 data/
-/docker-compose.override.yml
+**/docker-compose.override.yml
 omnisharp.json
+**/.theia

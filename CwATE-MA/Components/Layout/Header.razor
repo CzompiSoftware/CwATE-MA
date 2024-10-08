@@ -1,0 +1,38 @@
+﻿@using CzSoft.CwateMa.Model
+@using CzSoft.CwateMa.Model.Xmd
+@using Microsoft.AspNetCore.Http
+@using Microsoft.Extensions.Logging
+@using Microsoft.AspNetCore.Http.Extensions
+<header>
+    <!-- #region Czompi Group products -->
+    <nav class="nav nav-sticky group" aria-label="Czompi Group">
+        <div class="container w-100">
+            @foreach (GroupConfigItem group in Globals.Group.Groups)
+            {
+                @if (group.Id == Globals.Group.Current)
+                {
+                    @((MarkupString)$"<div class=\"nav-item group-{group.Id}\"><span class=\"active\">{group.Name}</span></div>")
+                }
+                else
+                {
+                    @((MarkupString)$"<div class=\"nav-item group-{group.Id}\"><a href=\"{group.Url}\">{group.Name}</a></div>")
+                }
+            }
+        </div>
+    </nav>
+    <!-- #endregion -->
+    <NavMenu />
+</header>
+@code {
+    [Inject]
+    public IHttpContextAccessor HttpContextAccessor { get; set; }
+
+    private string Page => HttpContextAccessor?.HttpContext?.Request.Path.ToString().TrimStart('/') ?? "";
+
+    public string GetPage() => Page;
+
+    protected override void OnParametersSet()
+    {
+        Globals.RefreshPages();
+    }
+}

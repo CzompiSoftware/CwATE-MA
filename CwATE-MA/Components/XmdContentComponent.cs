@@ -30,23 +30,39 @@ public class XmdContentComponent : ComponentBase, IAsyncDisposable
 
     protected string FileName
     {
+        //TODO: Sort out this mess (2024-07-11)
         get
         {
-            var fn = Path.Combine(Globals.ContentDirectory, $"{(Remaining ?? "index")
-                .Replace(".xmd", "", StringComparison.OrdinalIgnoreCase)
-                .Replace(".php", "", StringComparison.OrdinalIgnoreCase)
-                .Replace(".cshtml", "", StringComparison.OrdinalIgnoreCase)
-                .Replace(".html", "", StringComparison.OrdinalIgnoreCase)
-                .Replace(".htm", "", StringComparison.OrdinalIgnoreCase)}.xmdl");
+            var filename = Path.Combine(Globals.ContentDirectory, $"{Remaining ?? "index.xmdl"}");
             try
             {
-                fn = fn.GetActualFileName();
+                filename = filename.GetActualFileName();
             }
-            catch (FileNotFoundException fex)
+            catch (FileNotFoundException)
             {
-                Logger.LogWarning(fex, "No file!");
+                FileInfo fif = new(filename);
+                if(fif.Extension == "." && !fif.Exists)
+                {
+                    filename = Path.Combine(Globals.ContentDirectory, $"{Remaining.TrimEnd('/')}/index.xmdl");
+                    try
+                    {
+                        filename = filename.GetActualFileName();
+                    }
+                    catch (FileNotFoundException)
+                    {
+                        filename = Path.Combine(Globals.ContentDirectory, $"{Remaining.TrimEnd('/')}/index.xmd");
+                        try
+                        {
+                            filename = filename.GetActualFileName();
+                        }
+                        catch (FileNotFoundException fex)
+                        {
+                            Logger.LogWarning(fex, "No file!");
+                        }
+                    }
+                }
             }
-            return fn;
+            return filename;
         }
     }
 
@@ -115,7 +131,7 @@ public class XmdContentComponent : ComponentBase, IAsyncDisposable
     protected override async Task OnParametersSetAsync()
     {
         Remaining ??= "index";
-        _markdownPipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().UsePrism().UseXmdLanguage(_options, new(NavigationManager.Uri)).Build();
+        _markdownPipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().UsePrism().UseXmdlLanguage(_options, new(NavigationManager.Uri)).Build();
 
         if (CurrentPage != Remaining)
         {

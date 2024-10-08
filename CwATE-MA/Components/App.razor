@@ -1,15 +1,4 @@
-﻿@page "/"
-@namespace CzSoft.CwateMa.Pages
-@using CzSoft.CwateMa;
-@using CzSoft.CwateMa.Model;
-@using Microsoft.AspNetCore.Components
-@using System.Text.Json
-@using Microsoft.AspNetCore.Components.Web
-@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@{
-    Layout = null;
-    Globals.CurrentPage = $"{Request.Path.Value[1..]}";
-}
+﻿@using CzSoft.CwateMa.Model
 <!--
     @Globals.AppMeta.FullName @($"{System.Reflection.Assembly.GetEntryAssembly().GetName().Version.ToString(2)}") Build @($"{System.Reflection.Assembly.GetEntryAssembly().GetName().Version.Revision:D4}")
     - Compiled at @Globals.AppMeta.CompileTime.ToSqlTimeString()
@@ -19,13 +8,14 @@
 -->
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    @*<base href="~/" />*@
-    <title>Loading... - @Globals.Config.ShortName</title>
 
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    @* <title>Loading... - @Globals.Config.ShortName</title> *@
+
+    @* Stylesheets *@
     @foreach (var (name, version, file_name, url) in Globals.Config.Themes)
     {
         if (!string.IsNullOrEmpty(url))
@@ -44,11 +34,6 @@
             <link rel="stylesheet" href="@Cdn.GetUrl($"css/{name}@v{version}/{file_name ?? "master.css"}")">
         }
     }
-
-    <link rel="stylesheet" href="@Cdn.GetUrl("css/fluent-icons@v1.0.0/all.css")">
-    <link rel="stylesheet" href="@Cdn.GetUrl("css/prism@v1.29.0/prism.css")">
-    <link rel="stylesheet" href="@Cdn.GetUrl("css/prism@v1.29.0/prism.light.css")" media="(prefers-color-scheme: light)">
-    <link rel="stylesheet" href="@Cdn.GetUrl("css/prism@v1.29.0/prism.dark.css")" media="(prefers-color-scheme: dark)">
 
     <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
@@ -78,29 +63,36 @@
         .display-hidden {
             display: none;
         }
+
+        #blazor-error-ui {
+            background: lightyellow;
+            bottom: 0;
+            box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
+            display: none;
+            left: 0;
+            padding: 0.6rem 1.25rem 0.7rem 1.25rem;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+        }
+
+            #blazor-error-ui .dismiss {
+                cursor: pointer;
+                position: absolute;
+                right: 0.75rem;
+                top: 0.5rem;
+            }
     </style>
 
-    <component type="typeof(HeadOutlet)" render-mode="Server"/>
+    <HeadOutlet @rendermode="InteractiveServer" />
 </head>
-@*<body class="line-numbers" data-prismjs-copy="Copy to clipboard">*@
-<body class="line-numbers">
-    <component type="typeof(App)" render-mode="Server" />
-    <div class="container">
-        <div id="blazor-error-ui" class="alert alert-danger display-hidden">
-            <environment include="Staging,Production">
-                An error has occurred. This application may no longer respond until reloaded.
-            </environment>
-            <environment include="Development">
-                An unhandled exception has occurred. See browser dev tools for details.
-            </environment>
-            <a href="" class="reload">Reload</a>
-            <a class="dismiss">🗙</a>
-        </div>
-    </div>
 
-    <script src="~/_framework/blazor.server.js"></script>
+<body class="line-numbers">
+    <Routes @rendermode="InteractiveServer" />
+    <script src="/_framework/blazor.web.js"></script>
     <script src="@Cdn.GetUrl("js/cwate@v1.0.0/app.min.js")"></script>
     <script src="@Cdn.GetUrl("js/bootstrap@v5.1.2/bootstrap.bundle.min.js")"></script>
     <script src="@Cdn.GetUrl("js/prism@v1.29.0/prism.min.js")"></script>
 </body>
+
 </html>

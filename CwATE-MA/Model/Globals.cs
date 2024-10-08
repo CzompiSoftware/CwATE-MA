@@ -64,7 +64,7 @@ public class Globals
     public static GroupConfig Group { get; internal set; }
 
     //public static string PagesFile => Path.Combine(ContentDirectory, "pages.xml");
-    public static List<Metadata> Pages { get; internal set; } = new();
+    public static List<Metadata> Pages { get; internal set; } = [];
     #endregion
 
     #region Methods
@@ -151,7 +151,7 @@ public class Globals
             };
             return;
         }
-        foreach (var file in Directory.GetFiles(ContentDirectory, "*.xmd"))
+        foreach (var file in Directory.GetFiles(ContentDirectory, "*.xmdl", SearchOption.AllDirectories))
         {
             var markdownFile = File.ReadAllText(file);
             var header = $"{markdownFile[0..(markdownFile.IndexOf("</metadata>", StringComparison.OrdinalIgnoreCase) + "</metadata>".Length)]}";
