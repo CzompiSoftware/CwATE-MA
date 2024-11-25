@@ -1,22 +1,22 @@
-﻿using Microsoft.AspNetCore.Components.Rendering;
+﻿using System.Diagnostics;
+using Microsoft.AspNetCore.Components.Rendering;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using Markdig.Extensions.Xmd.CSCode;
+using Markdig.Extensions.Xmdl.Lua;
 using Markdig;
 using Markdig.Prism;
-using Markdig.Extensions.Xmd;
 using CzSoft.CwateMa.Model;
 using CzSoft.CwateMa.Model.Xmd;
 using CzSoft.CwateMa.Helpers;
+using Markdig.Extensions.Xmdl;
 
 namespace CzSoft.CwateMa.Components;
 
-public class XmdContentComponent : ComponentBase, IAsyncDisposable
+public class XmdlContentComponent : ComponentBase, IAsyncDisposable
 {
     protected IJSObjectReference _module;
-    private readonly CSCodeOptions _options = new()
+    private readonly ExecutableCodeOptions _options = new()
     {
-        OptimizationLevel = Microsoft.CodeAnalysis.OptimizationLevel.Release,
 #if RELEASE
         MinimumLogLevel = LogLevel.Warning,
 #else
@@ -27,42 +27,97 @@ public class XmdContentComponent : ComponentBase, IAsyncDisposable
     protected MarkdownPipeline _markdownPipeline;
     protected string _title; // = "Loading...";
     protected string _content;
-
+    List<string> _supportedVirtualExtensions = [
+        "html", 
+        "htm"
+    ];
+    List<string> _supportedExtensions = [
+        "xmdl", 
+        // "xmd"
+    ];
     protected string FileName
     {
-        //TODO: Sort out this mess (2024-07-11)
         get
         {
-            var filename = Path.Combine(Globals.ContentDirectory, $"{Remaining ?? "index.xmdl"}");
-            try
+            var baseFilename = Remaining ?? "index";
+            var basePath = Path.Combine(Globals.ContentDirectory, baseFilename);
+
+            if (Path.HasExtension(baseFilename))
             {
-                filename = filename.GetActualFileName();
-            }
-            catch (FileNotFoundException)
-            {
-                FileInfo fif = new(filename);
-                if(fif.Extension == "." && !fif.Exists)
+                foreach (var virtualExtension in _supportedVirtualExtensions)
                 {
-                    filename = Path.Combine(Globals.ContentDirectory, $"{Remaining.TrimEnd('/')}/index.xmdl");
-                    try
+                    foreach (var supportedExtension in _supportedExtensions)
                     {
-                        filename = filename.GetActualFileName();
-                    }
-                    catch (FileNotFoundException)
-                    {
-                        filename = Path.Combine(Globals.ContentDirectory, $"{Remaining.TrimEnd('/')}/index.xmd");
                         try
                         {
-                            filename = filename.GetActualFileName();
+                            var actualFilename = TryGetActualFileName(basePath.Replace(virtualExtension, supportedExtension));
+                            if (actualFilename != null)
+                            {
+                                return actualFilename;
+                            }
                         }
-                        catch (FileNotFoundException fex)
+                        catch (Exception e)
                         {
-                            Logger.LogWarning(fex, "No file!");
+                            Logger.LogDebug(e.Message);
+                            //throw;
                         }
                     }
                 }
             }
-            return filename;
+            else
+            {
+                // Remaining does not have an extension, so try appending supported extensions
+                foreach (string extension in _supportedExtensions)
+                {
+                    try
+                    {
+                        string candidate = basePath + "." + extension;
+                        string actualFilename = TryGetActualFileName(candidate);
+                        if (actualFilename != null)
+                        {
+                            return actualFilename;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Logger.LogDebug(e.Message);
+                    }
+                }
+
+                // Also try as a directory with index files
+                string directoryPath = Path.Combine(Globals.ContentDirectory, baseFilename);
+                foreach (string extension in _supportedExtensions)
+                {
+                    try
+                    {
+                        string candidate = Path.Combine(directoryPath, "index." + extension);
+                        string actualFilename = TryGetActualFileName(candidate);
+                        if (actualFilename != null)
+                        {
+                            return actualFilename;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Logger.LogDebug(e.Message);
+                    }
+                }
+            }
+
+            Logger.LogWarning("No file found for Remaining: {Remaining}", Remaining);
+            return null;
+        }
+    }
+
+    private string TryGetActualFileName(string filename)
+    {
+        try
+        {
+            return filename.GetActualFileName();
+        }
+        catch (FileNotFoundException)
+        {
+            return null;
         }
     }
 
@@ -70,10 +125,10 @@ public class XmdContentComponent : ComponentBase, IAsyncDisposable
 
     [Parameter] public RenderFragment ChildContent { get; set; }
 
-    public string CurrentPage { get; set; }
+    public string CurrentPage { get; protected set; }
 
     
-    [Inject] protected ILogger<XmdContentComponent> Logger { get; set; }
+    [Inject] protected ILogger<XmdlContentComponent> Logger { get; set; }
 
     [Inject] protected NavigationManager NavigationManager { get; set; }
 
@@ -123,15 +178,15 @@ public class XmdContentComponent : ComponentBase, IAsyncDisposable
 
     protected override async Task OnInitializedAsync()
     {
-        await Task.Run(() => _markdownPipeline ??= new MarkdownPipelineBuilder().UseAdvancedExtensions().UsePrism().UseXmdLanguage(_options, new(NavigationManager.Uri)).Build());
+        await Task.Run(() => _markdownPipeline ??= new MarkdownPipelineBuilder().UseAdvancedExtensions().UsePrism().UseXmdlLua(_options, new(NavigationManager.Uri)).Build());
         //content = await LoadPageContent();
         await base.OnInitializedAsync();
     }
 
     protected override async Task OnParametersSetAsync()
     {
-        Remaining ??= "index";
-        _markdownPipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().UsePrism().UseXmdlLanguage(_options, new(NavigationManager.Uri)).Build();
+        Remaining ??= "index.xmdl";
+        _markdownPipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().UsePrism().UseXmdlLua(_options, new(NavigationManager.Uri)).Build();
 
         if (CurrentPage != Remaining)
         {

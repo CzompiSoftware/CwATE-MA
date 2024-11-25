@@ -15,7 +15,7 @@ services:
       #- ./data:/data
       #- ./data/favicon.ico:/bin/wwwroot/favicon.ico:ro
   proxy:
-    image: cr.czompicloud.hu/czsoft/reverse-proxy:1.0.1-1.25.4
+    image: cr.czompicloud.hu/czsoft/reverse-proxy:latest
     depends_on:
       - node
     ports:

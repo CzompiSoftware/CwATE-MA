@@ -366,3 +366,6 @@ data/
 **/docker-compose.override.yml
 omnisharp.json
 **/.theia
+**/.run/
+**/.idea/
+global.json

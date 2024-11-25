@@ -8,7 +8,8 @@
 @using Markdig.Prism;
 @using MathJaxBlazor;
 @using Microsoft.AspNetCore.Html
-@inherits XmdContentComponent
+@inherits XmdlContentComponent
+@rendermode @(new InteractiveServerRenderMode(prerender: true))
 
 @if (_content != null && CurrentPage == Remaining)
 {
