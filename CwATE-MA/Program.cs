@@ -16,6 +16,9 @@ CzomPack.Settings.WorkingDirectory = Globals.DataDirectory;
 Globals.LoadConfigs();
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Debug()
+    .MinimumLevel.Override("System", LogEventLevel.Warning)
+    .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
+    .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Warning)
     .Enrich.FromLogContext()
     .WriteTo.File(
         Path.Combine(Globals.LogsDirectory, @$"{Assembly.GetExecutingAssembly().GetName().Name}.{DateTime.Now:yyyy-MM-dd}.log"),

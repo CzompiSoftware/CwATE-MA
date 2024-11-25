@@ -23,15 +23,15 @@
 		<PackageReference Include="CzomPack" Version="3.0.9.3" />
 		<PackageReference Include="CzomPack.Cryptography" Version="3.0.2.3" />
 		<PackageReference Include="CzomPack.Network" Version="3.0.2.5" />
-		<PackageReference Include="Markdig" Version="0.37.0" />
+		<PackageReference Include="Markdig" Version="0.38.0" />
 		<PackageReference Include="Markdig.Extensions.Xmdl" Version="3.0.0" />
-		<PackageReference Include="Markdig.Extensions.Xmdl.Lua" Version="3.0.0" />
+		<PackageReference Include="Markdig.Extensions.Xmdl.Lua" Version="3.0.1" />
 		<PackageReference Include="MathJaxBlazor" Version="2.0.1" />
 		<PackageReference Include="prismjs-vs" Version="1.0.2" />
 		<PackageReference Include="Serilog.AspNetCore" Version="8.0.3" />
 		<PackageReference Include="Serilog.Sinks.Grafana.Loki" Version="8.3.0" />
 		<PackageReference Include="WebStoating.Markdig.Prism" Version="1.0.0" />
-		<PackageReference Include="IPAddressRange" Version="6.0.0" />
+		<PackageReference Include="IPAddressRange" Version="6.1.0" />
 	</ItemGroup>
 
 	<Target Name="Date" BeforeTargets="BeforeBuild">
