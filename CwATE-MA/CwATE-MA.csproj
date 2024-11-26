@@ -14,7 +14,7 @@
 		<Copyright>Czompi Software 2024</Copyright>
 		<LangVersion>12.0</LangVersion>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<Version>4.3.0.22</Version>
+		<Version>5.0.0.22</Version>
 		<UserSecretsId>856522d9-149d-4315-86cb-58ef7be680cd</UserSecretsId>
 		<DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
 	</PropertyGroup>
