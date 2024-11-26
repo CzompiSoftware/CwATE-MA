@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using Microsoft.AspNetCore.Components.Rendering;
+﻿using Microsoft.AspNetCore.Components.Rendering;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using Markdig.Extensions.Xmdl.Lua;
@@ -27,15 +26,16 @@ public class XmdlContentComponent : ComponentBase, IAsyncDisposable
     protected MarkdownPipeline _markdownPipeline;
     protected string _title; // = "Loading...";
     protected string _content;
-    List<string> _supportedVirtualExtensions = [
+    private readonly List<string> _supportedVirtualExtensions = [
         "html", 
         "htm"
     ];
-    List<string> _supportedExtensions = [
+    private readonly List<string> _supportedExtensions = [
         "xmdl", 
         // "xmd"
     ];
-    protected string FileName
+
+    private string FileName
     {
         get
         {
@@ -104,7 +104,7 @@ public class XmdlContentComponent : ComponentBase, IAsyncDisposable
                 }
             }
 
-            Logger.LogWarning("No file found for Remaining: {Remaining}", Remaining);
+            Logger.LogWarning("File not found: {Remaining}", Remaining);
             return null;
         }
     }
