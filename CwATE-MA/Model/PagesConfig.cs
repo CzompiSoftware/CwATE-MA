@@ -1,4 +1,4 @@
-﻿using CzSoft.CwateMa.Model.Xmd;
+﻿using CzSoft.CwateMa.Model.Xmdl;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

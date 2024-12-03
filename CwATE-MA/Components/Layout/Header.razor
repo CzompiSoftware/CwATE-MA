@@ -1,8 +1,5 @@
 ﻿@using CzSoft.CwateMa.Model
-@using CzSoft.CwateMa.Model.Xmd
 @using Microsoft.AspNetCore.Http
-@using Microsoft.Extensions.Logging
-@using Microsoft.AspNetCore.Http.Extensions
 <header>
     <!-- #region Czompi Group products -->
     <nav class="nav nav-sticky group" aria-label="Czompi Group">
@@ -31,8 +28,4 @@
 
     public string GetPage() => Page;
 
-    protected override void OnParametersSet()
-    {
-        Globals.RefreshPages();
-    }
 }

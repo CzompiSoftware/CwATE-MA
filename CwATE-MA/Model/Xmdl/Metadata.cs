@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Xml.Schema;
 using System.Xml.Serialization;
 
-namespace CzSoft.CwateMa.Model.Xmd;
+namespace CzSoft.CwateMa.Model.Xmdl;
 
 [Serializable]
 [DesignerCategory("code")]
@@ -56,6 +56,7 @@ public partial class Metadata
     [XmlElement(Form = XmlSchemaForm.Qualified)]
     public DateTime ModifiedAt { get; set; } = DateTime.Now;
 
+    public string Checksum { get; set; }
 }
 
 /// <remarks/>

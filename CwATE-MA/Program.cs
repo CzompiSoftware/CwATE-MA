@@ -8,7 +8,7 @@ using CzSoft.CwateMa.Extensions;
 using CzSoft.CwateMa.Model;
 using CzSoft.CwateMa.Components;
 
-string CzSoftCdnCors = "_cscdncors";
+const string csCdnCors = "_cscdncors";
 
 CzomPack.Settings.Application = new CzomPack.Application(typeof(Program).Assembly);
 CzomPack.Settings.WorkingDirectory = Globals.DataDirectory;
@@ -59,10 +59,10 @@ try
     builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
     builder.Services.AddHttpContextAccessor();
     builder.Services.AddCors(options => {
-        options.AddPolicy(name: CzSoftCdnCors,
-        builder =>
+        options.AddPolicy(name: csCdnCors,
+        policy =>
         {
-            builder.WithOrigins(
+            policy.WithOrigins(
                 "https://cdn.czsoft.hu",
                 "https://cdn-beta.czsoft.hu",
                 "https://cdn.czsoft.dev",
@@ -95,7 +95,7 @@ try
     app.UseStaticFiles();
     app.UseCloudFlareConnectingIp();
     app.UseAntiforgery();
-    app.UseCors(CzSoftCdnCors);
+    app.UseCors(csCdnCors);
 
     app.MapRazorComponents<App>()
         .AddInteractiveServerRenderMode();

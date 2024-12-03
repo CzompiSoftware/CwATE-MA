@@ -5,7 +5,7 @@ using Markdig.Extensions.Xmdl.Lua;
 using Markdig;
 using Markdig.Prism;
 using CzSoft.CwateMa.Model;
-using CzSoft.CwateMa.Model.Xmd;
+using CzSoft.CwateMa.Model.Xmdl;
 using CzSoft.CwateMa.Helpers;
 using Markdig.Extensions.Xmdl;
 
@@ -34,6 +34,8 @@ public class XmdlContentComponent : ComponentBase, IAsyncDisposable
         "xmdl", 
         // "xmd"
     ];
+
+    private MarkdownParserContext _context = new();
 
     private string FileName
     {
@@ -131,6 +133,8 @@ public class XmdlContentComponent : ComponentBase, IAsyncDisposable
     [Inject] protected ILogger<XmdlContentComponent> Logger { get; set; }
 
     [Inject] protected NavigationManager NavigationManager { get; set; }
+    
+    [Inject] protected IHttpContextAccessor HttpContextAccessor {get; set; }
 
     protected override void BuildRenderTree(RenderTreeBuilder builder)
     {
@@ -140,6 +144,11 @@ public class XmdlContentComponent : ComponentBase, IAsyncDisposable
     private async Task<string> LoadPageContent()
     {
         CurrentPage = Remaining;
+
+        var uri = NavigationManager.ToAbsoluteUri(NavigationManager.Uri);
+        if (_context.Properties.ContainsKey("page")) _context.Properties.Remove("page");
+        _context.Properties.Add("page", new CwatePageContext(url: NavigationManager.BaseUri, route: uri.AbsolutePath, query: uri.Query + uri.Fragment));
+    
         if (File.Exists(FileName))
         {
             var cdnUri = new Uri(Globals.Config.CdnUrl);
@@ -156,23 +165,22 @@ public class XmdlContentComponent : ComponentBase, IAsyncDisposable
             markdownFile = markdownFile.Replace($"${{cdnRoot}}", "https://${cdnHost}/", StringComparison.OrdinalIgnoreCase);
             markdownFile = markdownFile.Replace($"${{cdnScheme}}", $"{cdnUri.Scheme}", StringComparison.OrdinalIgnoreCase);
             markdownFile = markdownFile.Replace($"${{cdnHost}}", $"{cdnUri.DnsSafeHost}", StringComparison.OrdinalIgnoreCase);
-            var content = Markdown.ToHtml(markdownFile, _markdownPipeline);
+            var content = Markdown.ToHtml(markdownFile, _markdownPipeline, _context);
 
-            if (meta.ShowModifiedAt)
-            {
-                content += $"""<p style="text-align: right;">Created{(meta.ReleasedAt == meta.ModifiedAt ? " and last modified" : "")} at <b>{meta.ReleasedAt.ToSqlTimeString().Replace("T", " ")}</b></p>""";
-                if (meta.ReleasedAt != meta.ModifiedAt)
-                {
-                    content += "\r\n" + $"""<p style="text-align: right;">Last modified at <b>{meta.ModifiedAt.ToSqlTimeString().Replace("T", " ")}</b></p>""";
-                }
-            }
+            if (!meta.ShowModifiedAt) return content;
+            
+            content += $"""<p style="text-align: right;">Created{(meta.ReleasedAt == meta.ModifiedAt ? " and last modified" : "")} at <b>{meta.ReleasedAt.ToSqlTimeString().Replace("T", " ")}</b></p>""";
+
+            if (meta.ReleasedAt == meta.ModifiedAt) return content;
+            
+            content += "\r\n" + $"""<p style="text-align: right;">Last modified at <b>{meta.ModifiedAt.ToSqlTimeString().Replace("T", " ")}</b></p>""";
 
             return content;
         }
         else
         {
             _title = "Not found";
-            return Markdown.ToHtml("]>danger< # Error 404\r\n] Sorry, there's nothing at this address.", _markdownPipeline);
+            return Markdown.ToHtml("]>danger< # Error 404\r\n] Sorry, there's nothing at this address.", _markdownPipeline, _context);
         }
     }
 
@@ -190,7 +198,6 @@ public class XmdlContentComponent : ComponentBase, IAsyncDisposable
 
         if (CurrentPage != Remaining)
         {
-            //await JsRuntime.InvokeVoidAsync("removeElementsByClass", "code-toolbar"); // Fixes issue caused by PrismJS
             _title = "Loading...";
             _content = null;
             StateHasChanged();
@@ -199,21 +206,6 @@ public class XmdlContentComponent : ComponentBase, IAsyncDisposable
         }
         await base.OnParametersSetAsync();
     }
-
-    //protected override async Task OnAfterRenderAsync(bool firstRender)
-    //{
-    //    if (firstRender)
-    //    {
-    //        _module = await JSRuntimeExtensions.InvokeAsync<IJSObjectReference>(JsRuntime, "import", new object[1] { "./_content/MathJaxBlazor/mathJaxBlazor.js" });
-    //    }
-
-    //    if(_module != null)
-    //    {
-    //        await _module.InvokeVoidAsync("typesetPromise");
-    //    }
-    //    await JsRuntime.InvokeVoidAsync("Prism.highlightAll");
-    //    await base.OnAfterRenderAsync(firstRender);
-    //}
 
     public async ValueTask DisposeAsync()
     {

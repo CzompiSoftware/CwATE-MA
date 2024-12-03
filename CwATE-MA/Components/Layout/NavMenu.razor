@@ -1,19 +1,23 @@
 ﻿@using CzSoft.CwateMa.Model
-@using CzSoft.CwateMa.Model.Xmd
+@using CzSoft.CwateMa.Model.Xmdl
 <!-- #region Navigation menu -->
 <div class="container">
     <nav class="nav menu" aria-label="Main">
         <a href="/" class="brand">
-            <img src="@Cdn.GetUrl($"img/{Globals.Config.Id}@v1.0/{Globals.Config.Id}-logo.svg")">
+            <img src="@Cdn.GetUrl($"img/{Globals.Config.Id}@v1.0/{Globals.Config.Id}-logo.svg")" alt="">
         </a>
         <a class="nav-mobile" href="#" role="button" data-bs-toggle="collapse" data-bs-target="#navbar-main" aria-controls="navbar-main" aria-expanded="false" aria-label="Toggle navigation"></a>
         <div class="nav-items dropdown-menu navbar-collapse collapse" aria-labelledby="navbar-main" id="navbar-main">
 
-            @foreach (Metadata page in Globals.Pages.Select(itm =>
+            @foreach (var page in Globals.Pages.DistinctBy(itm => $"{itm.Key}::{itm.Value.Checksum}").Select(itm =>
             {
-               if (itm.NavMenuId == -1) itm.NavMenuId = short.Parse($"{Math.Min(Globals.Pages.Max(x => x.NavMenuId) + Globals.Pages.Count, (int)short.MaxValue)}");
-               return itm;
-            }).Where(x => x.IsNavMenuItem == true).OrderBy(x => x.NavMenuId).ThenBy(y => y.Id))
+                itm.Value.NavMenuId = itm.Value.NavMenuId switch
+                {
+                    -1 => short.Parse($"{Math.Min(Globals.Pages.Max(x => x.Value.NavMenuId) + Globals.Pages.Count, (int)short.MaxValue)}"),
+                    _ => itm.Value.NavMenuId
+                };
+                return itm;
+            }).Where(itm => itm.Value.IsNavMenuItem).OrderBy(itm => itm.Value.NavMenuId).ThenBy(itm => itm.Value.Id).Select(itm => itm.Value))
             {
                 <div class="nav-item">
                     <NavLink Match="NavLinkMatch.All" class="" href="@($"/{page.Id.TrimStart('/')}")" ActiveClass="active">
@@ -25,3 +29,9 @@
     </nav>
 </div>
 <!-- #endregion -->
+@code {
+    protected override void OnParametersSet()
+    {
+        Globals.RefreshPages();
+    }
+}

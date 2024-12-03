@@ -6,7 +6,7 @@
                     <a href="@Globals.Config.GlobalUrl" class="branding"></a>
                     <div class="buildinfo">
                         <div class="container">
-                            <p class="engine-name">@Globals.AppMeta.Name @($"{System.Reflection.Assembly.GetEntryAssembly().GetName().Version.ToFancyString()}") Build @($"{System.Reflection.Assembly.GetEntryAssembly().GetName().Version.Revision:D4}")</p>
+                            <p class="engine-name">@Globals.AppMeta.Name @($"{System.Reflection.Assembly.GetEntryAssembly()?.GetName().Version.ToFancyString()}") Build @($"{System.Reflection.Assembly.GetEntryAssembly().GetName().Version.Revision:D4}")</p>
                             @*<p class="engine-fullname">Czompi WebAPP Common Template for Microsoft ASP.NET Version 4.0 Build ####</p>*@
                             <p class="version-id">@Globals.AppMeta.BuildId.ToString().ToUpper()</p>
                             <p class="build-date">@Globals.AppMeta.CompileTime.ToSqlTimeString()</p>
@@ -14,13 +14,13 @@
                     </div>
                     <div class="license">
                         <div class="container">
-                            <p xmlns:cc="http://creativecommons.org/ns#" >This work is licensed under <a href="http://creativecommons.org/licenses/by-nc-nd/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-ND 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nd.svg?ref=chooser-v1"></a></p>
+                            <p>This work is licensed under the <a href="https://github.com/CzompiSoftware/CwATE-MA/blob/master/LICENSE" target="_blank" rel="license" style="display:inline-block;">MIT License</a></p>
                         </div>
                     </div>
                 </div>
                 <div class="copyright">
                     <div class="container">
-                        Copyright &copy; <i class="cc cc-cc"></i> @DateTime.Now.Year <a href="@Globals.Config.CopyrightUrl">@Globals.Config.CopyrightHolder</a>. All rights reserved.
+                        Copyright &copy; @DateTime.Now.Year <a href="@Globals.Config.CopyrightUrl">@Globals.Config.CopyrightHolder</a>. All rights reserved.
                     </div>
                 </div>
             </div>

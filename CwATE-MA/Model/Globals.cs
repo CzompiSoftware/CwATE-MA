@@ -1,11 +1,13 @@
 ﻿using CzSoft.CwateMa.Model;
 using CzSoft.CwateMa.Helpers;
-using CzSoft.CwateMa.Model.Xmd;
+using CzSoft.CwateMa.Model.Xmdl;
 using Markdig;
 using System.Collections.Generic;
 using System.Net;
 using System.Reflection;
+using System.Runtime.Intrinsics.Arm;
 using System.Text.Json;
+using CzomPack.Cryptography;
 
 namespace CzSoft.CwateMa.Model;
 
@@ -64,7 +66,7 @@ public class Globals
     public static GroupConfig Group { get; internal set; }
 
     //public static string PagesFile => Path.Combine(ContentDirectory, "pages.xml");
-    public static List<Metadata> Pages { get; internal set; } = [];
+    public static Dictionary<string, Metadata> Pages { get; } = [];
     #endregion
 
     #region Methods
@@ -145,17 +147,26 @@ public class Globals
         Pages.Clear();
         if (!Directory.Exists(ContentDirectory))
         {
-            Pages = new List<Metadata>()
-            {
-                new() { Id = "index", Title = "Main page" }
-            };
+            Pages.Add("directory-not-found.error", new() { Id = "index", Title = "Main page" });
             return;
         }
         foreach (var file in Directory.GetFiles(ContentDirectory, "*.xmdl", SearchOption.AllDirectories))
         {
-            var markdownFile = File.ReadAllText(file);
-            var header = $"{markdownFile[0..(markdownFile.IndexOf("</metadata>", StringComparison.OrdinalIgnoreCase) + "</metadata>".Length)]}";
-            Pages.Add(header.ParseXml<Metadata>());
+            var xmdlContent = File.ReadAllText(file);
+            var checksum = SHA1.Encode(xmdlContent);
+            if (Pages.TryGetValue(file, out var page))
+            {
+                if (checksum == page.Checksum) continue;
+            }
+            
+            var xmdlHeader = $"{xmdlContent[0..(xmdlContent.IndexOf("</metadata>", StringComparison.OrdinalIgnoreCase) + "</metadata>".Length)]}";
+            var metadata = xmdlHeader.ParseXml<Metadata>();
+            metadata.Checksum = checksum;
+            
+            if (!Pages.TryAdd(file, metadata))
+            {
+                Pages[file] = metadata;
+            }
         }
     }
     #endregion
