@@ -369,3 +369,5 @@ omnisharp.json
 **/.run/
 **/.idea/
 global.json
+*.DotSettings
+*.zip
