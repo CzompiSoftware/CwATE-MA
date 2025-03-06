@@ -78,6 +78,27 @@ try
         ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
     });
 
+    // Prettify rendered HTML content
+    app.Use(async (context, next) =>
+    {
+        var body = context.Response.Body;
+
+        using (var updatedBody = new MemoryStream())
+        {
+            context.Response.Body = updatedBody;
+
+            await next();
+
+            context.Response.Body = body;
+
+            updatedBody.Seek(0, SeekOrigin.Begin);
+            var newContent = new StreamReader(updatedBody).ReadToEnd();
+
+            await context.Response.WriteAsync(PrettifyHtml(newContent));
+
+        }
+    });
+    
     if (app.Environment.IsDevelopment())
     {
         app.UseDeveloperExceptionPage();
@@ -110,4 +131,24 @@ catch (Exception ex)
 finally
 {
     Log.CloseAndFlush();
+}
+
+string PrettifyHtml(string content)
+{
+    var parser = new AngleSharp.Html.Parser.HtmlParser();
+    var document = parser.ParseDocument(content);
+ 
+    var sw = new StringWriter();
+    document.ToHtml(sw, new AngleSharp.Html.PrettyMarkupFormatter());
+    return sw.ToString();
+}
+
+string MinifyHtml(string content)
+{
+    var parser = new AngleSharp.Html.Parser.HtmlParser();
+    var document = parser.ParseDocument(content);
+ 
+    var sw = new StringWriter();
+    document.ToHtml(sw, new AngleSharp.Html.MinifyMarkupFormatter());
+    return sw.ToString();
 }

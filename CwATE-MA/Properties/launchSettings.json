@@ -10,7 +10,8 @@
   "profiles": {
     "CwATE-MA": {
       "commandName": "Project",
-      "launchBrowser": true,
+      "launchBrowser": false,
+      "workingDirectory": "../.run/data",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

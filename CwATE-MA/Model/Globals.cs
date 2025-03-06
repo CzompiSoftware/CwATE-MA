@@ -140,8 +140,7 @@ public class Globals
         Group = JsonSerializer.Deserialize<GroupConfig>(File.ReadAllText(GroupFile), JsonSerializerOptions);
     }
 
-    //TODO: Rework! Maybe only load file from disk when chage occurred and store it in memory (prolly precompile parts of the code and replace the C# code with an id that refers to the id of the compiled code.
-    // Magyarul a vége: Precompile-olja a fájlban található kódrészleteket és készít hozzájuk azonosítókat, majd ezekre az azonosítókra cseréli a tényleges kódot => nem kell mindig recompile-olni.
+    //TODO: Optimize! Maybe only load file from disk when change occur and store it in memory (probably precompile parts of the code and replace the Lua code with an id that refers to the id of the compiled code.
     internal static void RefreshPages()
     {
         Pages.Clear();
@@ -168,6 +167,25 @@ public class Globals
                 Pages[file] = metadata;
             }
         }
+        RefreshNavbarHierarchy();
     }
+
+    internal static void RefreshNavbarHierarchy()
+    {
+        NavHierarchy = new NavigationHierarchy();
+        foreach (var page in Pages.Values)
+        {
+            // Check if IsMember is set (it is only necessary when a legacy Xmdl file is present where IsNavMenuItem is used)
+            if (!page.Navbar.IsMember && page.IsNavMenuItem) {
+                page.Navbar.IsMember = page.IsNavMenuItem;
+                // Since the legacy Xmdl file structure didn't allow categorizing the files, it safe to assume that all of these files will be at the root of the hierarchy.
+            }
+            if (!page.Navbar.IsMember) continue;
+            NavHierarchy.BuildHierarchy(page.Navbar.Route.Replace("[]", $"[{page.Title}]"), page.Id);
+        }
+    }
+
+    public static NavigationHierarchy NavHierarchy { get; internal set; }
+
     #endregion
 }
