@@ -83,20 +83,17 @@ try
     {
         var body = context.Response.Body;
 
-        using (var updatedBody = new MemoryStream())
-        {
-            context.Response.Body = updatedBody;
+        using var updatedBody = new MemoryStream();
+        context.Response.Body = updatedBody;
 
-            await next();
+        await next();
 
-            context.Response.Body = body;
+        context.Response.Body = body;
 
-            updatedBody.Seek(0, SeekOrigin.Begin);
-            var newContent = new StreamReader(updatedBody).ReadToEnd();
+        updatedBody.Seek(0, SeekOrigin.Begin);
+        var newContent = new StreamReader(updatedBody).ReadToEnd();
 
-            await context.Response.WriteAsync(PrettifyHtml(newContent));
-
-        }
+        await context.Response.WriteAsync(Globals.PrettifyHtml(newContent));
     });
     
     if (app.Environment.IsDevelopment())
@@ -118,8 +115,7 @@ try
     app.UseAntiforgery();
     app.UseCors(csCdnCors);
 
-    app.MapRazorComponents<App>()
-        .AddInteractiveServerRenderMode();
+    app.MapRazorComponents<App>().AddInteractiveServerRenderMode();
 
     app.Run();
 
@@ -131,24 +127,4 @@ catch (Exception ex)
 finally
 {
     Log.CloseAndFlush();
-}
-
-string PrettifyHtml(string content)
-{
-    var parser = new AngleSharp.Html.Parser.HtmlParser();
-    var document = parser.ParseDocument(content);
- 
-    var sw = new StringWriter();
-    document.ToHtml(sw, new AngleSharp.Html.PrettyMarkupFormatter());
-    return sw.ToString();
-}
-
-string MinifyHtml(string content)
-{
-    var parser = new AngleSharp.Html.Parser.HtmlParser();
-    var document = parser.ParseDocument(content);
- 
-    var sw = new StringWriter();
-    document.ToHtml(sw, new AngleSharp.Html.MinifyMarkupFormatter());
-    return sw.ToString();
 }

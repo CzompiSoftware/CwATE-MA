@@ -11,7 +11,7 @@ using CzomPack.Cryptography;
 
 namespace CzSoft.CwateMa.Model;
 
-public class Globals
+internal class Globals
 {
     #region Properties
     public static string CurrentPage { get; set; }
@@ -71,6 +71,26 @@ public class Globals
 
     #region Methods
     //public static Metadata GetMetadata(string pageId) => Pages?.Page.FirstOrDefault(x => x.Id.Equals(pageId, StringComparison.OrdinalIgnoreCase)) ?? new() { };
+
+    internal static string PrettifyHtml(string content)
+    {
+        var parser = new AngleSharp.Html.Parser.HtmlParser();
+        var document = parser.ParseDocument(content);
+ 
+        var sw = new StringWriter();
+        document.ToHtml(sw, new AngleSharp.Html.PrettyMarkupFormatter());
+        return sw.ToString();
+    }
+
+    internal static string MinifyHtml(string content)
+    {
+        var parser = new AngleSharp.Html.Parser.HtmlParser();
+        var document = parser.ParseDocument(content);
+ 
+        var sw = new StringWriter();
+        document.ToHtml(sw, new AngleSharp.Html.MinifyMarkupFormatter());
+        return sw.ToString();
+    }
 
     internal static void LoadConfigs()
     {
