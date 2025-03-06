@@ -7,7 +7,6 @@
                     <div class="buildinfo">
                         <div class="container">
                             <p class="engine-name">@Globals.AppMeta.Name @($"{System.Reflection.Assembly.GetEntryAssembly()?.GetName().Version.ToFancyString()}") Build @($"{System.Reflection.Assembly.GetEntryAssembly().GetName().Version.Revision:D4}")</p>
-                            @*<p class="engine-fullname">Czompi WebAPP Common Template for Microsoft ASP.NET Version 4.0 Build ####</p>*@
                             <p class="version-id">@Globals.AppMeta.BuildId.ToString().ToUpper()</p>
                             <p class="build-date">@Globals.AppMeta.CompileTime.ToSqlTimeString()</p>
                         </div>

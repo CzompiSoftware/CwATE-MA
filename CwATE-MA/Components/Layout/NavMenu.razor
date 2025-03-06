@@ -1,22 +1,6 @@
 ﻿@using CzSoft.CwateMa.Model
 @using CzSoft.CwateMa.Model.Xmdl
 @code{
-
-    // IEnumerable<Metadata> _pages = Globals.Pages.DistinctBy(itm => $"{itm.Key}::{itm.Value.Checksum}")
-    //     .Select(itm =>
-    //     {
-    //         itm.Value.NavMenuId = itm.Value.NavMenuId switch
-    //         {
-    //             -1 => short.Parse($"{Math.Min(Globals.Pages.Max(x => x.Value.NavMenuId) + Globals.Pages.Count, short.MaxValue)}"),
-    //             _ => itm.Value.NavMenuId
-    //         };
-    //         return itm;
-    //     })
-    //     .Where(itm => itm.Value.IsNavMenuItem)
-    //     .OrderBy(itm => itm.Value.NavMenuId)
-    //     .ThenBy(itm => itm.Value.Id)
-    //     .Select(itm => itm.Value);
-
     IEnumerable<NavigationItem> _pages = Globals.NavHierarchy.Items;
 }
 <!-- #region Navigation menu -->
