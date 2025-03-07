@@ -81,19 +81,28 @@ try
     // Prettify rendered HTML content
     app.Use(async (context, next) =>
     {
+        if (context.Response.ContentType != null && !context.Response.ContentType.ToLower().Contains("text/html"))
+        {
+            await next();
+            return;
+        }
         var body = context.Response.Body;
 
         using var updatedBody = new MemoryStream();
         context.Response.Body = updatedBody;
+        //context.Response.ContentLength = updatedBody.Length;
 
         await next();
 
+        
         context.Response.Body = body;
 
         updatedBody.Seek(0, SeekOrigin.Begin);
         var newContent = new StreamReader(updatedBody).ReadToEnd();
-
-        await context.Response.WriteAsync(Globals.PrettifyHtml(newContent));
+        var responseStr = Globals.PrettifyHtml(newContent);
+        
+        await context.Response.WriteAsync(responseStr);
+        //context.Response.ContentLength = responseStr.Length;
     });
     
     if (app.Environment.IsDevelopment())

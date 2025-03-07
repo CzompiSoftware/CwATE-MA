@@ -7,11 +7,14 @@ using System.Net;
 using System.Reflection;
 using System.Runtime.Intrinsics.Arm;
 using System.Text.Json;
+using AngleSharp.Dom;
+using AngleSharp.Html;
+using AngleSharp.Html.Parser;
 using CzomPack.Cryptography;
 
 namespace CzSoft.CwateMa.Model;
 
-internal class Globals
+internal abstract class Globals
 {
     #region Properties
     public static string CurrentPage { get; set; }
@@ -74,11 +77,21 @@ internal class Globals
 
     internal static string PrettifyHtml(string content)
     {
-        var parser = new AngleSharp.Html.Parser.HtmlParser();
+        HtmlParserOptions options = new()
+        {
+            // SkipScriptText = true,
+            // SkipPlaintext = true,
+            // // SkipDataText = true,
+            // SkipRawText = true,
+            // SkipCDATA = true,
+            // SkipComments = true,
+        };
+        var parser = new HtmlParser(options);
         var document = parser.ParseDocument(content);
  
         var sw = new StringWriter();
-        document.ToHtml(sw, new AngleSharp.Html.PrettyMarkupFormatter());
+        var formatter = new PrettyMarkupFormatter();
+        document.ToHtml(sw, formatter);
         return sw.ToString();
     }
 

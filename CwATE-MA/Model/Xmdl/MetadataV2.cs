@@ -20,6 +20,7 @@ public partial class Navbar
 {
     [XmlAttribute]
     public bool IsMember { get; set; } = false;
+    
     [XmlAttribute]
     public string Route { get; set; } = "[]";
 }
