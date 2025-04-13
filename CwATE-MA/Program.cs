@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.HttpOverrides;
 using CzSoft.CwateMa.Extensions;
 using CzSoft.CwateMa.Model;
 using CzSoft.CwateMa.Components;
+using CzSoft.CwateMa.Middlewares;
 
 const string csCdnCors = "_cscdncors";
 
@@ -56,6 +57,7 @@ try
     builder.Services.AddRazorComponents()
         .AddInteractiveServerComponents();
 
+    builder.Services.AddTransient<HtmlFormatterMiddleware>();
     builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
     builder.Services.AddHttpContextAccessor();
     builder.Services.AddCors(options => {
@@ -78,33 +80,6 @@ try
         ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
     });
 
-    // Prettify rendered HTML content
-    app.Use(async (context, next) =>
-    {
-        if (context.Response.ContentType != null && !context.Response.ContentType.ToLower().Contains("text/html"))
-        {
-            await next();
-            return;
-        }
-        var body = context.Response.Body;
-
-        using var updatedBody = new MemoryStream();
-        context.Response.Body = updatedBody;
-        //context.Response.ContentLength = updatedBody.Length;
-
-        await next();
-
-        
-        context.Response.Body = body;
-
-        updatedBody.Seek(0, SeekOrigin.Begin);
-        var newContent = new StreamReader(updatedBody).ReadToEnd();
-        var responseStr = Globals.PrettifyHtml(newContent);
-        
-        await context.Response.WriteAsync(responseStr);
-        //context.Response.ContentLength = responseStr.Length;
-    });
-    
     if (app.Environment.IsDevelopment())
     {
         app.UseDeveloperExceptionPage();
@@ -123,6 +98,9 @@ try
     app.UseCloudFlareConnectingIp();
     app.UseAntiforgery();
     app.UseCors(csCdnCors);
+
+    // Prettify rendered HTML content
+    //app.UseMiddleware<HtmlFormatterMiddleware>();
 
     app.MapRazorComponents<App>().AddInteractiveServerRenderMode();
 
