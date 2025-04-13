@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components.Rendering;
+﻿using CzSoft.CwateMa.Extensions;
+using Microsoft.AspNetCore.Components.Rendering;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using Markdig.Extensions.Xmdl.Lua;
@@ -186,7 +187,7 @@ public class XmdlContentComponent : ComponentBase, IAsyncDisposable
 
     protected override async Task OnInitializedAsync()
     {
-        await Task.Run(() => _markdownPipeline ??= new MarkdownPipelineBuilder().UseAdvancedExtensions().UsePrism().UseXmdlLua(_options, new(NavigationManager.Uri)).Build());
+        await Task.Run(() => _markdownPipeline ??= new MarkdownPipelineBuilder().UseAdvancedExtensions().UsePrism().UseXmdlLua(_options, new(NavigationManager.Uri)).UseCdnForImages().Build());
         //content = await LoadPageContent();
         await base.OnInitializedAsync();
     }
@@ -194,7 +195,7 @@ public class XmdlContentComponent : ComponentBase, IAsyncDisposable
     protected override async Task OnParametersSetAsync()
     {
         Remaining ??= "index.xmdl";
-        _markdownPipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().UsePrism().UseXmdlLua(_options, new(NavigationManager.Uri)).Build();
+        _markdownPipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().UsePrism().UseXmdlLua(_options, new(NavigationManager.Uri)).UseCdnForImages().Build();
 
         if (CurrentPage != Remaining)
         {
