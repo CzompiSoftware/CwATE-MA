@@ -6,8 +6,10 @@ namespace CzSoft.CwateMa.Model;
 
 public class Config
 {
-    public string CdnUrl { get; set; }
     public string Id { get; set; }
+    public string CdnUrl { get; set; }
+    public bool HideHeader { get; set; } = false;
+    public bool HideFooter { get; set; } = false;
     public string ShortName { get; set; }
     public string FullName { get; set; }
     public string SiteURL { get; set; }

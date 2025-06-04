@@ -20,7 +20,7 @@ public static class Extensions
         // This will list all case variants of the filename even on file systems that
         // are case sensitive
         var files = Directory.GetFiles(directory, "*.*", new EnumerationOptions { MatchCasing = MatchCasing.CaseInsensitive });
-        var foundFiles = files.Where(x => x.Equals(pathAndFileName, StringComparison.OrdinalIgnoreCase));
+        var foundFiles = files.Where(x => x.Equals(Path.Combine(directory, pattern), StringComparison.OrdinalIgnoreCase));
 
         if (foundFiles.Any())
         {

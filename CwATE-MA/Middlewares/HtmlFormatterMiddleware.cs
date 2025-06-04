@@ -23,7 +23,7 @@ public class HtmlFormatterMiddleware : IMiddleware
         context.Response.Body = body;
 
         updatedBody.Seek(0, SeekOrigin.Begin);
-        var newContent = new StreamReader(updatedBody).ReadToEnd();
+        var newContent = await new StreamReader(updatedBody).ReadToEndAsync();
         var responseStr = Globals.PrettifyHtml(newContent);
         
         await context.Response.WriteAsync(responseStr);

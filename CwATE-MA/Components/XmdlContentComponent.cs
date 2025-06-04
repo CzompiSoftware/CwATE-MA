@@ -29,7 +29,7 @@ public class XmdlContentComponent : ComponentBase, IAsyncDisposable
     protected string _content;
     private readonly List<string> _supportedVirtualExtensions = [
         "html", 
-        "htm"
+        "php"
     ];
     private readonly List<string> _supportedExtensions = [
         "xmdl", 
@@ -56,6 +56,7 @@ public class XmdlContentComponent : ComponentBase, IAsyncDisposable
                             var actualFilename = TryGetActualFileName(basePath.Replace(virtualExtension, supportedExtension));
                             if (actualFilename != null)
                             {
+                                Logger.LogDebug("File found: {actualFilename}", actualFilename);
                                 return actualFilename;
                             }
                         }
@@ -78,6 +79,7 @@ public class XmdlContentComponent : ComponentBase, IAsyncDisposable
                         string actualFilename = TryGetActualFileName(candidate);
                         if (actualFilename != null)
                         {
+                            Logger.LogDebug("File found: {actualFilename}", actualFilename);
                             return actualFilename;
                         }
                     }
@@ -97,6 +99,7 @@ public class XmdlContentComponent : ComponentBase, IAsyncDisposable
                         string actualFilename = TryGetActualFileName(candidate);
                         if (actualFilename != null)
                         {
+                            Logger.LogDebug("File found: {actualFilename}", actualFilename);
                             return actualFilename;
                         }
                     }
@@ -108,6 +111,7 @@ public class XmdlContentComponent : ComponentBase, IAsyncDisposable
             }
 
             Logger.LogWarning("File not found: {Remaining}", Remaining);
+            Logger.LogDebug("File not found: {basePath}", basePath);
             return null;
         }
     }
@@ -116,7 +120,9 @@ public class XmdlContentComponent : ComponentBase, IAsyncDisposable
     {
         try
         {
-            return filename.GetActualFileName();
+            var actualFilename = filename.GetActualFileName();
+            Logger.LogDebug("TryGetActualFileName(): {actualFilename}", actualFilename);
+            return actualFilename;
         }
         catch (FileNotFoundException)
         {
@@ -147,7 +153,7 @@ public class XmdlContentComponent : ComponentBase, IAsyncDisposable
         CurrentPage = Remaining;
 
         var uri = NavigationManager.ToAbsoluteUri(NavigationManager.Uri);
-        if (_context.Properties.ContainsKey("page")) _context.Properties.Remove("page");
+        _context.Properties.Remove("page");
         _context.Properties.Add("page", new CwatePageContext(url: NavigationManager.BaseUri, route: uri.AbsolutePath, query: uri.Query + uri.Fragment));
     
         if (File.Exists(FileName))
@@ -159,13 +165,10 @@ public class XmdlContentComponent : ComponentBase, IAsyncDisposable
             _title = meta.Title;
             markdownFile = markdownFile[header.Length..];
 
-            foreach (var t in Enum.GetNames<AssetType>())
-            {
-                markdownFile = markdownFile.Replace($"${{assetTypeRoot:{t}}}", $"${{cdnRoot}}{t.ToLowerInvariant()}/", StringComparison.OrdinalIgnoreCase);
-            }
-            markdownFile = markdownFile.Replace($"${{cdnRoot}}", "https://${cdnHost}/", StringComparison.OrdinalIgnoreCase);
-            markdownFile = markdownFile.Replace($"${{cdnScheme}}", $"{cdnUri.Scheme}", StringComparison.OrdinalIgnoreCase);
-            markdownFile = markdownFile.Replace($"${{cdnHost}}", $"{cdnUri.DnsSafeHost}", StringComparison.OrdinalIgnoreCase);
+            markdownFile = Enum.GetNames<AssetType>().Aggregate(markdownFile, (current, t) => current.Replace($"${{assetTypeRoot:{t}}}", $"${{cdnRoot}}{t.ToLowerInvariant()}/", StringComparison.OrdinalIgnoreCase));
+            markdownFile = markdownFile.Replace("${{cdnRoot}}", "${cdnScheme}://${cdnHost}/", StringComparison.OrdinalIgnoreCase);
+            markdownFile = markdownFile.Replace("${{cdnScheme}}", $"{cdnUri.Scheme}", StringComparison.OrdinalIgnoreCase);
+            markdownFile = markdownFile.Replace("${{cdnHost}}", $"{cdnUri.DnsSafeHost}", StringComparison.OrdinalIgnoreCase);
             var content = Markdown.ToHtml(markdownFile, _markdownPipeline, _context);
 
             if (!meta.ShowModifiedAt) return content;
@@ -187,15 +190,15 @@ public class XmdlContentComponent : ComponentBase, IAsyncDisposable
 
     protected override async Task OnInitializedAsync()
     {
-        await Task.Run(() => _markdownPipeline ??= new MarkdownPipelineBuilder().UseAdvancedExtensions().UsePrism().UseXmdlLua(_options, new(NavigationManager.Uri)).UseCdnForImages().Build());
+        await Task.Run(() => _markdownPipeline ??= new MarkdownPipelineBuilder().UseAdvancedExtensions().UsePrism().UseXmdlLua(_options, new(NavigationManager.Uri), false).UseCdnForImages().Build());
         //content = await LoadPageContent();
         await base.OnInitializedAsync();
     }
 
     protected override async Task OnParametersSetAsync()
     {
-        Remaining ??= "index.xmdl";
-        _markdownPipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().UsePrism().UseXmdlLua(_options, new(NavigationManager.Uri)).UseCdnForImages().Build();
+        Remaining ??= "index.html";
+        _markdownPipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().UsePrism().UseXmdlLua(_options, new(NavigationManager.Uri), false).UseCdnForImages().Build();
 
         if (CurrentPage != Remaining)
         {

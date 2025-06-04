@@ -75,7 +75,7 @@ try
 
     var app = builder.Build();
 
-    app.UseForwardedHeaders(new ForwardedHeadersOptions
+    app.UseForwardedHeaders(new()
     {
         ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
     });
