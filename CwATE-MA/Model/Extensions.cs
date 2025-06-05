@@ -14,29 +14,32 @@ public static class Extensions
     {
         string directory = Path.GetDirectoryName(pathAndFileName);
         string pattern = Path.GetFileName(pathAndFileName);
-        string resultFileName;
+        string resultFileName = null;
 
-        // Enumerate all files in the directory, using the file name as a pattern
+        // List all files in the directory, using the file name as a pattern
         // This will list all case variants of the filename even on file systems that
-        // are case sensitive
-        var files = Directory.GetFiles(directory, "*.*", new EnumerationOptions { MatchCasing = MatchCasing.CaseInsensitive });
-        var foundFiles = files.Where(x => x.Equals(pathAndFileName, StringComparison.OrdinalIgnoreCase));
-
-        if (foundFiles.Any())
+        // are case-sensitive
+        if (directory != null)
         {
-            if (foundFiles.Count() > 1)
+            var files = Directory.GetFiles(directory, "*.*", new EnumerationOptions { MatchCasing = MatchCasing.CaseInsensitive });
+            var foundFiles = files.Where(x => x.Equals(Path.Combine(directory, pattern), StringComparison.OrdinalIgnoreCase));
+
+            if (foundFiles.Any())
             {
-                // More than two files with the same name but different case spelling found
-                throw new Exception("Ambiguous File reference for " + pathAndFileName);
+                if (foundFiles.Count() > 1)
+                {
+                    // More than two files with the same name but different case spelling found
+                    throw new Exception("Ambiguous File reference for " + pathAndFileName);
+                }
+                else
+                {
+                    resultFileName = foundFiles.First();
+                }
             }
             else
             {
-                resultFileName = foundFiles.First();
+                throw new FileNotFoundException("File not found", pathAndFileName);
             }
-        }
-        else
-        {
-            throw new FileNotFoundException("File not found", pathAndFileName);
         }
 
         return resultFileName;

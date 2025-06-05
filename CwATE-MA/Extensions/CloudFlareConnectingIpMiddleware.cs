@@ -9,7 +9,7 @@ namespace CzSoft.CwateMa.Extensions;
 
 internal class CloudFlareConnectingIpMiddleware
 {
-    public const string CLOUDFLARE_CONNECTING_IP_HEADER_NAME = "CF_CONNECTING_IP";
+    public const string HeaderName = "CF_CONNECTING_IP";
 
     private readonly List<IPAddressRange> _cloudFlareIpAddressRanges = new();
 
@@ -42,14 +42,14 @@ internal class CloudFlareConnectingIpMiddleware
 
         _forwardedHeadersMiddleware = new ForwardedHeadersMiddleware(next, loggerFactory, Options.Create(new ForwardedHeadersOptions
         {
-            ForwardedForHeaderName = CLOUDFLARE_CONNECTING_IP_HEADER_NAME,
+            ForwardedForHeaderName = HeaderName,
             ForwardedHeaders = ForwardedHeaders.XForwardedFor
         }));
     }
 
     public Task Invoke(HttpContext context)
     {
-        if (context.Request.Headers.ContainsKey(CLOUDFLARE_CONNECTING_IP_HEADER_NAME) && IsCloudFlareIp(context.Connection.RemoteIpAddress))
+        if (context.Request.Headers.ContainsKey(HeaderName) && IsCloudFlareIp(context.Connection.RemoteIpAddress))
         {
             return _forwardedHeadersMiddleware.Invoke(context);
         }

@@ -1,6 +1,10 @@
-﻿@inherits LayoutComponentBase
+﻿@using CzSoft.CwateMa.Model
+@inherits LayoutComponentBase
 
-<Header />
+@if (!Globals.Config.HideHeader)
+{
+    <Header />
+}
 
 <main>
     <div class="container" id="content">
@@ -14,5 +18,7 @@
 
     </div>
 </main>
-
-<Footer />
+@if (!Globals.Config.HideFooter)
+{
+    <Footer />
+}

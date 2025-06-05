@@ -24,7 +24,7 @@ public static class CloudFlareConnectingIpExtensions
         {
             app.UseForwardedHeaders(new ForwardedHeadersOptions
             {
-                ForwardedForHeaderName = CloudFlareConnectingIpMiddleware.CLOUDFLARE_CONNECTING_IP_HEADER_NAME,
+                ForwardedForHeaderName = CloudFlareConnectingIpMiddleware.HeaderName,
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor
             });
         }

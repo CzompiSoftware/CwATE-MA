@@ -1,0 +1,47 @@
+﻿@using CzSoft.CwateMa.Model.Xmdl
+
+@foreach (var page in Items)
+{
+    
+    @if (page.Children is { Count: > 0 })
+    {
+        
+        
+        <div class="@(Type == NavigationItemType.Dropdown ? "dropdown-item dropdown" : "nav-item dropdown")">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                @(page?.Title ?? "")
+            </a>
+            
+            <div class="dropdown-menu">
+                <NavigationMenu Items="page.Children" Type="NavigationItemType.Dropdown"/>
+            </div>
+        </div>
+        
+    }
+    else
+    {
+        
+        
+        <div class="@(Type == NavigationItemType.Dropdown ? "dropdown-item" : "nav-item")">
+            
+            
+            <NavLink Match="NavLinkMatch.All" class="nav-link" href="@($"/{page?.Id?.TrimStart('/')}")" ActiveClass="active">
+                @(page?.Title ?? "")
+            </NavLink>
+            
+            
+        </div>
+        
+        
+    }
+        
+        
+}
+
+@code {
+
+    [Parameter] public IEnumerable<NavigationItem> Items { get; set; }
+    [Parameter] public NavigationItemType? Type { get; set; } = NavigationItemType.Item;
+
+
+}

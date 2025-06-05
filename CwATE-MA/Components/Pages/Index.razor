@@ -1,7 +1,7 @@
 ﻿@page "/{**remaining}"
 @using CzSoft.CwateMa.Model
 @inherits XmdlContentComponent
-@inject IJSRuntime _jsRuntime;
+@inject IJSRuntime JsRuntime;
 @rendermode @(new InteractiveServerRenderMode(prerender: true))
 
 @if (_content != null && CurrentPage == Remaining)
@@ -24,7 +24,7 @@ else if(_content == null)
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        await _jsRuntime.InvokeVoidAsync("Prism.highlightAll");
+        await JsRuntime.InvokeVoidAsync("Prism.highlightAll");
     }
 
 }

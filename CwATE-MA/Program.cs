@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.HttpOverrides;
 using CzSoft.CwateMa.Extensions;
 using CzSoft.CwateMa.Model;
 using CzSoft.CwateMa.Components;
+using CzSoft.CwateMa.Middlewares;
 
 const string csCdnCors = "_cscdncors";
 
@@ -56,6 +57,7 @@ try
     builder.Services.AddRazorComponents()
         .AddInteractiveServerComponents();
 
+    builder.Services.AddTransient<HtmlFormatterMiddleware>();
     builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
     builder.Services.AddHttpContextAccessor();
     builder.Services.AddCors(options => {
@@ -73,7 +75,7 @@ try
 
     var app = builder.Build();
 
-    app.UseForwardedHeaders(new ForwardedHeadersOptions
+    app.UseForwardedHeaders(new()
     {
         ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
     });
@@ -97,8 +99,10 @@ try
     app.UseAntiforgery();
     app.UseCors(csCdnCors);
 
-    app.MapRazorComponents<App>()
-        .AddInteractiveServerRenderMode();
+    // Prettify rendered HTML content
+    //app.UseMiddleware<HtmlFormatterMiddleware>();
+
+    app.MapRazorComponents<App>().AddInteractiveServerRenderMode();
 
     app.Run();
 

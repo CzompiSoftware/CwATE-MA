@@ -12,29 +12,67 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <base href="/" />
 
     @* <title>Loading... - @Globals.Config.ShortName</title> *@
 
     @* Stylesheets *@
-    @foreach (var (name, version, file_name, url) in Globals.Config.Themes)
+    @foreach (var theme in Globals.Config.Themes)
     {
-        if (!string.IsNullOrEmpty(url))
+        var url = "";
+        if (!string.IsNullOrEmpty(theme.Url))
         {
-            if (!url.StartsWith("//") && (url.StartsWith("http://") || url.StartsWith("https://")))
+            if (!theme.Url.StartsWith("//") && (theme.Url.StartsWith("http://") || theme.Url.StartsWith("https://")))
             {
-                <link rel="stylesheet" href="@Cdn.GetUrl(url)">
+                url = Cdn.GetUrl(theme.Url);
             }
             else
             {
-                <link rel="stylesheet" href="@url">
+                url = theme.Url;
             }
         }
         else
         {
-            <link rel="stylesheet" href="@Cdn.GetUrl($"css/{name}@v{version}/{file_name ?? "master.css"}")">
+            url = Cdn.GetUrl($"css/{theme.Name}@v{theme.Version}/{theme.FileName ?? "master.css"}");
+        }
+
+        if (!string.IsNullOrEmpty(theme.Media))
+        {
+            <link rel="stylesheet" href="@url" media="@theme.Media">
+        }
+        else
+        {
+            <link rel="stylesheet" href="@url">
         }
     }
+    <!-- If you add any scoped CSS files, uncomment the following to load them -->
+    <link href="CwATE-MA.styles.css" rel="stylesheet" />
 
+    <style>
+
+        .display-hidden {
+            display: none;
+        }
+
+        #blazor-error-ui {
+            background: lightyellow;
+            bottom: 0;
+            box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
+            display: none;
+            left: 0;
+            padding: 0.6rem 1.25rem 0.7rem 1.25rem;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        #blazor-error-ui .dismiss {
+            cursor: pointer;
+            position: absolute;
+            right: 0.75rem;
+            top: 0.5rem;
+        }
+    </style>
     <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
     <!-- #region Primary metadata -->
@@ -59,39 +97,15 @@
     <meta property="twitter:description" content="@(Globals.Config.Meta.Description)">
     <meta property="twitter:image" content="@(Globals.Config.Meta.Image)">
     <!-- #endregion -->
-    <style>
-        .display-hidden {
-            display: none;
-        }
-
-        #blazor-error-ui {
-            background: lightyellow;
-            bottom: 0;
-            box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
-            display: none;
-            left: 0;
-            padding: 0.6rem 1.25rem 0.7rem 1.25rem;
-            position: fixed;
-            width: 100%;
-            z-index: 1000;
-        }
-
-            #blazor-error-ui .dismiss {
-                cursor: pointer;
-                position: absolute;
-                right: 0.75rem;
-                top: 0.5rem;
-            }
-    </style>
 
     <HeadOutlet @rendermode="InteractiveServer" />
 </head>
 
 <body class="line-numbers">
     <Routes @rendermode="InteractiveServer" />
-    <script src="/_framework/blazor.web.js"></script>
-    <script src="@Cdn.GetUrl("js/cwate@v1.0.0/app.min.js")"></script>
-    <script src="@Cdn.GetUrl("js/bootstrap@v5.1.2/bootstrap.bundle.min.js")"></script>
+    <script src="/_framework/blazor.server.js"></script>
+    <script src="@Cdn.GetUrl("js/cwate@v2.0.0/app.min.js")"></script>
+    <script src="@Cdn.GetUrl("js/bootstrap@v5.3.3/bootstrap.bundle.min.js")"></script>
     <script src="@Cdn.GetUrl("js/prism@v1.29.0/prism.min.js")"></script>
 </body>
 

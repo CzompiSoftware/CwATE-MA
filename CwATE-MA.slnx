@@ -1,0 +1,16 @@
+﻿<Solution>
+  <Configurations>
+    <BuildType Name="Beta" />
+    <BuildType Name="Debug" />
+    <BuildType Name="NoVariablesDefault" />
+    <BuildType Name="Release" />
+    <BuildType Name="Staging" />
+  </Configurations>
+  <Project Path="CwATE-MA\CwATE-MA.csproj">
+    <Configuration Solution="Debug|Any CPU" Project="Staging|Any CPU" />
+    <Configuration Solution="NoVariablesDefault|Any CPU" Project="Release|Any CPU" />
+  </Project>
+  <Project Path="docker-compose.dcproj">
+    <Configuration Solution="Debug|Any CPU" Project="Release|Any CPU" />
+  </Project>
+</Solution>
