@@ -371,3 +371,5 @@ omnisharp.json
 global.json
 *.DotSettings
 *.zip
+
+.github/planning/
